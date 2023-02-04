@@ -48,13 +48,6 @@ namespace Chess
 
         }
 
-        public void RemoveFigure(Figure figure)
-        {
-            board.ClearSquare(figure.Position);
-            inputManager.DeregisterFigure(figure);
-            Destroy(figure);
-        }
-
         private void CreateStandardFigures()
         {
             CreateFigure(rookPrefab, Color.White, new Position(0, 0));

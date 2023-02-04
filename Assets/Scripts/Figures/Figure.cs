@@ -30,6 +30,9 @@ namespace Chess
         public delegate void OnFigureSelectedHandler(Figure figure);
         public event OnFigureSelectedHandler OnFigureSelectedEvent;
 
+        public delegate void OnFigureDestroyedHandler(Figure figure);
+        public event OnFigureDestroyedHandler OnFigureDestroyedEvent;
+
         private SpriteRenderer Sprite
         {
             get
@@ -62,6 +65,11 @@ namespace Chess
             UpdatePositions();
         }
 
+        private void OnDestroy()
+        {
+            OnFigureDestroyedEvent.Invoke(this);
+        }
+
         public void OnPointerDown(PointerEventData eventData)
         {
             OnFigureSelectedEvent?.Invoke(this);
@@ -92,7 +100,7 @@ namespace Chess
             if (!Board.SquareIsEmpty(newPosition))
             {
                 Assert.IsTrue(Board.GetFigure(newPosition).Color != Color);
-                Destroy(Board.GetFigure(newPosition));
+                Destroy(Board.GetFigure(newPosition).gameObject);
             }
 
             Board.SetFigureToSquare(this, newPosition);
@@ -108,13 +116,18 @@ namespace Chess
 
         }
 
-        protected abstract void UpdatePositions();
+        protected virtual void UpdatePositions()
+        {
+            moveablePositions.Clear();
+            attackedPositions.Clear();
+        }
 
-
+        // Checks the square at position is empty or has an enemy piece.
         protected bool UpdateField(Position newPosition)
         {
             if (newPosition.IsValid())
             {
+                attackedPositions.Add(newPosition);
                 if (Board.SquareIsEmpty(newPosition))
                 {
                     moveablePositions.Add(newPosition);
@@ -125,19 +138,34 @@ namespace Chess
                 {
                     moveablePositions.Add(newPosition);
                 }
-
-                attackedPositions.Add(newPosition);
             }
             return false;
         }
 
+        // Checks for each square in a line if the figure can move there, stopping the first time a piece blocks the line. 
+        // TODO: Implement pinning behaviour
         protected void UpdateLine(int horizontal, int vertical)
         {
             for (int i = 1; i < Mathf.Max(Board.Width, Board.Height); i++)
             {
                 Position newPosition = new Position(position.File + horizontal * i, position.Rank + vertical * i);
+                if (!newPosition.IsValid())
+                {
+                    break;
+                }
+
                 if (!UpdateField(newPosition))
                 {
+                    // If the figure on the square is the enemy king, also mark the position behind the king as attacked
+                    Figure figure = Board.GetFigure(newPosition);
+                    if (figure != null && figure.Color != Color && figure is King)
+                    {
+                        Position nextPosition = new Position(newPosition.File + horizontal, newPosition.Rank + vertical);
+                        if (nextPosition.IsValid())
+                        {
+                            attackedPositions.Add(nextPosition);
+                        }
+                    }
                     break;
                 }
             }

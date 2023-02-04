@@ -24,6 +24,20 @@ namespace Chess
             {
                 blackPieces.Add(figure);
             }
+
+            figure.OnFigureDestroyedEvent += OnFigureDestroyed;
+        }
+
+        public void OnFigureDestroyed(Figure figure)
+        {
+            if (figure.Color == Color.White)
+            {
+                whitePieces.Remove(figure);
+            }
+            else
+            {
+                blackPieces.Remove(figure);
+            }
         }
 
         public bool IsSquareAttacked(Color ownColor, Position position)
@@ -31,7 +45,7 @@ namespace Chess
             List<Figure> opponentPieces = ownColor == Color.White ? blackPieces : whitePieces;
             foreach (var piece in opponentPieces)
             {
-                if (piece.MoveablePositions.Contains(position))
+                if (piece.AttackedPositions.Contains(position))
                 {
                     return true;
                 }

@@ -6,7 +6,7 @@ namespace Chess
     {
         protected override void UpdatePositions()
         {
-            moveablePositions.Clear();
+            base.UpdatePositions();
 
             AddPossibleSquares();
             CheckCastle();
@@ -70,9 +70,6 @@ namespace Chess
             }
         }
 
-        // TODO: This has the problem that the king can move on a tile that e.g. the queen cannot currently reach because
-        // the kings stands in between. Mabybe better to implement a way to check if the situation that results from a move is viable. 
-        // That would also solve the problem of pinned figures. Also currently pawns remove squares where they move, not which they attack. 
         private void RemoveAttackedSquares()
         {
             List<Position> attackedPositions = new List<Position>();

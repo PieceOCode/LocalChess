@@ -5,7 +5,8 @@ namespace Chess
     {
         protected override void UpdatePositions()
         {
-            moveablePositions.Clear();
+            base.UpdatePositions();
+
             UpdateForwardMove();
             UpdateDiagonalMove();
         }
