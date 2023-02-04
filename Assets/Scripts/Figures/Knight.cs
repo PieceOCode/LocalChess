@@ -6,7 +6,7 @@ namespace Chess
     {
         protected override void UpdatePositions()
         {
-            base.moveablePositions.Clear();
+            base.UpdatePositions();
 
             List<Position> moveablePositions = new List<Position>
             {

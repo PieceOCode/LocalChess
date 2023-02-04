@@ -4,7 +4,7 @@ namespace Chess
     {
         protected override void UpdatePositions()
         {
-            moveablePositions.Clear();
+            base.UpdatePositions();
 
             UpdateStraight();
             UpdateDiagonals();
