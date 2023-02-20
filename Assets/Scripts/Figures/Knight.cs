@@ -8,8 +8,6 @@ namespace Chess
     {
         public override void UpdatePositions()
         {
-            base.UpdatePositions();
-
             List<Vector2Int> moveablePositions = new List<Vector2Int>
             {
                 new Vector2Int(position.x + 2, position.y + 1),

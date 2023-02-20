@@ -7,8 +7,6 @@ namespace Chess
     {
         public override void UpdatePositions()
         {
-            base.UpdatePositions();
-
             UpdateForwardMove();
             UpdateDiagonalMove();
         }

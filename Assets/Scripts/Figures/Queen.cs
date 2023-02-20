@@ -4,11 +4,10 @@ namespace Chess
     {
         public override void UpdatePositions()
         {
-            base.UpdatePositions();
-
             UpdateStraight();
             UpdateDiagonals();
         }
+
         private void UpdateStraight()
         {
             UpdateLine(1, 0);

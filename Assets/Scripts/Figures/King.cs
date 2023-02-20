@@ -8,8 +8,6 @@ namespace Chess
     {
         public override void UpdatePositions()
         {
-            base.UpdatePositions();
-
             AddPossibleSquares();
             CheckCastle();
             RemoveAttackedSquares();

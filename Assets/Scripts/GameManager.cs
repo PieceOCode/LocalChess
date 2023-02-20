@@ -10,16 +10,34 @@ namespace Chess
         private Board board = default;
         public Board Board { get { return board; } }
 
+        [SerializeField]
+        private SpawnManager spawnManager = default;
+
         private List<Figure> whitePieces = new List<Figure>();
         private List<Figure> blackPieces = new List<Figure>();
         private List<Figure> pieces => whitePieces.Concat(blackPieces).ToList();
 
-        private void Update()
+        private void Start()
         {
+            spawnManager.ResetBoardStandard();
+            UpdateGameState();
+        }
+
+        public void UpdateGameState()
+        {
+            foreach (var piece in pieces)
+            {
+                piece.ClearState();
+            }
+
             foreach (var piece in pieces)
             {
                 piece.UpdatePositions();
             }
+
+            // Kings have to be updated last, because they cannot move to attacked tiles. 
+            GetKingOfColor(Color.White).UpdatePositions();
+            GetKingOfColor(Color.Black).UpdatePositions();
 
             foreach (var piece in pieces)
             {
@@ -38,7 +56,13 @@ namespace Chess
                 blackPieces.Add(figure);
             }
 
+            figure.OnFigureMovedEvent += OnFigureMoved;
             figure.OnFigureDestroyedEvent += OnFigureDestroyed;
+        }
+
+        private void OnFigureMoved(Figure figure)
+        {
+            UpdateGameState();
         }
 
         public void OnFigureDestroyed(Figure figure)
@@ -51,6 +75,9 @@ namespace Chess
             {
                 blackPieces.Remove(figure);
             }
+
+            figure.OnFigureMovedEvent -= OnFigureMoved;
+            figure.OnFigureDestroyedEvent -= OnFigureDestroyed;
         }
 
         public bool IsSquareAttacked(Color ownColor, Vector2Int position)

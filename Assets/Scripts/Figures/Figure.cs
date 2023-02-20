@@ -27,6 +27,9 @@ namespace Chess
         protected readonly List<Vector2Int> moveablePositions = new List<Vector2Int>();
         protected readonly List<Vector2Int> attackedPositions = new List<Vector2Int>();
 
+        public delegate void OnFigureMovedHandler(Figure figure);
+        public event OnFigureMovedHandler OnFigureMovedEvent;
+
         public delegate void OnFigureSelectedHandler(Figure figure);
         public event OnFigureSelectedHandler OnFigureSelectedEvent;
 
@@ -104,6 +107,7 @@ namespace Chess
             this.position = newPosition;
             transform.position = Board.GetWorldPosition(position);
             hasMoved = true;
+            OnFigureMovedEvent?.Invoke(this);
         }
 
         protected virtual void OnMove(Vector2Int oldPosition, Vector2Int newPosition)
@@ -111,11 +115,14 @@ namespace Chess
 
         }
 
-        public virtual void UpdatePositions()
+        public void ClearState()
         {
             moveablePositions.Clear();
             attackedPositions.Clear();
+            pinnedBy = null;
         }
+
+        public abstract void UpdatePositions();
 
         public virtual void UpdatePinned()
         {

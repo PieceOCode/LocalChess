@@ -8,8 +8,6 @@ namespace Chess
     public class SpawnManager : MonoBehaviour
     {
         [SerializeField]
-        private Board board = default;
-        [SerializeField]
         private InputManager inputManager = default;
         [SerializeField]
         private GameManager gameManager = null;
@@ -28,19 +26,13 @@ namespace Chess
         [SerializeField]
         private King kingPrefab = default;
 
-
-        private void Start()
-        {
-            CreateStandardFigures();
-        }
-
         private void CreateFigure(Figure prefab, Color color, Vector2Int position)
         {
             Figure figure = Instantiate(prefab);
             figure.SetFigure(position, color, gameManager);
             gameManager.RegisterFigure(figure);
             inputManager.RegisterFigure(figure);
-            board.SetFigureToSquare(figure, position);
+            gameManager.Board.SetFigureToSquare(figure, position);
         }
 
         public void SpawnFigure<FigureType>() where FigureType : Figure
@@ -48,7 +40,7 @@ namespace Chess
 
         }
 
-        private void CreateStandardFigures()
+        public void ResetBoardStandard()
         {
             CreateFigure(rookPrefab, Color.White, new Vector2Int(0, 0));
             CreateFigure(rookPrefab, Color.White, new Vector2Int(7, 0));
@@ -71,7 +63,7 @@ namespace Chess
             CreateFigure(kingPrefab, Color.White, new Vector2Int(4, 0));
             CreateFigure(kingPrefab, Color.Black, new Vector2Int(4, 7));
 
-            for (int i = 0; i < board.Width; i++)
+            for (int i = 0; i < gameManager.Board.Width; i++)
             {
                 CreateFigure(pawnPrefab, Color.White, new Vector2Int(i, 1));
                 CreateFigure(pawnPrefab, Color.Black, new Vector2Int(i, 6));
