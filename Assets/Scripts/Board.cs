@@ -36,7 +36,7 @@ namespace Chess
                 {
                     Square square = Instantiate(squarePrefab, transform);
 
-                    Position pos = new Position(file, rank);
+                    Vector2Int pos = new Vector2Int(file, rank);
                     Color color = (Color)((file + rank + 1) % 2);
                     square.SetSquare(pos, color);
                     inputManager.RegisterSquare(square);
@@ -47,18 +47,18 @@ namespace Chess
             }
         }
 
-        private Square GetSquare(Position position)
+        private Square GetSquare(Vector2Int position)
         {
             Assert.IsTrue(position.IsValid());
-            return squares[position.File, position.Rank];
+            return squares[position.x, position.y];
         }
 
-        public Figure GetFigure(Position position)
+        public Figure GetFigure(Vector2Int position)
         {
             return GetSquare(position).Figure;
         }
 
-        public void HighlightSquares(List<Position> squarePositions)
+        public void HighlightSquares(List<Vector2Int> squarePositions)
         {
             ClearHighlights();
             foreach (var position in squarePositions)
@@ -75,29 +75,29 @@ namespace Chess
             }
         }
 
-        public void SetFigureToSquare(Figure figure, Position squarePosition)
+        public void SetFigureToSquare(Figure figure, Vector2Int squarePosition)
         {
             GetSquare(squarePosition).Figure = figure;
         }
 
-        public void RemoveFigureFromSquare(Position squarePosition)
+        public void RemoveFigureFromSquare(Vector2Int squarePosition)
         {
             GetSquare(squarePosition).Figure = null;
         }
 
-        public void ClearSquare(Position position)
+        public void ClearSquare(Vector2Int position)
         {
             GetSquare(position).Figure = null;
         }
 
 
-        public bool SquareIsEmpty(Position position)
+        public bool SquareIsEmpty(Vector2Int position)
         {
             Assert.IsTrue(position.IsValid());
             return GetSquare(position).IsEmpty;
         }
 
-        public bool SquareHasEnemyPiece(Color ownColor, Position position)
+        public bool SquareHasEnemyPiece(Color ownColor, Vector2Int position)
         {
             Assert.IsTrue(position.IsValid());
             if (SquareIsEmpty(position))
@@ -107,10 +107,10 @@ namespace Chess
             return GetSquare(position).Figure.Color != ownColor;
         }
 
-        public Vector3 GetWorldPosition(Position position)
+        public Vector3 GetWorldPosition(Vector2Int position)
         {
             Assert.IsTrue(position.IsValid());
-            return new Vector3(position.File, position.Rank, 0);
+            return new Vector3(position.x, position.y, 0);
         }
     }
 }

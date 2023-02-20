@@ -34,7 +34,7 @@ namespace Chess
             CreateStandardFigures();
         }
 
-        private void CreateFigure(Figure prefab, Color color, Position position)
+        private void CreateFigure(Figure prefab, Color color, Vector2Int position)
         {
             Figure figure = Instantiate(prefab);
             figure.SetFigure(position, color, gameManager);
@@ -50,31 +50,31 @@ namespace Chess
 
         private void CreateStandardFigures()
         {
-            CreateFigure(rookPrefab, Color.White, new Position(0, 0));
-            CreateFigure(rookPrefab, Color.White, new Position(7, 0));
-            CreateFigure(rookPrefab, Color.Black, new Position(0, 7));
-            CreateFigure(rookPrefab, Color.Black, new Position(7, 7));
+            CreateFigure(rookPrefab, Color.White, new Vector2Int(0, 0));
+            CreateFigure(rookPrefab, Color.White, new Vector2Int(7, 0));
+            CreateFigure(rookPrefab, Color.Black, new Vector2Int(0, 7));
+            CreateFigure(rookPrefab, Color.Black, new Vector2Int(7, 7));
 
-            CreateFigure(knightPrefab, Color.White, new Position(1, 0));
-            CreateFigure(knightPrefab, Color.White, new Position(6, 0));
-            CreateFigure(knightPrefab, Color.Black, new Position(1, 7));
-            CreateFigure(knightPrefab, Color.Black, new Position(6, 7));
+            CreateFigure(knightPrefab, Color.White, new Vector2Int(1, 0));
+            CreateFigure(knightPrefab, Color.White, new Vector2Int(6, 0));
+            CreateFigure(knightPrefab, Color.Black, new Vector2Int(1, 7));
+            CreateFigure(knightPrefab, Color.Black, new Vector2Int(6, 7));
 
-            CreateFigure(bishopPrefab, Color.White, new Position(2, 0));
-            CreateFigure(bishopPrefab, Color.White, new Position(5, 0));
-            CreateFigure(bishopPrefab, Color.Black, new Position(2, 7));
-            CreateFigure(bishopPrefab, Color.Black, new Position(5, 7));
+            CreateFigure(bishopPrefab, Color.White, new Vector2Int(2, 0));
+            CreateFigure(bishopPrefab, Color.White, new Vector2Int(5, 0));
+            CreateFigure(bishopPrefab, Color.Black, new Vector2Int(2, 7));
+            CreateFigure(bishopPrefab, Color.Black, new Vector2Int(5, 7));
 
-            CreateFigure(queenPrefab, Color.White, new Position(3, 0));
-            CreateFigure(queenPrefab, Color.Black, new Position(3, 7));
+            CreateFigure(queenPrefab, Color.White, new Vector2Int(3, 0));
+            CreateFigure(queenPrefab, Color.Black, new Vector2Int(3, 7));
 
-            CreateFigure(kingPrefab, Color.White, new Position(4, 0));
-            CreateFigure(kingPrefab, Color.Black, new Position(4, 7));
+            CreateFigure(kingPrefab, Color.White, new Vector2Int(4, 0));
+            CreateFigure(kingPrefab, Color.Black, new Vector2Int(4, 7));
 
             for (int i = 0; i < board.Width; i++)
             {
-                CreateFigure(pawnPrefab, Color.White, new Position(i, 1));
-                CreateFigure(pawnPrefab, Color.Black, new Position(i, 6));
+                CreateFigure(pawnPrefab, Color.White, new Vector2Int(i, 1));
+                CreateFigure(pawnPrefab, Color.Black, new Vector2Int(i, 6));
             }
         }
     }

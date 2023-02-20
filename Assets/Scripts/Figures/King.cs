@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace Chess
@@ -22,16 +23,16 @@ namespace Chess
 
         private void AddPossibleSquares()
         {
-            List<Position> moveablePositions = new List<Position>
+            List<Vector2Int> moveablePositions = new List<Vector2Int>
             {
-                new Position(position.File + 1, position.Rank),
-                new Position(position.File - 1, position.Rank),
-                new Position(position.File, position.Rank + 1),
-                new Position(position.File, position.Rank - 1),
-                new Position(position.File + 1, position.Rank + 1),
-                new Position(position.File + 1, position.Rank - 1),
-                new Position(position.File - 1, position.Rank + 1),
-                new Position(position.File - 1, position.Rank - 1)
+                new Vector2Int(position.x + 1, position.y),
+                new Vector2Int(position.x - 1, position.y),
+                new Vector2Int(position.x, position.y + 1),
+                new Vector2Int(position.x, position.y - 1),
+                new Vector2Int(position.x + 1, position.y + 1),
+                new Vector2Int(position.x + 1, position.y - 1),
+                new Vector2Int(position.x - 1, position.y + 1),
+                new Vector2Int(position.x - 1, position.y - 1)
             };
 
             foreach (var position in moveablePositions)
@@ -45,34 +46,34 @@ namespace Chess
         {
             if (!hasMoved)
             {
-                Position rookPosition = Color == Color.White ? new Position(0, 0) : new Position(0, 7);
+                Vector2Int rookPosition = Color == Color.White ? new Vector2Int(0, 0) : new Vector2Int(0, 7);
                 Figure figure = Board.GetFigure(rookPosition);
                 if (figure != null && figure.Color == Color && !figure.HasMoved && figure is Rook)
                 {
-                    if (Board.GetFigure(new Position(position.File - 1, position.Rank)) == null &&
-                        Board.GetFigure(new Position(position.File - 2, position.Rank)) == null &&
+                    if (Board.GetFigure(new Vector2Int(position.x - 1, position.y)) == null &&
+                        Board.GetFigure(new Vector2Int(position.x - 2, position.y)) == null &&
                         !GameManager.IsSquareAttacked(Color, position) &&
-                        !GameManager.IsSquareAttacked(Color, new Position(position.File - 1, position.Rank)) &&
-                        !GameManager.IsSquareAttacked(Color, new Position(position.File - 2, position.Rank))
+                        !GameManager.IsSquareAttacked(Color, new Vector2Int(position.x - 1, position.y)) &&
+                        !GameManager.IsSquareAttacked(Color, new Vector2Int(position.x - 2, position.y))
                     )
                     {
-                        moveablePositions.Add(new Position(position.File - 2, position.Rank));
+                        moveablePositions.Add(new Vector2Int(position.x - 2, position.y));
                     }
                 }
 
-                rookPosition = Color == Color.White ? new Position(7, 0) : new Position(7, 7);
+                rookPosition = Color == Color.White ? new Vector2Int(7, 0) : new Vector2Int(7, 7);
                 figure = Board.GetFigure(rookPosition);
                 if (figure != null && figure.Color == Color && !figure.HasMoved && figure is Rook)
                 {
-                    if (Board.GetFigure(new Position(position.File + 1, position.Rank)) == null &&
-                        Board.GetFigure(new Position(position.File + 2, position.Rank)) == null &&
+                    if (Board.GetFigure(new Vector2Int(position.x + 1, position.y)) == null &&
+                        Board.GetFigure(new Vector2Int(position.x + 2, position.y)) == null &&
                         !GameManager.IsSquareAttacked(Color, position) &&
-                        !GameManager.IsSquareAttacked(Color, new Position(position.File + 1, position.Rank)) &&
-                        !GameManager.IsSquareAttacked(Color, new Position(position.File + 2, position.Rank))
+                        !GameManager.IsSquareAttacked(Color, new Vector2Int(position.x + 1, position.y)) &&
+                        !GameManager.IsSquareAttacked(Color, new Vector2Int(position.x + 2, position.y))
                     )
                     {
 
-                        moveablePositions.Add(new Position(position.File + 2, position.Rank));
+                        moveablePositions.Add(new Vector2Int(position.x + 2, position.y));
                     }
                 }
             }
@@ -80,8 +81,8 @@ namespace Chess
 
         private void RemoveAttackedSquares()
         {
-            List<Position> attackedPositions = new List<Position>();
-            foreach (Position position in moveablePositions)
+            List<Vector2Int> attackedPositions = new List<Vector2Int>();
+            foreach (Vector2Int position in moveablePositions)
             {
                 if (GameManager.IsSquareAttacked(Color, position))
                 {
@@ -92,19 +93,19 @@ namespace Chess
         }
 
         // Check if move is castle to move the corresponding rook
-        protected override void OnMove(Position oldPosition, Position newPosition)
+        protected override void OnMove(Vector2Int oldPosition, Vector2Int newPosition)
         {
             base.OnMove(oldPosition, newPosition);
-            int direction = oldPosition.File - newPosition.File;
+            float direction = oldPosition.x - newPosition.x;
             if (direction > 1)
             {
-                Figure rook = Board.GetFigure(new Position(0, position.Rank));
-                rook.Move(new Position(3, position.Rank));
+                Figure rook = Board.GetFigure(new Vector2Int(0, position.y));
+                rook.Move(new Vector2Int(3, position.y));
             }
             else if (direction < -1)
             {
-                Figure rook = Board.GetFigure(new Position(7, position.Rank));
-                rook.Move(new Position(5, position.Rank));
+                Figure rook = Board.GetFigure(new Vector2Int(7, position.y));
+                rook.Move(new Vector2Int(5, position.y));
             }
         }
     }

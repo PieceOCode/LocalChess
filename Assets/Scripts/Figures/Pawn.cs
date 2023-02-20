@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Chess
 {
     // TODO: Implement what happens when pawn reaches last row. 
@@ -16,15 +18,15 @@ namespace Chess
         {
             int rankDirection = Color == Color.White ? 1 : -1;
 
-            Position possiblePosition = new Position(position.File, position.Rank + rankDirection);
+            Vector2Int possiblePosition = new Vector2Int(position.x, position.y + rankDirection);
             if (Board.SquareIsEmpty(possiblePosition))
             {
                 moveablePositions.Add(possiblePosition);
 
                 // Check if pawn can also move two field forwards
-                if ((Color == Color.White && position.Rank == 1) || (Color == Color.Black && position.Rank == 6))
+                if ((Color == Color.White && position.y == 1) || (Color == Color.Black && position.y == 6))
                 {
-                    possiblePosition = new Position(position.File, position.Rank + rankDirection * 2);
+                    possiblePosition = new Vector2Int(position.x, position.y + rankDirection * 2);
                     if (Board.SquareIsEmpty(possiblePosition))
                     {
                         moveablePositions.Add(possiblePosition);
@@ -39,7 +41,7 @@ namespace Chess
         {
             int rankDirection = Color == Color.White ? 1 : -1;
 
-            Position possiblePosition = new Position(position.File + 1, position.Rank + rankDirection);
+            Vector2Int possiblePosition = new Vector2Int(position.x + 1, position.y + rankDirection);
             if (possiblePosition.IsValid())
             {
                 if (Board.SquareHasEnemyPiece(this.Color, possiblePosition))
@@ -49,7 +51,7 @@ namespace Chess
                 attackedPositions.Add(possiblePosition);
             }
 
-            possiblePosition = new Position(position.File - 1, position.Rank + rankDirection);
+            possiblePosition = new Vector2Int(position.x - 1, position.y + rankDirection);
             if (possiblePosition.IsValid())
             {
                 if (Board.SquareHasEnemyPiece(this.Color, possiblePosition))

@@ -53,7 +53,7 @@ namespace Chess
             }
         }
 
-        public bool IsSquareAttacked(Color ownColor, Position position)
+        public bool IsSquareAttacked(Color ownColor, Vector2Int position)
         {
             List<Figure> opponentPieces = ownColor == Color.White ? blackPieces : whitePieces;
             foreach (var piece in opponentPieces)

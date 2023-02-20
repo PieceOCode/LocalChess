@@ -2,46 +2,27 @@
 
 namespace Chess
 {
-    public readonly struct Position
-    {
-        public int File { get; }
-        public int Rank { get; }
-
-        public Position(int file, int rank)
-        {
-            this.File = file;
-            this.Rank = rank;
-        }
-
-        public override readonly string ToString()
-        {
-            return $"{(Files)File}{Rank + 1}";
-        }
-
-        // Manhattan distance between squares
-        public readonly int Distance(Position other)
-        {
-            return Mathf.Abs(this.File - other.File) + Mathf.Abs(this.Rank - this.File);
-        }
-
-        public readonly bool IsValid()
-        {
-            return (File >= 0 && File <= 7) && (Rank >= 0 && Rank <= 7);
-        }
-
-        public static bool operator ==(Position left, Position right)
-        {
-            return left.Rank == right.Rank && left.File == right.File;
-        }
-
-        public static bool operator !=(Position left, Position right)
-        {
-            return !(left == right);
-        }
-    }
-
     public enum Files
     {
         A, B, C, D, E, F, G, H
+    }
+
+    public static class ChessVectorExtensions
+    {
+        public static string ToString(this Vector2Int pos)
+        {
+            return $"{(Files)pos.x}{pos.y + 1}";
+        }
+
+        public static bool IsValid(this Vector2Int pos)
+        {
+            return (pos.x >= 0 && pos.x <= 7) && (pos.y >= 0 && pos.y <= 7);
+        }
+
+        // Manhattan distance between squares
+        public static float Distance(this Vector2Int pos, Vector2Int otherPos)
+        {
+            return Mathf.Abs(pos.x - otherPos.x) + Mathf.Abs(pos.y - otherPos.y);
+        }
     }
 }

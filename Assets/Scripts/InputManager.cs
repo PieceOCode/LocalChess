@@ -48,7 +48,7 @@ namespace Chess
             }
         }
 
-        private void MoveSelectedFigure(Position position)
+        private void MoveSelectedFigure(Vector2Int position)
         {
             if (selectedFigure.CanMove(position))
             {

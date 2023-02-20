@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using UnityEngine;
+
 
 namespace Chess
 {
@@ -8,16 +10,16 @@ namespace Chess
         {
             base.UpdatePositions();
 
-            List<Position> moveablePositions = new List<Position>
+            List<Vector2Int> moveablePositions = new List<Vector2Int>
             {
-                new Position(position.File + 2, position.Rank + 1),
-                new Position(position.File + 2, position.Rank - 1),
-                new Position(position.File - 2, position.Rank + 1),
-                new Position(position.File - 2, position.Rank - 1),
-                new Position(position.File + 1, position.Rank + 2),
-                new Position(position.File + 1, position.Rank - 2),
-                new Position(position.File - 1, position.Rank + 2),
-                new Position(position.File - 1, position.Rank - 2)
+                new Vector2Int(position.x + 2, position.y + 1),
+                new Vector2Int(position.x + 2, position.y - 1),
+                new Vector2Int(position.x - 2, position.y + 1),
+                new Vector2Int(position.x - 2, position.y - 1),
+                new Vector2Int(position.x + 1, position.y + 2),
+                new Vector2Int(position.x + 1, position.y - 2),
+                new Vector2Int(position.x - 1, position.y + 2),
+                new Vector2Int(position.x - 1, position.y - 2)
             };
 
             foreach (var position in moveablePositions)
@@ -29,7 +31,10 @@ namespace Chess
         // Knight cannot move if he is pinned. 
         public override void UpdatePinned()
         {
-            moveablePositions.Clear();
+            if (pinnedBy != null)
+            {
+                moveablePositions.Clear();
+            }
         }
     }
 }

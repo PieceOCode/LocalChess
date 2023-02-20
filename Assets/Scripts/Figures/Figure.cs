@@ -18,14 +18,14 @@ namespace Chess
         protected Figure pinnedBy = null;
 
         public Chess.Color Color => color;
-        public Position Position => position;
+        public Vector2Int Position => position;
         protected GameManager GameManager => gameManager;
         protected Board Board => GameManager.Board;
         public bool HasMoved => hasMoved;
 
-        protected Position position = new Position();
-        protected readonly List<Position> moveablePositions = new List<Position>();
-        protected readonly List<Position> attackedPositions = new List<Position>();
+        protected Vector2Int position = new Vector2Int();
+        protected readonly List<Vector2Int> moveablePositions = new List<Vector2Int>();
+        protected readonly List<Vector2Int> attackedPositions = new List<Vector2Int>();
 
         public delegate void OnFigureSelectedHandler(Figure figure);
         public event OnFigureSelectedHandler OnFigureSelectedEvent;
@@ -45,8 +45,8 @@ namespace Chess
             }
         }
 
-        public List<Position> MoveablePositions { get { return moveablePositions; } }
-        public List<Position> AttackedPositions { get { return attackedPositions; } }
+        public List<Vector2Int> MoveablePositions { get { return moveablePositions; } }
+        public List<Vector2Int> AttackedPositions { get { return attackedPositions; } }
 
         private void Start()
         {
@@ -70,7 +70,7 @@ namespace Chess
             OnFigureSelectedEvent?.Invoke(this);
         }
 
-        public void SetFigure(Position position, Color color, GameManager gameManager)
+        public void SetFigure(Vector2Int position, Color color, GameManager gameManager)
         {
             this.position = position;
             this.color = color;
@@ -78,7 +78,7 @@ namespace Chess
             transform.position = Board.GetWorldPosition(position);
         }
 
-        public bool CanMove(Position position)
+        public bool CanMove(Vector2Int position)
         {
             if (moveablePositions.Contains(position))
             {
@@ -87,7 +87,7 @@ namespace Chess
             return false;
         }
 
-        public void Move(Position newPosition)
+        public void Move(Vector2Int newPosition)
         {
             Assert.IsTrue(CanMove(newPosition));
             Board.RemoveFigureFromSquare(position);
@@ -106,7 +106,7 @@ namespace Chess
             hasMoved = true;
         }
 
-        protected virtual void OnMove(Position oldPosition, Position newPosition)
+        protected virtual void OnMove(Vector2Int oldPosition, Vector2Int newPosition)
         {
 
         }
@@ -124,12 +124,12 @@ namespace Chess
                 return;
             }
 
-            Vector2 piecePosition = new Vector2(position.File, position.Rank);
-            Vector2 pinnedPosition = new Vector2(pinnedBy.position.File, pinnedBy.position.Rank);
+            Vector2Int piecePosition = new Vector2Int(position.x, position.y);
+            Vector2Int pinnedPosition = new Vector2Int(pinnedBy.position.x, pinnedBy.position.y);
 
             moveablePositions.RemoveAll(pos =>
             {
-                Vector2 moveablePosition = new Vector2(pos.File, pos.Rank);
+                Vector2Int moveablePosition = new Vector2Int(pos.x, pos.y);
                 if (Vector2.Angle(piecePosition - pinnedPosition, piecePosition - moveablePosition) > Vector2.kEpsilon)
                 {
                     return true;
@@ -139,7 +139,7 @@ namespace Chess
 
             attackedPositions.RemoveAll(pos =>
             {
-                Vector2 moveablePosition = new Vector2(pos.File, pos.Rank);
+                Vector2Int moveablePosition = new Vector2Int(pos.x, pos.y);
                 if (Vector2.Angle(piecePosition - pinnedPosition, piecePosition - moveablePosition) > Vector2.kEpsilon)
                 {
                     return true;
@@ -151,7 +151,7 @@ namespace Chess
         }
 
         // Checks the square at position is empty or has an enemy piece.
-        protected bool UpdateField(Position newPosition)
+        protected bool UpdateField(Vector2Int newPosition)
         {
             if (newPosition.IsValid())
             {
@@ -176,7 +176,7 @@ namespace Chess
         {
             for (int i = 1; i < Mathf.Max(Board.Width, Board.Height); i++)
             {
-                Position newPosition = new Position(position.File + horizontal * i, position.Rank + vertical * i);
+                Vector2Int newPosition = new Vector2Int(position.x + horizontal * i, position.y + vertical * i);
                 if (!newPosition.IsValid())
                 {
                     break;
@@ -190,7 +190,7 @@ namespace Chess
                     {
                         if (figure is King)
                         {
-                            Position nextPosition = new Position(newPosition.File + horizontal, newPosition.Rank + vertical);
+                            Vector2Int nextPosition = new Vector2Int(newPosition.x + horizontal, newPosition.y + vertical);
                             if (nextPosition.IsValid())
                             {
                                 attackedPositions.Add(nextPosition);
@@ -203,7 +203,7 @@ namespace Chess
                             King enemyKing = gameManager.GetKingOfColor(color == Color.White ? Color.Black : Color.White);
                             for (int j = 1; j < Mathf.Max(Board.Width, Board.Height); j++)
                             {
-                                Position nextPosition = new Position(newPosition.File + horizontal * j, newPosition.Rank + vertical * j);
+                                Vector2Int nextPosition = new Vector2Int(newPosition.x + horizontal * j, newPosition.y + vertical * j);
                                 if (!nextPosition.IsValid())
                                 {
                                     break;

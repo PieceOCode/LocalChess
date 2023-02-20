@@ -8,7 +8,7 @@ namespace Chess
         [SerializeField]
         private GameObject highlight = default;
 
-        private Position position = default;
+        private Vector2Int position = default;
         private Color color = default;
         private SpriteRenderer sprite = default;
         private Figure figure = null;
@@ -41,12 +41,12 @@ namespace Chess
             }
         }
 
-        public Position Position => position;
+        public Vector2Int Position => position;
         public Color Color => color;
         public bool IsEmpty => figure == null;
 
 
-        public void SetSquare(Position position, Color color)
+        public void SetSquare(Vector2Int position, Color color)
         {
             this.position = position;
             this.color = color;
