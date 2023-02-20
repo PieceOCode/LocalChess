@@ -4,7 +4,7 @@ namespace Chess
 {
     public class Knight : Figure
     {
-        protected override void UpdatePositions()
+        public override void UpdatePositions()
         {
             base.UpdatePositions();
 
@@ -24,6 +24,12 @@ namespace Chess
             {
                 UpdateField(position);
             }
+        }
+
+        // Knight cannot move if he is pinned. 
+        public override void UpdatePinned()
+        {
+            moveablePositions.Clear();
         }
     }
 }

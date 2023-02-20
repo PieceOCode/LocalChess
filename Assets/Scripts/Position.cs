@@ -28,6 +28,16 @@ namespace Chess
         {
             return (File >= 0 && File <= 7) && (Rank >= 0 && Rank <= 7);
         }
+
+        public static bool operator ==(Position left, Position right)
+        {
+            return left.Rank == right.Rank && left.File == right.File;
+        }
+
+        public static bool operator !=(Position left, Position right)
+        {
+            return !(left == right);
+        }
     }
 
     public enum Files

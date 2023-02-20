@@ -2,7 +2,7 @@ namespace Chess
 {
     public class Rook : Figure
     {
-        protected override void UpdatePositions()
+        public override void UpdatePositions()
         {
             base.UpdatePositions();
 

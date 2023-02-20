@@ -14,6 +14,19 @@ namespace Chess
         private List<Figure> blackPieces = new List<Figure>();
         private List<Figure> pieces => whitePieces.Concat(blackPieces).ToList();
 
+        private void Update()
+        {
+            foreach (var piece in pieces)
+            {
+                piece.UpdatePositions();
+            }
+
+            foreach (var piece in pieces)
+            {
+                piece.UpdatePinned();
+            }
+        }
+
         public void RegisterFigure(Figure figure)
         {
             if (figure.Color == Color.White)
@@ -51,6 +64,18 @@ namespace Chess
                 }
             }
             return false;
+        }
+
+        public King GetKingOfColor(Color color)
+        {
+            if (color == Color.White)
+            {
+                return whitePieces.Where(piece => piece is King).First() as King;
+            }
+            else
+            {
+                return blackPieces.Where(piece => piece is King).First() as King;
+            }
         }
 
     }

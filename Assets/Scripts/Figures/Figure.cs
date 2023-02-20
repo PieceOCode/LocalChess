@@ -60,11 +60,6 @@ namespace Chess
             }
         }
 
-        private void Update()
-        {
-            UpdatePositions();
-        }
-
         private void OnDestroy()
         {
             OnFigureDestroyedEvent.Invoke(this);
@@ -116,10 +111,43 @@ namespace Chess
 
         }
 
-        protected virtual void UpdatePositions()
+        public virtual void UpdatePositions()
         {
             moveablePositions.Clear();
             attackedPositions.Clear();
+        }
+
+        public virtual void UpdatePinned()
+        {
+            if (pinnedBy == null)
+            {
+                return;
+            }
+
+            Vector2 piecePosition = new Vector2(position.File, position.Rank);
+            Vector2 pinnedPosition = new Vector2(pinnedBy.position.File, pinnedBy.position.Rank);
+
+            moveablePositions.RemoveAll(pos =>
+            {
+                Vector2 moveablePosition = new Vector2(pos.File, pos.Rank);
+                if (Vector2.Angle(piecePosition - pinnedPosition, piecePosition - moveablePosition) > Vector2.kEpsilon)
+                {
+                    return true;
+                }
+                else return false;
+            });
+
+            attackedPositions.RemoveAll(pos =>
+            {
+                Vector2 moveablePosition = new Vector2(pos.File, pos.Rank);
+                if (Vector2.Angle(piecePosition - pinnedPosition, piecePosition - moveablePosition) > Vector2.kEpsilon)
+                {
+                    return true;
+                }
+                else return false;
+            });
+
+            pinnedBy = null;
         }
 
         // Checks the square at position is empty or has an enemy piece.
@@ -158,12 +186,40 @@ namespace Chess
                 {
                     // If the figure on the square is the enemy king, also mark the position behind the king as attacked
                     Figure figure = Board.GetFigure(newPosition);
-                    if (figure != null && figure.Color != Color && figure is King)
+                    if (figure != null && figure.Color != Color)
                     {
-                        Position nextPosition = new Position(newPosition.File + horizontal, newPosition.Rank + vertical);
-                        if (nextPosition.IsValid())
+                        if (figure is King)
                         {
-                            attackedPositions.Add(nextPosition);
+                            Position nextPosition = new Position(newPosition.File + horizontal, newPosition.Rank + vertical);
+                            if (nextPosition.IsValid())
+                            {
+                                attackedPositions.Add(nextPosition);
+                            }
+                        }
+                        else
+                        {
+                            // Continue walking down the line to check if piece is pinned because its king is behind.
+                            // TODO: implement efficient check if king is on this line.
+                            King enemyKing = gameManager.GetKingOfColor(color == Color.White ? Color.Black : Color.White);
+                            for (int j = 1; j < Mathf.Max(Board.Width, Board.Height); j++)
+                            {
+                                Position nextPosition = new Position(newPosition.File + horizontal * j, newPosition.Rank + vertical * j);
+                                if (!nextPosition.IsValid())
+                                {
+                                    break;
+                                }
+
+                                if (nextPosition == enemyKing.Position)
+                                {
+                                    figure.pinnedBy = this;
+                                }
+
+                                if (!Board.SquareIsEmpty(nextPosition))
+                                {
+                                    break;
+                                }
+                            }
+
                         }
                     }
                     break;

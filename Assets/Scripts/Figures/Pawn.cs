@@ -3,7 +3,7 @@ namespace Chess
     // TODO: Implement what happens when pawn reaches last row. 
     public class Pawn : Figure
     {
-        protected override void UpdatePositions()
+        public override void UpdatePositions()
         {
             base.UpdatePositions();
 

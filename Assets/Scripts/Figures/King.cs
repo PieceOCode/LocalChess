@@ -1,10 +1,11 @@
 using System.Collections.Generic;
+using UnityEngine.Assertions;
 
 namespace Chess
 {
     public class King : Figure
     {
-        protected override void UpdatePositions()
+        public override void UpdatePositions()
         {
             base.UpdatePositions();
 
@@ -12,6 +13,13 @@ namespace Chess
             CheckCastle();
             RemoveAttackedSquares();
         }
+
+        public override void UpdatePinned()
+        {
+            Assert.IsNull(pinnedBy, $"Pinning the king should not be possible. PinnedBy: {pinnedBy}");
+            return;
+        }
+
         private void AddPossibleSquares()
         {
             List<Position> moveablePositions = new List<Position>
