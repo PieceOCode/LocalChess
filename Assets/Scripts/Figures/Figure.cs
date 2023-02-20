@@ -10,9 +10,13 @@ namespace Chess
     /// </summary>
     public abstract class Figure : MonoBehaviour, IPointerDownHandler
     {
+        [SerializeField]
+        private GameObject whiteSprite = default;
+        [SerializeField]
+        private GameObject blackSprite = default;
+
         private Chess.Color color = default;
         private GameManager gameManager;
-        private SpriteRenderer sprite = default;
         protected bool hasMoved = false;
 
         protected Figure pinnedBy = null;
@@ -36,32 +40,9 @@ namespace Chess
         public delegate void OnFigureDestroyedHandler(Figure figure);
         public event OnFigureDestroyedHandler OnFigureDestroyedEvent;
 
-        private SpriteRenderer Sprite
-        {
-            get
-            {
-                if (sprite == null)
-                {
-                    sprite = GetComponent<SpriteRenderer>();
-                }
-                return sprite;
-            }
-        }
-
         public List<Vector2Int> MoveablePositions { get { return moveablePositions; } }
         public List<Vector2Int> AttackedPositions { get { return attackedPositions; } }
 
-        private void Start()
-        {
-            if (Color == Color.Black)
-            {
-                Sprite.color = UnityEngine.Color.green;
-            }
-            if (Color == Color.White)
-            {
-                Sprite.color = UnityEngine.Color.red;
-            }
-        }
 
         private void OnDestroy()
         {
@@ -79,6 +60,9 @@ namespace Chess
             this.color = color;
             this.gameManager = gameManager;
             transform.position = Board.GetWorldPosition(position);
+
+            whiteSprite.SetActive(color == Color.White);
+            blackSprite.SetActive(color == Color.Black);
         }
 
         public bool CanMove(Vector2Int position)
