@@ -336,7 +336,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9939a1703b1d2243962d325d27b760c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  board: {fileID: 1980422164}
   inputManager: {fileID: 1797114148}
   gameManager: {fileID: 1797114149}
   pawnPrefab: {fileID: 6333922855887763651, guid: 90fea7d0e9cc59a4c818a40a76081c7c, type: 3}
@@ -386,6 +385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   board: {fileID: 1980422164}
+  spawnManager: {fileID: 1797114146}
 --- !u!1 &1980422163
 GameObject:
   m_ObjectHideFlags: 0
