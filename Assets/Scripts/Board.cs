@@ -110,7 +110,7 @@ namespace Chess
         public Vector3 GetWorldPosition(Vector2Int position)
         {
             Assert.IsTrue(position.IsValid());
-            return new Vector3(position.x, position.y, 0);
+            return new Vector3(position.x, position.y, transform.position.z);
         }
     }
 }

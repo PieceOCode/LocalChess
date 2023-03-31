@@ -12,50 +12,25 @@ namespace Chess
 
         private Figure selectedFigure = null;
 
-        public void RegisterFigure(Figure figure)
-        {
-            figure.OnFigureSelectedEvent += OnFigureSelected;
-        }
-
         public void RegisterSquare(Square square)
         {
             square.OnSquareSelectedEvent += OnSquareSelected;
         }
 
-        private void OnFigureSelected(Figure figure)
-        {
-            Debug.Log($"OnFigureSelected in Board: Figure {figure.GetType().Name} on square {figure.Position}");
-            if (selectedFigure == null)
-            {
-                selectedFigure = figure;
-            }
-            else
-            {
-                if (figure.Color != selectedFigure.Color)
-                {
-                    MoveSelectedFigure(figure.Position);
-                }
-            }
-            UpdateHighlights();
-        }
-
         private void OnSquareSelected(Square square)
         {
             Debug.Log($"OnSqaureSelected in Board: on square {square.Position}");
-            if (selectedFigure != null)
+            if (selectedFigure != null && selectedFigure.CanMove(square.Position))
             {
-                MoveSelectedFigure(square.Position);
+                selectedFigure.Move(square.Position);
+                selectedFigure = null;
+                UpdateHighlights();
             }
-        }
-
-        private void MoveSelectedFigure(Vector2Int position)
-        {
-            if (selectedFigure.CanMove(position))
+            else
             {
-                selectedFigure.Move(position);
+                selectedFigure = board.GetFigure(square.Position);
+                UpdateHighlights();
             }
-            selectedFigure = null;
-            UpdateHighlights();
         }
 
         private void UpdateHighlights()

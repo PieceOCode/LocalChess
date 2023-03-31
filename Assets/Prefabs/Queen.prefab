@@ -94,7 +94,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4547729893612916165}
   - component: {fileID: 7423063447623985888}
-  - component: {fileID: 767357774475812932}
   m_Layer: 0
   m_Name: Queen
   m_TagString: Untagged
@@ -133,32 +132,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whiteSprite: {fileID: 1946542241904690622}
   blackSprite: {fileID: 5871696365438376165}
---- !u!61 &767357774475812932
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4151710121149133802}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!1 &5871696365438376165
 GameObject:
   m_ObjectHideFlags: 0

@@ -31,7 +31,6 @@ namespace Chess
             Figure figure = Instantiate(prefab);
             figure.SetFigure(position, color, gameManager);
             gameManager.RegisterFigure(figure);
-            inputManager.RegisterFigure(figure);
             gameManager.Board.SetFigureToSquare(figure, position);
         }
 
