@@ -9,30 +9,29 @@ namespace Chess
     /// </summary>
     public abstract class Figure
     {
-        private Chess.Color color = default;
-        private GameManager gameManager;
-        protected bool hasMoved = false;
-
-        protected Figure pinnedBy = null;
-
-        public Chess.Color Color => color;
-        public Vector2Int Position => position;
-        protected GameManager GameManager => gameManager;
-        protected Board Board => GameManager.Board;
-        public bool HasMoved => hasMoved;
-
-        protected Vector2Int position = new Vector2Int();
-        protected readonly List<Vector2Int> moveablePositions = new List<Vector2Int>();
-        protected readonly List<Vector2Int> attackedPositions = new List<Vector2Int>();
-
         public delegate void OnFigureMovedHandler(Figure figure);
         public event OnFigureMovedHandler OnFigureMovedEvent;
 
         public delegate void OnFigureDestroyedHandler(Figure figure);
         public event OnFigureDestroyedHandler OnFigureDestroyedEvent;
 
+        public Chess.Color Color => color;
+        public Vector2Int Position => position;
+        protected GameManager GameManager => gameManager;
+        protected Board Board => GameManager.Board;
+        public bool HasMoved => hasMoved;
         public List<Vector2Int> MoveablePositions { get { return moveablePositions; } }
         public List<Vector2Int> AttackedPositions { get { return attackedPositions; } }
+
+
+        private GameManager gameManager;
+        protected Vector2Int position = new();
+        private Chess.Color color = default;
+        protected bool hasMoved = false;
+        protected Figure pinnedBy = null;
+
+        protected readonly List<Vector2Int> moveablePositions = new List<Vector2Int>();
+        protected readonly List<Vector2Int> attackedPositions = new List<Vector2Int>();
 
 
         public void SetFigure(Vector2Int position, Color color, GameManager gameManager)
@@ -41,8 +40,6 @@ namespace Chess
             this.color = color;
             this.gameManager = gameManager;
         }
-
-
 
         public void RaiseDestroyedEvent()
         {
@@ -77,10 +74,7 @@ namespace Chess
             OnFigureMovedEvent?.Invoke(this);
         }
 
-        protected virtual void OnMove(Vector2Int oldPosition, Vector2Int newPosition)
-        {
-
-        }
+        protected virtual void OnMove(Vector2Int oldPosition, Vector2Int newPosition) { }
 
         public void ClearState()
         {
@@ -144,8 +138,7 @@ namespace Chess
             return false;
         }
 
-        // Checks for each square in a line if the figure can move there, stopping the first time a piece blocks the line. 
-        // TODO: Implement pinning behaviour
+        // Checks for each square in a line if the figure can move there, stopping the first time a piece blocks the line.
         protected void UpdateLine(int horizontal, int vertical)
         {
             for (int i = 1; i < Mathf.Max(Board.Width, Board.Height); i++)

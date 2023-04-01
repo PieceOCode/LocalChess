@@ -48,8 +48,8 @@ namespace Chess
                 Figure figure = Board.GetFigure(rookPosition);
                 if (figure != null && figure.Color == Color && !figure.HasMoved && figure is Rook)
                 {
-                    if (Board.GetFigure(new Vector2Int(position.x - 1, position.y)) == null &&
-                        Board.GetFigure(new Vector2Int(position.x - 2, position.y)) == null &&
+                    if (Board.SquareIsEmpty(new Vector2Int(position.x - 1, position.y)) &&
+                        Board.SquareIsEmpty(new Vector2Int(position.x - 2, position.y)) &&
                         !GameManager.IsSquareAttacked(Color, position) &&
                         !GameManager.IsSquareAttacked(Color, new Vector2Int(position.x - 1, position.y)) &&
                         !GameManager.IsSquareAttacked(Color, new Vector2Int(position.x - 2, position.y))
@@ -63,8 +63,8 @@ namespace Chess
                 figure = Board.GetFigure(rookPosition);
                 if (figure != null && figure.Color == Color && !figure.HasMoved && figure is Rook)
                 {
-                    if (Board.GetFigure(new Vector2Int(position.x + 1, position.y)) == null &&
-                        Board.GetFigure(new Vector2Int(position.x + 2, position.y)) == null &&
+                    if (Board.SquareIsEmpty(new Vector2Int(position.x + 1, position.y)) &&
+                        Board.SquareIsEmpty(new Vector2Int(position.x + 2, position.y)) &&
                         !GameManager.IsSquareAttacked(Color, position) &&
                         !GameManager.IsSquareAttacked(Color, new Vector2Int(position.x + 1, position.y)) &&
                         !GameManager.IsSquareAttacked(Color, new Vector2Int(position.x + 2, position.y))

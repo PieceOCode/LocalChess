@@ -98,9 +98,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d39a8c1fd2cf31418c6c041ebbfa293, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprite: {fileID: 5047525397450811247}
   brightColor: {r: 0.9333334, g: 0.9333334, b: 0.8235295, a: 1}
   darkColor: {r: 0.71599996, g: 0.5741198, b: 0.36624885, a: 1}
-  highlight: {fileID: 0}
 --- !u!61 &2003425606624045311
 BoxCollider2D:
   m_ObjectHideFlags: 0
