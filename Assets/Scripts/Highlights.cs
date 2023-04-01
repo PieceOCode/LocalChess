@@ -8,7 +8,7 @@ namespace Chess
         [SerializeField]
         private GameObject highlightPrefab = default;
         [SerializeField]
-        private Board board = default;
+        private BoardRepresentation board = default;
 
         private List<GameObject> highlightList = new List<GameObject>();
 

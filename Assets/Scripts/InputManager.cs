@@ -8,12 +8,13 @@ namespace Chess
     public class InputManager : MonoBehaviour
     {
         [SerializeField]
-        private Board board;
+        private GameManager gameManager = default;
         [SerializeField]
-        Highlights highlights;
+        private Highlights highlights = default;
 
+        private Board Board => gameManager.Board;
         private Figure selectedFigure = null;
-        private Color activePlayer;
+        private Color activePlayer = Color.White;
 
         public void RegisterSquare(Square square)
         {
@@ -32,7 +33,7 @@ namespace Chess
             }
             else
             {
-                selectedFigure = board.GetFigure(square.Position);
+                selectedFigure = Board.GetFigure(square.Position);
                 if (selectedFigure != null && selectedFigure.Color != activePlayer)
                 {
                     selectedFigure = null;

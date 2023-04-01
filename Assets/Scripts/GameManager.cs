@@ -7,18 +7,18 @@ namespace Chess
     public sealed class GameManager : MonoBehaviour
     {
         [SerializeField]
-        private Board board = default;
-        public Board Board { get { return board; } }
-
-        [SerializeField]
         private SpawnManager spawnManager = default;
 
+        public Board Board { get { return board; } }
+
+        private Board board;
         private List<Figure> whitePieces = new List<Figure>();
         private List<Figure> blackPieces = new List<Figure>();
         private List<Figure> pieces => whitePieces.Concat(blackPieces).ToList();
 
-        private void Start()
+        private void Awake()
         {
+            board = new Board(8, 8);
             spawnManager.ResetBoardStandard();
             UpdateGameState();
         }

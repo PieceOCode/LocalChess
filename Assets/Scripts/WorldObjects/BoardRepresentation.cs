@@ -1,12 +1,13 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Chess
 {
     public class BoardRepresentation : MonoBehaviour
     {
         [SerializeField]
-        Board board = default;
+        GameManager gameManager;
         [SerializeField]
         InputManager inputManager = default;
 
@@ -19,8 +20,19 @@ namespace Chess
         [SerializeField]
         private TMP_Text rankUIPrefab = default;
 
+        public int Width => board.Width;
+        public int Height => board.Height;
+        private Board board;
+
+        public Vector3 GetWorldPosition(Vector2Int position)
+        {
+            Assert.IsTrue(position.IsValid());
+            return new Vector3(position.x, position.y, transform.position.z);
+        }
+
         void Start()
         {
+            board = gameManager.Board;
             SpawnSquares();
             SpawnRankAndFileTexts();
         }
@@ -39,7 +51,7 @@ namespace Chess
                     square.SetSquare(pos, color);
                     inputManager.RegisterSquare(square);
 
-                    square.transform.position = board.GetWorldPosition(pos);
+                    square.transform.position = GetWorldPosition(pos);
                 }
             }
         }
@@ -52,7 +64,7 @@ namespace Chess
                 fileUI.text = ((Files)x).ToString();
 
                 Vector2Int pos = new Vector2Int(x, 0);
-                fileUI.transform.position = board.GetWorldPosition(pos) + new Vector3(0.5f, -0.5f, 0);
+                fileUI.transform.position = GetWorldPosition(pos) + new Vector3(0.5f, -0.5f, 0);
                 //fileUI.color = this.color == Color.White ? darkColor : brightColor;
             }
 
@@ -62,7 +74,7 @@ namespace Chess
                 rankUI.text = (y + 1).ToString();
 
                 Vector2Int pos = new Vector2Int(0, y);
-                rankUI.transform.position = board.GetWorldPosition(pos) + new Vector3(-0.5f, 0.5f, 0);
+                rankUI.transform.position = GetWorldPosition(pos) + new Vector3(-0.5f, 0.5f, 0);
                 //rankUI.color = this.color == Color.White ? darkColor : brightColor;
             }
         }

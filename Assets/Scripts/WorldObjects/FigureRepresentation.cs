@@ -10,9 +10,9 @@ namespace Chess
         [SerializeField]
         private GameObject blackSprite = default;
 
-        private Board board;
+        private BoardRepresentation board;
 
-        public void Initialize(Figure figure, Board board)
+        public void Initialize(Figure figure, BoardRepresentation board)
         {
             this.board = board;
             transform.position = board.GetWorldPosition(figure.Position);

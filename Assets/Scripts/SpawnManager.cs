@@ -9,6 +9,8 @@ namespace Chess
     {
         [SerializeField]
         private GameManager gameManager = null;
+        [SerializeField]
+        private BoardRepresentation boardRepresentation = null;
 
         [Header("Figure Prefabs")]
         [SerializeField]
@@ -34,7 +36,7 @@ namespace Chess
             gameManager.Board.SetFigureToSquare(figure, position);
 
             FigureRepresentation figureRepresentation = Instantiate(prefab);
-            figureRepresentation.Initialize(figure, gameManager.Board);
+            figureRepresentation.Initialize(figure, boardRepresentation);
         }
 
         public void ResetBoardStandard()

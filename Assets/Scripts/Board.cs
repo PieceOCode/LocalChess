@@ -6,14 +6,21 @@ namespace Chess
     /// <summary>
     /// Represents the chess board and the current game, by giving access to a list of squares and their figures. 
     /// </summary>
-    public class Board : MonoBehaviour
+    public sealed class Board
     {
         public int Width { get { return width; } }
         public int Height { get { return height; } }
 
-        private readonly int height = 8;
-        private readonly int width = 8;
-        private readonly Figure[,] squares = new Figure[8, 8];
+        private readonly int height;
+        private readonly int width;
+        private readonly Figure[,] squares;
+
+        public Board(int height, int width)
+        {
+            this.height = height;
+            this.width = width;
+            squares = new Figure[width, height];
+        }
 
         public Figure GetFigure(Vector2Int position)
         {
@@ -47,12 +54,6 @@ namespace Chess
                 return false;
             }
             return GetFigure(position).Color != ownColor;
-        }
-
-        public Vector3 GetWorldPosition(Vector2Int position)
-        {
-            Assert.IsTrue(position.IsValid());
-            return new Vector3(position.x, position.y, transform.position.z);
         }
     }
 }

@@ -6,11 +6,10 @@ namespace Chess
     public class CameraController : MonoBehaviour
     {
         [SerializeField]
-        private Board board;
+        private BoardRepresentation board;
 
         private Camera camera = default;
 
-        // Start is called before the first frame update
         void Start()
         {
             camera = GetComponent<Camera>();
@@ -22,7 +21,6 @@ namespace Chess
             camera.orthographicSize = Mathf.Max(board.Width / 2, (board.Width / 2) / camera.aspect);
         }
 
-        // Update is called once per frame
         void Update()
         {
             camera.orthographicSize = Mathf.Max(board.Width / 2, (board.Width / 2) / camera.aspect);
