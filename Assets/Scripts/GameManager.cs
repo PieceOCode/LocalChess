@@ -19,6 +19,7 @@ namespace Chess
 
         private void Start()
         {
+            board.InitializeBoard();
             spawnManager.ResetBoardStandard();
             UpdateGameState();
         }

@@ -9,8 +9,11 @@ namespace Chess
     {
         [SerializeField]
         private Board board;
+        [SerializeField]
+        Highlights highlights;
 
         private Figure selectedFigure = null;
+        private Color activePlayer;
 
         public void RegisterSquare(Square square)
         {
@@ -25,10 +28,15 @@ namespace Chess
                 selectedFigure.Move(square.Position);
                 selectedFigure = null;
                 UpdateHighlights();
+                activePlayer = activePlayer == Color.White ? Color.Black : Color.White;
             }
             else
             {
                 selectedFigure = board.GetFigure(square.Position);
+                if (selectedFigure != null && selectedFigure.Color != activePlayer)
+                {
+                    selectedFigure = null;
+                }
                 UpdateHighlights();
             }
         }
@@ -37,11 +45,11 @@ namespace Chess
         {
             if (selectedFigure == null)
             {
-                board.ClearHighlights();
+                highlights.ClearHighlights();
                 return;
             }
 
-            board.HighlightSquares(selectedFigure.MoveablePositions);
+            highlights.HighlightSquares(selectedFigure.MoveablePositions);
         }
     }
 }

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -9,7 +8,6 @@ namespace Chess
     /// </summary>
     public class Board : MonoBehaviour
     {
-
         [SerializeField]
         private Square squarePrefab = default;
         [SerializeField]
@@ -20,15 +18,9 @@ namespace Chess
 
         private readonly int height = 8;
         private readonly int width = 8;
-        private Square[,] squares = new Square[8, 8];
+        private readonly Square[,] squares = new Square[8, 8];
 
-
-        private void Awake()
-        {
-            BuildBoard();
-        }
-
-        private void BuildBoard()
+        public void InitializeBoard()
         {
             for (int file = 0; file < width; file++)
             {
@@ -58,22 +50,6 @@ namespace Chess
             return GetSquare(position).Figure;
         }
 
-        public void HighlightSquares(List<Vector2Int> squarePositions)
-        {
-            ClearHighlights();
-            foreach (var position in squarePositions)
-            {
-                GetSquare(position).ShowHighlight();
-            }
-        }
-
-        public void ClearHighlights()
-        {
-            foreach (var square in squares)
-            {
-                square.HideHighlight();
-            }
-        }
 
         public void SetFigureToSquare(Figure figure, Vector2Int squarePosition)
         {
@@ -84,12 +60,6 @@ namespace Chess
         {
             GetSquare(squarePosition).Figure = null;
         }
-
-        public void ClearSquare(Vector2Int position)
-        {
-            GetSquare(position).Figure = null;
-        }
-
 
         public bool SquareIsEmpty(Vector2Int position)
         {
