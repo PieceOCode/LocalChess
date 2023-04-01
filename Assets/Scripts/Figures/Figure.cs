@@ -1,20 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.EventSystems;
 
 namespace Chess
 {
     /// <summary>
     /// Abstract base class for all figures. Each chess piece defines it's behaviour by calculating a list of all possiblePositions it can move to.
     /// </summary>
-    public abstract class Figure : MonoBehaviour, IPointerDownHandler
+    public abstract class Figure
     {
-        [SerializeField]
-        private GameObject whiteSprite = default;
-        [SerializeField]
-        private GameObject blackSprite = default;
-
         private Chess.Color color = default;
         private GameManager gameManager;
         protected bool hasMoved = false;
@@ -34,9 +28,6 @@ namespace Chess
         public delegate void OnFigureMovedHandler(Figure figure);
         public event OnFigureMovedHandler OnFigureMovedEvent;
 
-        public delegate void OnFigureSelectedHandler(Figure figure);
-        public event OnFigureSelectedHandler OnFigureSelectedEvent;
-
         public delegate void OnFigureDestroyedHandler(Figure figure);
         public event OnFigureDestroyedHandler OnFigureDestroyedEvent;
 
@@ -44,25 +35,18 @@ namespace Chess
         public List<Vector2Int> AttackedPositions { get { return attackedPositions; } }
 
 
-        private void OnDestroy()
-        {
-            OnFigureDestroyedEvent.Invoke(this);
-        }
-
-        public void OnPointerDown(PointerEventData eventData)
-        {
-            OnFigureSelectedEvent?.Invoke(this);
-        }
-
         public void SetFigure(Vector2Int position, Color color, GameManager gameManager)
         {
             this.position = position;
             this.color = color;
             this.gameManager = gameManager;
-            transform.position = Board.GetWorldPosition(position);
+        }
 
-            whiteSprite.SetActive(color == Color.White);
-            blackSprite.SetActive(color == Color.Black);
+
+
+        public void RaiseDestroyedEvent()
+        {
+            OnFigureDestroyedEvent.Invoke(this);
         }
 
         public bool CanMove(Vector2Int position)
@@ -82,14 +66,13 @@ namespace Chess
             if (!Board.SquareIsEmpty(newPosition))
             {
                 Assert.IsTrue(Board.GetFigure(newPosition).Color != Color);
-                Destroy(Board.GetFigure(newPosition).gameObject);
+                Board.GetFigure(newPosition).RaiseDestroyedEvent();
             }
 
             Board.SetFigureToSquare(this, newPosition);
             OnMove(this.position, newPosition);
 
             this.position = newPosition;
-            transform.position = Board.GetWorldPosition(position);
             hasMoved = true;
             OnFigureMovedEvent?.Invoke(this);
         }

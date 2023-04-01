@@ -8,64 +8,62 @@ namespace Chess
     public class SpawnManager : MonoBehaviour
     {
         [SerializeField]
-        private InputManager inputManager = default;
-        [SerializeField]
         private GameManager gameManager = null;
 
         [Header("Figure Prefabs")]
         [SerializeField]
-        private Pawn pawnPrefab = default;
+        private FigureRepresentation pawnPrefab = default;
         [SerializeField]
-        private Bishop bishopPrefab = default;
+        private FigureRepresentation bishopPrefab = default;
         [SerializeField]
-        private Knight knightPrefab = default;
+        private FigureRepresentation knightPrefab = default;
         [SerializeField]
-        private Rook rookPrefab = default;
+        private FigureRepresentation rookPrefab = default;
         [SerializeField]
-        private Queen queenPrefab = default;
+        private FigureRepresentation queenPrefab = default;
         [SerializeField]
-        private King kingPrefab = default;
+        private FigureRepresentation kingPrefab = default;
 
-        private void CreateFigure(Figure prefab, Color color, Vector2Int position)
+        private void CreateFigure<FigureType>(FigureRepresentation prefab, Color color, Vector2Int position)
+            where FigureType : Figure, new()
         {
-            Figure figure = Instantiate(prefab);
+            FigureType figure = new FigureType();
+
             figure.SetFigure(position, color, gameManager);
             gameManager.RegisterFigure(figure);
             gameManager.Board.SetFigureToSquare(figure, position);
-        }
 
-        public void SpawnFigure<FigureType>() where FigureType : Figure
-        {
-
+            FigureRepresentation figureRepresentation = Instantiate(prefab);
+            figureRepresentation.Initialize(figure, gameManager.Board);
         }
 
         public void ResetBoardStandard()
         {
-            CreateFigure(rookPrefab, Color.White, new Vector2Int(0, 0));
-            CreateFigure(rookPrefab, Color.White, new Vector2Int(7, 0));
-            CreateFigure(rookPrefab, Color.Black, new Vector2Int(0, 7));
-            CreateFigure(rookPrefab, Color.Black, new Vector2Int(7, 7));
+            CreateFigure<Rook>(rookPrefab, Color.White, new Vector2Int(0, 0));
+            CreateFigure<Rook>(rookPrefab, Color.White, new Vector2Int(7, 0));
+            CreateFigure<Rook>(rookPrefab, Color.Black, new Vector2Int(0, 7));
+            CreateFigure<Rook>(rookPrefab, Color.Black, new Vector2Int(7, 7));
 
-            CreateFigure(knightPrefab, Color.White, new Vector2Int(1, 0));
-            CreateFigure(knightPrefab, Color.White, new Vector2Int(6, 0));
-            CreateFigure(knightPrefab, Color.Black, new Vector2Int(1, 7));
-            CreateFigure(knightPrefab, Color.Black, new Vector2Int(6, 7));
+            CreateFigure<Knight>(knightPrefab, Color.White, new Vector2Int(1, 0));
+            CreateFigure<Knight>(knightPrefab, Color.White, new Vector2Int(6, 0));
+            CreateFigure<Knight>(knightPrefab, Color.Black, new Vector2Int(1, 7));
+            CreateFigure<Knight>(knightPrefab, Color.Black, new Vector2Int(6, 7));
 
-            CreateFigure(bishopPrefab, Color.White, new Vector2Int(2, 0));
-            CreateFigure(bishopPrefab, Color.White, new Vector2Int(5, 0));
-            CreateFigure(bishopPrefab, Color.Black, new Vector2Int(2, 7));
-            CreateFigure(bishopPrefab, Color.Black, new Vector2Int(5, 7));
+            CreateFigure<Bishop>(bishopPrefab, Color.White, new Vector2Int(2, 0));
+            CreateFigure<Bishop>(bishopPrefab, Color.White, new Vector2Int(5, 0));
+            CreateFigure<Bishop>(bishopPrefab, Color.Black, new Vector2Int(2, 7));
+            CreateFigure<Bishop>(bishopPrefab, Color.Black, new Vector2Int(5, 7));
 
-            CreateFigure(queenPrefab, Color.White, new Vector2Int(3, 0));
-            CreateFigure(queenPrefab, Color.Black, new Vector2Int(3, 7));
+            CreateFigure<Queen>(queenPrefab, Color.White, new Vector2Int(3, 0));
+            CreateFigure<Queen>(queenPrefab, Color.Black, new Vector2Int(3, 7));
 
-            CreateFigure(kingPrefab, Color.White, new Vector2Int(4, 0));
-            CreateFigure(kingPrefab, Color.Black, new Vector2Int(4, 7));
+            CreateFigure<King>(kingPrefab, Color.White, new Vector2Int(4, 0));
+            CreateFigure<King>(kingPrefab, Color.Black, new Vector2Int(4, 7));
 
             for (int i = 0; i < gameManager.Board.Width; i++)
             {
-                CreateFigure(pawnPrefab, Color.White, new Vector2Int(i, 1));
-                CreateFigure(pawnPrefab, Color.Black, new Vector2Int(i, 6));
+                CreateFigure<Pawn>(pawnPrefab, Color.White, new Vector2Int(i, 1));
+                CreateFigure<Pawn>(pawnPrefab, Color.Black, new Vector2Int(i, 6));
             }
         }
     }
