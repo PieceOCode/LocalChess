@@ -74,13 +74,21 @@ namespace Chess
             OnFigureMovedEvent?.Invoke(this);
         }
 
-        protected virtual void OnMove(Vector2Int oldPosition, Vector2Int newPosition) { }
-
         public void ClearState()
         {
             moveablePositions.Clear();
             attackedPositions.Clear();
             pinnedBy = null;
+        }
+
+        public void ClearMoveablePositions()
+        {
+            moveablePositions.Clear();
+        }
+
+        public void ClearMoveablePositionsExcept(List<Vector2Int> validPositions)
+        {
+            moveablePositions.RemoveAll(x => !validPositions.Contains(x));
         }
 
         public abstract void UpdatePositions();
@@ -117,6 +125,8 @@ namespace Chess
 
             pinnedBy = null;
         }
+
+        protected virtual void OnMove(Vector2Int oldPosition, Vector2Int newPosition) { }
 
         // Checks the square at position is empty or has an enemy piece.
         protected bool UpdateField(Vector2Int newPosition)

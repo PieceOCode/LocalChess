@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Chess
 {
@@ -25,23 +26,97 @@ namespace Chess
 
         public void UpdateGameState()
         {
-            foreach (var piece in pieces)
-            {
-                piece.ClearState();
-            }
-
-            foreach (var piece in pieces)
-            {
-                piece.UpdatePositions();
-            }
+            pieces.ForEach(piece => piece.ClearState());
+            pieces.ForEach(piece => piece.UpdatePositions());
 
             // Kings have to be updated last, because they cannot move to attacked tiles. 
             GetKingOfColor(Color.White).UpdatePositions();
             GetKingOfColor(Color.Black).UpdatePositions();
 
-            foreach (var piece in pieces)
+            pieces.ForEach(piece => piece.UpdatePinned());
+
+            // If the king is attacked no piece can move if it does not resolve the check.
+            UpdateCheck(Color.White);
+            UpdateCheck(Color.Black);
+
+            UpdateCheckMate(Color.White);
+            UpdateCheckMate(Color.Black);
+        }
+
+        // The king is checkmated if he is in check and there are no valid moves to stop that. 
+        // The game is a draw if there are no valid moves but the king is not in check. 
+        private void UpdateCheckMate(Color color)
+        {
+            List<Figure> ownPieces = color == Color.White ? whitePieces : blackPieces;
+            foreach (Figure piece in ownPieces)
             {
-                piece.UpdatePinned();
+                if (piece.MoveablePositions.Count > 0)
+                {
+                    return;
+                }
+            }
+
+            King king = GetKingOfColor(color);
+            List<Figure> enemyPieces = color == Color.White ? blackPieces : whitePieces;
+            foreach (var piece in enemyPieces)
+            {
+                if (piece.AttackedPositions.Contains(king.Position))
+                {
+                    Debug.Log("Checkmate!");
+                    return;
+                }
+            }
+
+            Debug.Log("Draw");
+        }
+
+        // TODO: Implement Draw
+        private void UpdateCheck(Color kingColor)
+        {
+            King king = GetKingOfColor(kingColor);
+            List<Figure> enemyPieces = kingColor == Color.White ? blackPieces : whitePieces;
+            List<Figure> ownPieces = kingColor == Color.White ? whitePieces : blackPieces;
+
+            List<Figure> attackingFigures = new List<Figure>();
+            foreach (var piece in enemyPieces)
+            {
+                if (piece.AttackedPositions.Contains(king.Position))
+                {
+                    attackingFigures.Add(piece);
+                }
+            }
+
+            // If the king is checked by two pieces simultaneously, no other move but moving the king is valid (Double Check)
+            if (attackingFigures.Count >= 2)
+            {
+                foreach (var piece in ownPieces)
+                {
+                    if (piece is not King)
+                    {
+                        piece.ClearMoveablePositions();
+                    }
+                }
+            }
+            // If the king is checked by only one figure, only moves that kick the figure or set a figure in between (not for Knight or Pawn) are valid. 
+            else if (attackingFigures.Count == 1)
+            {
+                Figure attackingFigure = attackingFigures[0];
+                List<Vector2Int> validPositions = new List<Vector2Int>() { attackingFigure.Position };
+
+                // If the figure is a queen, bishop or rook it is also possible to move a figure in between the king and the attacking figure. 
+                if (attackingFigure is Queen || attackingFigure is Bishop || attackingFigure is Rook)
+                {
+                    List<Vector2Int> positionsBetween = attackingFigure.Position.GetPositionsBetween(king.Position);
+                    validPositions.AddRange(positionsBetween);
+                }
+
+                foreach (var piece in ownPieces)
+                {
+                    if (piece is not King)
+                    {
+                        piece.ClearMoveablePositionsExcept(validPositions);
+                    }
+                }
             }
         }
 
@@ -95,14 +170,10 @@ namespace Chess
 
         public King GetKingOfColor(Color color)
         {
-            if (color == Color.White)
-            {
-                return whitePieces.Where(piece => piece is King).First() as King;
-            }
-            else
-            {
-                return blackPieces.Where(piece => piece is King).First() as King;
-            }
+            List<Figure> pieces = color == Color.White ? whitePieces : blackPieces;
+            King king = pieces.Where(piece => piece is King).First() as King;
+            Assert.IsNotNull(king, "A king of each color should exist at all time.");
+            return king;
         }
 
     }
