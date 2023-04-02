@@ -1,11 +1,12 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace Chess
 {
     /// <summary>
-    /// Abstract base class for all figures. Each chess piece defines it's behaviour by calculating a list of all possiblePositions it can move to.
+    /// Abstract base class for all figures. Each chess piece defines it's behavior by calculating a list of all possiblePositions it can move to.
     /// </summary>
     public abstract class Figure
     {
@@ -17,11 +18,10 @@ namespace Chess
 
         public Chess.Color Color => color;
         public Vector2Int Position => position;
-        protected GameManager GameManager => gameManager;
-        protected Board Board => GameManager.Board;
         public bool HasMoved => hasMoved;
         public List<Vector2Int> MoveablePositions { get { return moveablePositions; } }
-        public List<Vector2Int> AttackedPositions { get { return attackedPositions; } }
+        protected GameManager GameManager => gameManager;
+        protected Board Board => GameManager.Board;
 
 
         private GameManager gameManager;
@@ -48,11 +48,12 @@ namespace Chess
 
         public bool CanMove(Vector2Int position)
         {
-            if (moveablePositions.Contains(position))
-            {
-                return true;
-            }
-            return false;
+            return moveablePositions.Contains(position);
+        }
+
+        public bool AttacksPosition(Vector2Int position)
+        {
+            return attackedPositions.Contains(position);
         }
 
         public void Move(Vector2Int newPosition)
@@ -128,78 +129,52 @@ namespace Chess
 
         protected virtual void OnMove(Vector2Int oldPosition, Vector2Int newPosition) { }
 
-        // Checks the square at position is empty or has an enemy piece.
-        protected bool UpdateField(Vector2Int newPosition)
+        // Adds a square as movable and attacked position if it is not blocked by a piece of the same color
+        protected void UpdateField(Vector2Int position)
         {
-            if (newPosition.IsValid())
+            if (position.IsValid())
             {
-                attackedPositions.Add(newPosition);
-                if (Board.SquareIsEmpty(newPosition))
+                attackedPositions.Add(position);
+                if (Board.SquareIsEmpty(position) || Board.SquareHasEnemyPiece(Color, position))
                 {
-                    moveablePositions.Add(newPosition);
-                    return true;
-                }
-
-                if (Board.SquareHasEnemyPiece(Color, newPosition))
-                {
-                    moveablePositions.Add(newPosition);
+                    moveablePositions.Add(position);
                 }
             }
-            return false;
         }
 
         // Checks for each square in a line if the figure can move there, stopping the first time a piece blocks the line.
         protected void UpdateLine(int horizontal, int vertical)
         {
-            for (int i = 1; i < Mathf.Max(Board.Width, Board.Height); i++)
+            Vector2Int newPosition = position + new Vector2Int(horizontal, vertical);
+
+            // Walks down the line until the end of the board or a blocked square is reached. 
+            while (newPosition.IsValid() && Board.SquareIsEmpty(newPosition))
             {
-                Vector2Int newPosition = new Vector2Int(position.x + horizontal * i, position.y + vertical * i);
-                if (!newPosition.IsValid())
-                {
-                    break;
-                }
+                UpdateField(newPosition);
+                newPosition += new Vector2Int(horizontal, vertical);
+            }
 
-                if (!UpdateField(newPosition))
+            // If the current position was blocked by an enemy piece check if the piece was pinned. If the blocking piece was the enemy king the square behind the king is also attacked. 
+            if (newPosition.IsValid())
+            {
+                UpdateField(newPosition);
+                Figure figure = Board.GetFigure(newPosition);
+                King enemyKing = GameManager.GetEnemyKing(color);
+                if (figure == enemyKing)
                 {
-                    // If the figure on the square is the enemy king, also mark the position behind the king as attacked
-                    Figure figure = Board.GetFigure(newPosition);
-                    if (figure != null && figure.Color != Color)
+                    Vector2Int positionBehindKing = new Vector2Int(newPosition.x + horizontal, newPosition.y + vertical);
+                    if (positionBehindKing.IsValid())
                     {
-                        if (figure is King)
-                        {
-                            Vector2Int nextPosition = new Vector2Int(newPosition.x + horizontal, newPosition.y + vertical);
-                            if (nextPosition.IsValid())
-                            {
-                                attackedPositions.Add(nextPosition);
-                            }
-                        }
-                        else
-                        {
-                            // Continue walking down the line to check if piece is pinned because its king is behind.
-                            // TODO: implement efficient check if king is on this line.
-                            King enemyKing = gameManager.GetKingOfColor(color == Color.White ? Color.Black : Color.White);
-                            for (int j = 1; j < Mathf.Max(Board.Width, Board.Height); j++)
-                            {
-                                Vector2Int nextPosition = new Vector2Int(newPosition.x + horizontal * j, newPosition.y + vertical * j);
-                                if (!nextPosition.IsValid())
-                                {
-                                    break;
-                                }
-
-                                if (nextPosition == enemyKing.Position)
-                                {
-                                    figure.pinnedBy = this;
-                                }
-
-                                if (!Board.SquareIsEmpty(nextPosition))
-                                {
-                                    break;
-                                }
-                            }
-
-                        }
+                        attackedPositions.Add(positionBehindKing);
                     }
-                    break;
+                }
+                else if (figure.Color != this.color && figure.position.IsBetween(this.position, enemyKing.position))
+                {
+                    List<Vector2Int> positionsBetween = figure.position.GetPositionsBetween(enemyKing.position);
+                    if (positionsBetween.Where(pos => !Board.SquareIsEmpty(pos)).Count() == 0)
+                    {
+                        figure.pinnedBy = this;
+                    }
                 }
             }
         }

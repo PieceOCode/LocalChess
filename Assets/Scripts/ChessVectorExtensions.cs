@@ -39,6 +39,15 @@ namespace Chess
             return d.x == 0 || d.y == 0 || Mathf.Abs(d.x) == Mathf.Abs(d.y);
         }
 
+        public static bool IsBetween(this Vector2Int pos, Vector2Int start, Vector2Int end)
+        {
+            Assert.IsTrue(start != end);
+            Vector2Int line = end - start;
+            Vector2Int unitDirection = line / start.ChebyshevDistance(end);
+            int distance = start.ChebyshevDistance(pos);
+            return pos == (start + distance * unitDirection);
+        }
+
         public static List<Vector2Int> GetPositionsBetween(this Vector2Int pos, Vector2Int otherPos)
         {
             Assert.IsTrue(pos.IsOnSameLine(otherPos));

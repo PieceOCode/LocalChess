@@ -60,7 +60,7 @@ namespace Chess
             List<Figure> enemyPieces = color == Color.White ? blackPieces : whitePieces;
             foreach (var piece in enemyPieces)
             {
-                if (piece.AttackedPositions.Contains(king.Position))
+                if (piece.AttacksPosition(king.Position))
                 {
                     Debug.Log("Checkmate!");
                     return;
@@ -80,9 +80,10 @@ namespace Chess
             List<Figure> attackingFigures = new List<Figure>();
             foreach (var piece in enemyPieces)
             {
-                if (piece.AttackedPositions.Contains(king.Position))
+                if (piece.AttacksPosition(king.Position))
                 {
                     attackingFigures.Add(piece);
+                    Debug.Log("Check!");
                 }
             }
 
@@ -160,7 +161,7 @@ namespace Chess
             List<Figure> opponentPieces = ownColor == Color.White ? blackPieces : whitePieces;
             foreach (var piece in opponentPieces)
             {
-                if (piece.AttackedPositions.Contains(position))
+                if (piece.AttacksPosition(position))
                 {
                     return true;
                 }
@@ -176,5 +177,9 @@ namespace Chess
             return king;
         }
 
+        public King GetEnemyKing(Color color)
+        {
+            return GetKingOfColor(color == Color.White ? Color.Black : Color.White);
+        }
     }
 }
