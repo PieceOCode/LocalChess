@@ -237,7 +237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f4f0c4dd4a2212418ac40823dcff994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  board: {fileID: 0}
+  board: {fileID: 1980422166}
 --- !u!1 &762628378
 GameObject:
   m_ObjectHideFlags: 0
@@ -511,6 +511,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 1797114149}
   inputManager: {fileID: 1797114148}
+  brightColor: {r: 0.9333334, g: 0.9333334, b: 0.8235295, a: 1}
+  darkColor: {r: 0.71599996, g: 0.5741198, b: 0.36624885, a: 1}
   squarePrefab: {fileID: 8530702423172087641, guid: 181e36cb7ee854a439d6e7bb2f98eed1, type: 3}
   squareContainer: {fileID: 1195169428}
   fileUIPrefab: {fileID: 4430852760287227857, guid: d5de28f943dc486438f1704acc4270f9, type: 3}

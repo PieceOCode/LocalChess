@@ -4,7 +4,7 @@ using UnityEngine.Assertions;
 namespace Chess
 {
     /// <summary>
-    /// Represents the chess board and the current game, by giving access to a list of squares and their figures. 
+    /// Represents the state of the chess board and its figures. 
     /// </summary>
     public sealed class Board
     {

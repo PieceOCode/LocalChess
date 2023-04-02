@@ -9,10 +9,6 @@ namespace Chess
     {
         [SerializeField]
         private SpriteRenderer sprite = default;
-        [SerializeField]
-        private UnityEngine.Color brightColor = UnityEngine.Color.white;
-        [SerializeField]
-        private UnityEngine.Color darkColor = UnityEngine.Color.black;
 
         public delegate void OnSquareSelectedHandler(Square square);
         public event OnSquareSelectedHandler OnSquareSelectedEvent;
@@ -21,10 +17,10 @@ namespace Chess
 
         private Vector2Int position = default;
 
-        public void SetSquare(Vector2Int position, Color color)
+        public void SetSquare(Vector2Int position, UnityEngine.Color color)
         {
             this.position = position;
-            sprite.color = color == Color.White ? brightColor : darkColor;
+            sprite.color = color;
         }
 
         public void OnPointerDown(PointerEventData eventData)

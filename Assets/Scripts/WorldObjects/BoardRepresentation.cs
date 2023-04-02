@@ -12,6 +12,11 @@ namespace Chess
         InputManager inputManager = default;
 
         [SerializeField]
+        private UnityEngine.Color brightColor = UnityEngine.Color.white;
+        [SerializeField]
+        private UnityEngine.Color darkColor = UnityEngine.Color.black;
+
+        [SerializeField]
         private Square squarePrefab = default;
         [SerializeField]
         private Transform squareContainer = default;
@@ -22,7 +27,7 @@ namespace Chess
 
         public int Width => board.Width;
         public int Height => board.Height;
-        private Board board;
+        private Board board => gameManager.Board;
 
         public Vector3 GetWorldPosition(Vector2Int position)
         {
@@ -32,7 +37,6 @@ namespace Chess
 
         void Start()
         {
-            board = gameManager.Board;
             SpawnSquares();
             SpawnRankAndFileTexts();
         }
@@ -47,8 +51,9 @@ namespace Chess
 
                     Vector2Int pos = new Vector2Int(x, y);
                     Color color = (Color)((x + y + 1) % 2);
+                    UnityEngine.Color squareColor = color == Color.White ? brightColor : darkColor;
 
-                    square.SetSquare(pos, color);
+                    square.SetSquare(pos, squareColor);
                     inputManager.RegisterSquare(square);
 
                     square.transform.position = GetWorldPosition(pos);
@@ -65,7 +70,8 @@ namespace Chess
 
                 Vector2Int pos = new Vector2Int(x, 0);
                 fileUI.transform.position = GetWorldPosition(pos) + new Vector3(0.5f, -0.5f, 0);
-                //fileUI.color = this.color == Color.White ? darkColor : brightColor;
+                Color color = (Color)((x + 1) % 2);
+                fileUI.color = color == Color.White ? darkColor : brightColor;
             }
 
             for (int y = 0; y < board.Height; y++)
@@ -75,7 +81,8 @@ namespace Chess
 
                 Vector2Int pos = new Vector2Int(0, y);
                 rankUI.transform.position = GetWorldPosition(pos) + new Vector3(-0.5f, 0.5f, 0);
-                //rankUI.color = this.color == Color.White ? darkColor : brightColor;
+                Color color = (Color)((y + 1) % 2);
+                rankUI.color = color == Color.White ? darkColor : brightColor;
             }
         }
     }
