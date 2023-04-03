@@ -17,6 +17,7 @@ namespace Chess
             return $"{(Files)pos.x}{pos.y + 1}";
         }
 
+        // TODO: This is not dry, because it takes the assumption of the boards width and height.
         public static bool IsValid(this Vector2Int pos)
         {
             return (pos.x >= 0 && pos.x <= 7) && (pos.y >= 0 && pos.y <= 7);
