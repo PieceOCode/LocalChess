@@ -46,6 +46,11 @@ namespace Chess
             OnFigureDestroyedEvent.Invoke(this);
         }
 
+        public void RaiseMovedEvent()
+        {
+            OnFigureMovedEvent.Invoke(this);
+        }
+
         public bool CanMove(Vector2Int position)
         {
             return moveablePositions.Contains(position);

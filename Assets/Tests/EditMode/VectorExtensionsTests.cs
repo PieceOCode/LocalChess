@@ -164,5 +164,14 @@ public class VectorExtensionTests
             Vector2Int outside = new Vector2Int(1, 2);
             Assert.That(outside.IsBetween(start, end), Is.False);
         }
+
+        [Test]
+        public void nearby_point_is_outside()
+        {
+            Vector2Int start = new Vector2Int(3, 7);
+            Vector2Int end = new Vector2Int(4, 0);
+            Vector2Int outside = new Vector2Int(3, 4);
+            Assert.That(outside.IsBetween(start, end), Is.False);
+        }
     }
 }

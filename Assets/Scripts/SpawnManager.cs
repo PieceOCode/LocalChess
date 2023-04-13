@@ -26,15 +26,55 @@ namespace Chess
         [SerializeField]
         private FigureRepresentation kingPrefab = default;
 
-        private void CreateFigure<FigureType>(FigureRepresentation prefab, Color color, Vector2Int position)
-            where FigureType : Figure, new()
+        public Pawn CreatePawn(Color color, Vector2Int position)
         {
-            FigureType figure = new FigureType();
+            Pawn pawn = new Pawn(this);
+            InitializeFigure(pawn, pawnPrefab, color, position);
+            return pawn;
+        }
 
+        public Bishop CreateBishop(Color color, Vector2Int position)
+        {
+            Bishop bishop = new Bishop();
+            InitializeFigure(bishop, bishopPrefab, color, position);
+            return bishop;
+        }
+
+        public Knight CreateKnight(Color color, Vector2Int position)
+        {
+            Knight knight = new Knight();
+            InitializeFigure(knight, knightPrefab, color, position);
+            return knight;
+        }
+
+        public Rook CreateRook(Color color, Vector2Int position)
+        {
+            Rook rook = new Rook();
+            InitializeFigure(rook, rookPrefab, color, position);
+            return rook;
+        }
+
+        public Queen CreateQueen(Color color, Vector2Int position)
+        {
+            Queen queen = new Queen();
+            InitializeFigure(queen, queenPrefab, color, position);
+            return queen;
+        }
+
+        public King CreateKing(Color color, Vector2Int position)
+        {
+            King king = new King();
+            InitializeFigure(king, kingPrefab, color, position);
+            return king;
+        }
+
+        // TODO: Change this to only spawn a figure representation and hook up in game callbacks. Figures should be able to be spawned independently.
+        public void InitializeFigure(Figure figure, FigureRepresentation prefab, Color color, Vector2Int position)
+        {
             figure.SetFigure(position, color, gameManager);
-            gameManager.RegisterFigure(figure);
             gameManager.Board.SetFigureToSquare(figure, position);
 
+            gameManager.RegisterFigure(figure);
             FigureRepresentation figureRepresentation = Instantiate(prefab);
             figureRepresentation.Initialize(figure, boardRepresentation);
         }
@@ -42,31 +82,31 @@ namespace Chess
         // TODO: this only spawns figures but does not reset.
         public void ResetBoardStandard()
         {
-            CreateFigure<Rook>(rookPrefab, Color.White, new Vector2Int(0, 0));
-            CreateFigure<Rook>(rookPrefab, Color.White, new Vector2Int(7, 0));
-            CreateFigure<Rook>(rookPrefab, Color.Black, new Vector2Int(0, 7));
-            CreateFigure<Rook>(rookPrefab, Color.Black, new Vector2Int(7, 7));
+            CreateRook(Color.White, new Vector2Int(0, 0));
+            CreateRook(Color.White, new Vector2Int(7, 0));
+            CreateRook(Color.Black, new Vector2Int(0, 7));
+            CreateRook(Color.Black, new Vector2Int(7, 7));
 
-            CreateFigure<Knight>(knightPrefab, Color.White, new Vector2Int(1, 0));
-            CreateFigure<Knight>(knightPrefab, Color.White, new Vector2Int(6, 0));
-            CreateFigure<Knight>(knightPrefab, Color.Black, new Vector2Int(1, 7));
-            CreateFigure<Knight>(knightPrefab, Color.Black, new Vector2Int(6, 7));
+            CreateKnight(Color.White, new Vector2Int(1, 0));
+            CreateKnight(Color.White, new Vector2Int(6, 0));
+            CreateKnight(Color.Black, new Vector2Int(1, 7));
+            CreateKnight(Color.Black, new Vector2Int(6, 7));
 
-            CreateFigure<Bishop>(bishopPrefab, Color.White, new Vector2Int(2, 0));
-            CreateFigure<Bishop>(bishopPrefab, Color.White, new Vector2Int(5, 0));
-            CreateFigure<Bishop>(bishopPrefab, Color.Black, new Vector2Int(2, 7));
-            CreateFigure<Bishop>(bishopPrefab, Color.Black, new Vector2Int(5, 7));
+            CreateBishop(Color.White, new Vector2Int(2, 0));
+            CreateBishop(Color.White, new Vector2Int(5, 0));
+            CreateBishop(Color.Black, new Vector2Int(2, 7));
+            CreateBishop(Color.Black, new Vector2Int(5, 7));
 
-            CreateFigure<Queen>(queenPrefab, Color.White, new Vector2Int(3, 0));
-            CreateFigure<Queen>(queenPrefab, Color.Black, new Vector2Int(3, 7));
+            CreateQueen(Color.White, new Vector2Int(3, 0));
+            CreateQueen(Color.Black, new Vector2Int(3, 7));
 
-            CreateFigure<King>(kingPrefab, Color.White, new Vector2Int(4, 0));
-            CreateFigure<King>(kingPrefab, Color.Black, new Vector2Int(4, 7));
+            CreateKing(Color.White, new Vector2Int(4, 0));
+            CreateKing(Color.Black, new Vector2Int(4, 7));
 
             for (int i = 0; i < gameManager.Board.Width; i++)
             {
-                CreateFigure<Pawn>(pawnPrefab, Color.White, new Vector2Int(i, 1));
-                CreateFigure<Pawn>(pawnPrefab, Color.Black, new Vector2Int(i, 6));
+                CreatePawn(Color.White, new Vector2Int(i, 1));
+                CreatePawn(Color.Black, new Vector2Int(i, 6));
             }
         }
     }

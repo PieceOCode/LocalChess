@@ -24,6 +24,15 @@ namespace Chess
             UpdateGameState();
         }
 
+        // TODO: Implement proper debug menu
+        public void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.U))
+            {
+                UpdateGameState();
+            }
+        }
+
         public void UpdateGameState()
         {
             pieces.ForEach(piece => piece.ClearState());

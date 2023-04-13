@@ -36,10 +36,10 @@ namespace Chess
         public static bool IsBetween(this Vector2Int pos, Vector2Int start, Vector2Int end)
         {
             Assert.IsTrue(start != end);
-            Vector2Int line = end - start;
-            Vector2Int unitDirection = line / start.ChebyshevDistance(end);
+            Vector2 line = end - start;
+            Vector2 unitDirection = line / (float)start.ChebyshevDistance(end);
             int distance = start.ChebyshevDistance(pos);
-            return pos == (start + distance * unitDirection);
+            return Vector2.Distance(pos, (start + distance * unitDirection)) <= Vector2.kEpsilon;
         }
 
         public static List<Vector2Int> GetPositionsBetween(this Vector2Int pos, Vector2Int otherPos)

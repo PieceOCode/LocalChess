@@ -15,7 +15,7 @@ public class BoardTests
     public void SetUp()
     {
         board = new Board(8, 8);
-        pawn = new Pawn();
+        pawn = new Pawn(null);
 
         pos0 = new Vector2Int();
         posOutside = new Vector2Int(8, 8);

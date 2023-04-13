@@ -5,6 +5,13 @@ namespace Chess
     // TODO: Implement what happens when pawn reaches last row. 
     public class Pawn : Figure
     {
+        private SpawnManager spawnManager;
+
+        public Pawn(SpawnManager spawnManager) : base()
+        {
+            this.spawnManager = spawnManager;
+        }
+
         public override void UpdatePositions()
         {
             UpdateForwardMove();
@@ -57,6 +64,19 @@ namespace Chess
                     moveablePositions.Add(possiblePosition);
                 }
                 attackedPositions.Add(possiblePosition);
+            }
+        }
+
+        protected override void OnMove(Vector2Int oldPosition, Vector2Int newPosition)
+        {
+            // TODO: Implement UI that let's the player choose which kind of figure he wants. 
+            if (newPosition.y == 0 || newPosition.y == Board.Height - 1)
+            {
+                // TODO: Because the pawn is destroyed the move event does not trigger an update anymore. Queen does not trigger either so game is not updated.
+                RaiseDestroyedEvent();
+                Board.RemoveFigureFromSquare(newPosition);
+                Queen queen = spawnManager.CreateQueen(this.Color, newPosition);
+                queen.RaiseMovedEvent();
             }
         }
     }
