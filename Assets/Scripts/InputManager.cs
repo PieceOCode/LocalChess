@@ -26,7 +26,10 @@ namespace Chess
             Debug.Log($"OnSqaureSelected in Board: on square {square.Position}");
             if (selectedFigure != null && selectedFigure.CanMove(square.Position))
             {
-                selectedFigure.Move(square.Position);
+                Move move = new Move(selectedFigure, selectedFigure.Position, square.Position);
+                gameManager.Match.Add(move);
+                gameManager.Match.Redo();
+
                 selectedFigure = null;
                 UpdateHighlights();
                 activePlayer = activePlayer == Color.White ? Color.Black : Color.White;

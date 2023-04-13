@@ -11,7 +11,9 @@ namespace Chess
         private SpawnManager spawnManager = default;
 
         public Board Board { get { return board; } }
+        public Match Match { get { return match; } }
 
+        private Match match;
         private Board board;
         private List<Figure> whitePieces = new List<Figure>();
         private List<Figure> blackPieces = new List<Figure>();
@@ -20,6 +22,7 @@ namespace Chess
         private void Awake()
         {
             board = new Board(8, 8);
+            match = new Match();
             spawnManager.ResetBoardStandard();
             UpdateGameState();
         }
@@ -30,6 +33,16 @@ namespace Chess
             if (Input.GetKeyDown(KeyCode.U))
             {
                 UpdateGameState();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                match.Undo();
+            }
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                match.Redo();
             }
         }
 
