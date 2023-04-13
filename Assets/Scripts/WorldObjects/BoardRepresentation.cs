@@ -31,7 +31,7 @@ namespace Chess
 
         public Vector3 GetWorldPosition(Vector2Int position)
         {
-            Assert.IsTrue(position.IsValid());
+            Assert.IsTrue(board.IsPositionValid(position));
             return new Vector3(position.x, position.y, transform.position.z);
         }
 

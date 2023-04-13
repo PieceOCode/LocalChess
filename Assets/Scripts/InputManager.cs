@@ -31,14 +31,18 @@ namespace Chess
                 UpdateHighlights();
                 activePlayer = activePlayer == Color.White ? Color.Black : Color.White;
             }
-            else
+            else if (!Board.SquareIsEmpty(square.Position))
             {
                 selectedFigure = Board.GetFigure(square.Position);
-                if (selectedFigure != null && selectedFigure.Color != activePlayer)
+                if (selectedFigure.Color != activePlayer)
                 {
                     selectedFigure = null;
                 }
                 UpdateHighlights();
+            }
+            else
+            {
+                selectedFigure = null;
             }
         }
 

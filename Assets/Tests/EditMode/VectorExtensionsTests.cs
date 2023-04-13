@@ -125,7 +125,7 @@ public class VectorExtensionTests
     public class IsBetweenTests
     {
         [Test]
-        public void start_point_cannot_be_end_point()
+        public void throws_exception_for_identical_start_and_end_point()
         {
             Vector2Int pos1 = new Vector2Int();
             Assert.Throws<UnityEngine.Assertions.AssertionException>(() => pos1.IsBetween(pos1, pos1));

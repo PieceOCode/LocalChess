@@ -39,6 +39,7 @@ namespace Chess
             figureRepresentation.Initialize(figure, boardRepresentation);
         }
 
+        // TODO: this only spawns figures but does not reset.
         public void ResetBoardStandard()
         {
             CreateFigure<Rook>(rookPrefab, Color.White, new Vector2Int(0, 0));

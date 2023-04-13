@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -24,36 +25,46 @@ namespace Chess
 
         public Figure GetFigure(Vector2Int position)
         {
-            Assert.IsTrue(position.IsValid());
+            if (!IsPositionValid(position)) throw new ArgumentOutOfRangeException("position");
+            Assert.IsNotNull(squares[position.x, position.y]);
+
             return squares[position.x, position.y];
         }
 
         public void SetFigureToSquare(Figure figure, Vector2Int position)
         {
-            Assert.IsTrue(position.IsValid());
+            if (!IsPositionValid(position)) throw new ArgumentOutOfRangeException("position");
+            Assert.IsNotNull(figure);
+            Assert.IsTrue(SquareIsEmpty(position));
+
             squares[position.x, position.y] = figure;
         }
 
         public void RemoveFigureFromSquare(Vector2Int position)
         {
-            Assert.IsTrue(position.IsValid());
+            if (!IsPositionValid(position)) throw new ArgumentOutOfRangeException("position");
             squares[position.x, position.y] = null;
         }
 
         public bool SquareIsEmpty(Vector2Int position)
         {
-            Assert.IsTrue(position.IsValid());
+            if (!IsPositionValid(position)) throw new ArgumentOutOfRangeException("position");
             return squares[position.x, position.y] == null;
         }
 
         public bool SquareHasEnemyPiece(Color ownColor, Vector2Int position)
         {
-            Assert.IsTrue(position.IsValid());
+            if (!IsPositionValid(position)) throw new ArgumentOutOfRangeException("position");
             if (SquareIsEmpty(position))
             {
                 return false;
             }
             return GetFigure(position).Color != ownColor;
+        }
+
+        public bool IsPositionValid(Vector2Int pos)
+        {
+            return (pos.x >= 0 && pos.x < Width) && (pos.y >= 0 && pos.y < Height);
         }
     }
 }

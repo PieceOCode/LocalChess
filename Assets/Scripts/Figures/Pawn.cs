@@ -40,7 +40,7 @@ namespace Chess
             int rankDirection = Color == Color.White ? 1 : -1;
 
             Vector2Int possiblePosition = new Vector2Int(position.x + 1, position.y + rankDirection);
-            if (possiblePosition.IsValid())
+            if (Board.IsPositionValid(possiblePosition))
             {
                 if (Board.SquareHasEnemyPiece(this.Color, possiblePosition))
                 {
@@ -50,7 +50,7 @@ namespace Chess
             }
 
             possiblePosition = new Vector2Int(position.x - 1, position.y + rankDirection);
-            if (possiblePosition.IsValid())
+            if (Board.IsPositionValid(possiblePosition))
             {
                 if (Board.SquareHasEnemyPiece(this.Color, possiblePosition))
                 {

@@ -70,7 +70,6 @@ namespace Chess
             Debug.Log("Draw");
         }
 
-        // TODO: Implement Draw
         private void UpdateCheck(Color kingColor)
         {
             King king = GetKingOfColor(kingColor);

@@ -65,6 +65,7 @@ namespace Chess
             {
                 Assert.IsTrue(Board.GetFigure(newPosition).Color != Color);
                 Board.GetFigure(newPosition).RaiseDestroyedEvent();
+                Board.RemoveFigureFromSquare(newPosition);
             }
 
             Board.SetFigureToSquare(this, newPosition);
@@ -114,6 +115,7 @@ namespace Chess
                 else return false;
             });
 
+            // TODO: attacked positions probably stay the same if a piece is pinned. (king cannot move onto a tile that is attacked by a pinned figure (https://chess.stackexchange.com/questions/4565/can-the-king-be-attacked-by-a-pinned-piece)
             attackedPositions.RemoveAll(pos =>
             {
                 Vector2Int moveablePosition = new Vector2Int(pos.x, pos.y);
@@ -132,7 +134,7 @@ namespace Chess
         // Adds a square as movable and attacked position if it is not blocked by a piece of the same color
         protected void UpdateField(Vector2Int position)
         {
-            if (position.IsValid())
+            if (Board.IsPositionValid(position))
             {
                 attackedPositions.Add(position);
                 if (Board.SquareIsEmpty(position) || Board.SquareHasEnemyPiece(Color, position))
@@ -148,14 +150,14 @@ namespace Chess
             Vector2Int newPosition = position + new Vector2Int(horizontal, vertical);
 
             // Walks down the line until the end of the board or a blocked square is reached. 
-            while (newPosition.IsValid() && Board.SquareIsEmpty(newPosition))
+            while (Board.IsPositionValid(newPosition) && Board.SquareIsEmpty(newPosition))
             {
                 UpdateField(newPosition);
                 newPosition += new Vector2Int(horizontal, vertical);
             }
 
             // If the current position was blocked by an enemy piece check if the piece was pinned. If the blocking piece was the enemy king the square behind the king is also attacked. 
-            if (newPosition.IsValid())
+            if (Board.IsPositionValid(newPosition))
             {
                 UpdateField(newPosition);
                 Figure figure = Board.GetFigure(newPosition);
@@ -163,7 +165,7 @@ namespace Chess
                 if (figure == enemyKing)
                 {
                     Vector2Int positionBehindKing = new Vector2Int(newPosition.x + horizontal, newPosition.y + vertical);
-                    if (positionBehindKing.IsValid())
+                    if (Board.IsPositionValid(positionBehindKing))
                     {
                         attackedPositions.Add(positionBehindKing);
                     }
