@@ -11,9 +11,9 @@ namespace Chess
 
     public static class ChessVectorExtensions
     {
-        public static string ToString(this Vector2Int pos)
+        public static string ToChessNotation(this Vector2Int pos)
         {
-            return $"{(Files)pos.x}{pos.y + 1}";
+            return $"{(Files)pos.x}{pos.y + 1}".ToLower();
         }
 
         public static float ManhattanDistance(this Vector2Int pos, Vector2Int otherPos)

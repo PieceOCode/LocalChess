@@ -28,7 +28,7 @@ namespace Chess
             {
                 Move move = new Move(selectedFigure, selectedFigure.Position, square.Position);
                 gameManager.Match.Add(move);
-                gameManager.Match.Redo();
+                gameManager.Match.Redo(Board);
 
                 selectedFigure = null;
                 UpdateHighlights();

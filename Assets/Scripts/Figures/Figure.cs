@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace Chess
 {
@@ -46,11 +45,6 @@ namespace Chess
             OnFigureDestroyedEvent.Invoke(this);
         }
 
-        public void RaiseMovedEvent()
-        {
-            OnFigureMovedEvent.Invoke(this);
-        }
-
         public bool CanMove(Vector2Int position)
         {
             return moveablePositions.Contains(position);
@@ -63,19 +57,7 @@ namespace Chess
 
         public void Move(Vector2Int newPosition)
         {
-            Assert.IsTrue(CanMove(newPosition));
-            Board.RemoveFigureFromSquare(position);
-
-            if (!Board.SquareIsEmpty(newPosition))
-            {
-                Assert.IsTrue(Board.GetFigure(newPosition).Color != Color);
-                Board.GetFigure(newPosition).RaiseDestroyedEvent();
-                Board.RemoveFigureFromSquare(newPosition);
-            }
-
-            Board.SetFigureToSquare(this, newPosition);
             OnMove(this.position, newPosition);
-
             this.position = newPosition;
             hasMoved = true;
             OnFigureMovedEvent?.Invoke(this);

@@ -37,12 +37,17 @@ namespace Chess
 
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                match.Undo();
+                match.Undo(board);
             }
 
             if (Input.GetKeyDown(KeyCode.E))
             {
-                match.Redo();
+                match.Redo(board);
+            }
+
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                match.Serialize();
             }
         }
 

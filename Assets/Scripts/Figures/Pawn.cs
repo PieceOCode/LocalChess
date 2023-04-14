@@ -41,7 +41,6 @@ namespace Chess
         }
 
         // TODO: Implement en passant
-        // Check if pawn can move diagonally by taking out an opponent's piece
         private void UpdateDiagonalMove()
         {
             int rankDirection = Color == Color.White ? 1 : -1;
@@ -72,11 +71,10 @@ namespace Chess
             // TODO: Implement UI that let's the player choose which kind of figure he wants. 
             if (newPosition.y == 0 || newPosition.y == Board.Height - 1)
             {
-                // TODO: Because the pawn is destroyed the move event does not trigger an update anymore. Queen does not trigger either so game is not updated.
                 RaiseDestroyedEvent();
                 Board.RemoveFigureFromSquare(newPosition);
                 Queen queen = spawnManager.CreateQueen(this.Color, newPosition);
-                queen.RaiseMovedEvent();
+                queen.Move(newPosition);
             }
         }
     }
