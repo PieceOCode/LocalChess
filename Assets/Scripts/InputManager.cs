@@ -14,7 +14,7 @@ namespace Chess
 
         private Board Board => gameManager.Board;
         private Figure selectedFigure = null;
-        private Color activePlayer = Color.White;
+        private Color activePlayer => gameManager.ActivePlayer;
 
         public void RegisterSquare(Square square)
         {
@@ -32,7 +32,7 @@ namespace Chess
 
                 selectedFigure = null;
                 UpdateHighlights();
-                activePlayer = activePlayer == Color.White ? Color.Black : Color.White;
+                gameManager.SwitchActivePlayer();
             }
             else if (!Board.SquareIsEmpty(square.Position))
             {

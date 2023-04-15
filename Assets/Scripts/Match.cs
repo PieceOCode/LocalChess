@@ -10,12 +10,12 @@ namespace Chess
         private readonly List<Move> moves = new List<Move>();
         private int currentIndex = 0;
 
-        public void Undo(Board board)
+        public void Undo(Board board, SpawnManager spawnManager)
         {
-            if (currentIndex > 1)
+            if (currentIndex >= 1)
             {
                 currentIndex--;
-                moves[currentIndex].Undo(board);
+                moves[currentIndex].Undo(board, spawnManager);
             }
         }
 

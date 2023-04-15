@@ -26,6 +26,7 @@ namespace Chess
         [SerializeField]
         private FigureRepresentation kingPrefab = default;
 
+
         public Pawn CreatePawn(Color color, Vector2Int position)
         {
             Pawn pawn = new Pawn(this);

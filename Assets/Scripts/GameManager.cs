@@ -12,12 +12,15 @@ namespace Chess
 
         public Board Board { get { return board; } }
         public Match Match { get { return match; } }
+        public Color ActivePlayer => activePlayer;
 
         private Match match;
         private Board board;
         private List<Figure> whitePieces = new List<Figure>();
         private List<Figure> blackPieces = new List<Figure>();
         private List<Figure> pieces => whitePieces.Concat(blackPieces).ToList();
+        private Color activePlayer = Color.White;
+
 
         private void Awake()
         {
@@ -27,6 +30,7 @@ namespace Chess
             UpdateGameState();
         }
 
+
         // TODO: Implement proper debug menu
         public void Update()
         {
@@ -35,20 +39,28 @@ namespace Chess
                 UpdateGameState();
             }
 
+            // TODO: Only switch active player if undo was successful
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                match.Undo(board);
+                match.Undo(board, spawnManager);
+                SwitchActivePlayer();
             }
 
             if (Input.GetKeyDown(KeyCode.E))
             {
                 match.Redo(board);
+                SwitchActivePlayer();
             }
 
             if (Input.GetKeyDown(KeyCode.S))
             {
                 match.Serialize();
             }
+        }
+
+        public void SwitchActivePlayer()
+        {
+            activePlayer = activePlayer == Color.White ? Color.Black : Color.White;
         }
 
         public void UpdateGameState()
