@@ -2,7 +2,6 @@ using UnityEngine;
 
 namespace Chess
 {
-    // TODO: Implement what happens when pawn reaches last row. 
     public class Pawn : Figure
     {
         private SpawnManager spawnManager;

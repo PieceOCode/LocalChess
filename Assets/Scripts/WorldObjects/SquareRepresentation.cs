@@ -5,12 +5,12 @@ using UnityEngine.EventSystems;
 namespace Chess
 {
     // Represents a square in the game. Reacts to clicks. 
-    public class Square : MonoBehaviour, IPointerDownHandler
+    public class SquareRepresentation : MonoBehaviour, IPointerDownHandler
     {
         [SerializeField]
         private SpriteRenderer sprite = default;
 
-        public delegate void OnSquareSelectedHandler(Square square);
+        public delegate void OnSquareSelectedHandler(SquareRepresentation square);
         public event OnSquareSelectedHandler OnSquareSelectedEvent;
         public Vector2Int Position => position;
 

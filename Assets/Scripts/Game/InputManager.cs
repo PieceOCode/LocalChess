@@ -16,12 +16,12 @@ namespace Chess
         private Figure selectedFigure = null;
         private Color activePlayer => gameManager.ActivePlayer;
 
-        public void RegisterSquare(Square square)
+        public void RegisterSquare(SquareRepresentation square)
         {
             square.OnSquareSelectedEvent += OnSquareSelected;
         }
 
-        private void OnSquareSelected(Square square)
+        private void OnSquareSelected(SquareRepresentation square)
         {
             Debug.Log($"OnSqaureSelected in Board: on square {square.Position}");
             if (selectedFigure != null && selectedFigure.CanMove(square.Position))

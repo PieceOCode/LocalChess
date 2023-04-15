@@ -17,7 +17,7 @@ namespace Chess
         private UnityEngine.Color darkColor = UnityEngine.Color.black;
 
         [SerializeField]
-        private Square squarePrefab = default;
+        private SquareRepresentation squarePrefab = default;
         [SerializeField]
         private Transform squareContainer = default;
         [SerializeField]
@@ -47,7 +47,7 @@ namespace Chess
             {
                 for (int y = 0; y < board.Height; y++)
                 {
-                    Square square = Instantiate(squarePrefab, squareContainer);
+                    SquareRepresentation square = Instantiate(squarePrefab, squareContainer);
 
                     Vector2Int pos = new Vector2Int(x, y);
                     Color color = (Color)((x + y + 1) % 2);
