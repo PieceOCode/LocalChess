@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Chess
 {
     /// <summary>
-    /// Handles spawning and despawning figures from prefabs and registers their callbacks at the appropriate managers.
+    /// Holds and creates in game representations of the pieces on the board. 
     /// </summary>
     public class FigureSpawner : MonoBehaviour
     {
