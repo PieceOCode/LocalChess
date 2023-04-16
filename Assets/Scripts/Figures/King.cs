@@ -41,8 +41,7 @@ namespace Chess
             }
         }
 
-        // TODO: Refactor, this seems overly long and complicated. Is there a better way to quickly check a number of tiles?
-        // TODO: King may not castle if he is checked. Some kind of bug here?
+        // BUG: King may not castle if he is checked. Some kind of bug here?
         private void CheckCastle()
         {
             if (!hasMoved)

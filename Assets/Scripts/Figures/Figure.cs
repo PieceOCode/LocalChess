@@ -98,7 +98,7 @@ namespace Chess
                 else return false;
             });
 
-            // TODO: attacked positions probably stay the same if a piece is pinned. (king cannot move onto a tile that is attacked by a pinned figure (https://chess.stackexchange.com/questions/4565/can-the-king-be-attacked-by-a-pinned-piece)
+            // BUG: attacked positions probably stay the same if a piece is pinned. (king cannot move onto a tile that is attacked by a pinned figure (https://chess.stackexchange.com/questions/4565/can-the-king-be-attacked-by-a-pinned-piece)
             attackedPositions.RemoveAll(pos =>
             {
                 Vector2Int moveablePosition = new Vector2Int(pos.x, pos.y);

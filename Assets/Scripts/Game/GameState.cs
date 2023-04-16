@@ -7,7 +7,7 @@ namespace Chess
     /// <summary>
     /// Holds all relevant information about the current state of a game.
     /// </summary>
-    // TODO: (Optimization) Cache LINQ queries
+    // OPTIMIZE: Cache LINQ queries
     public class GameState
     {
         public List<Figure> WhitePieces => whitePieces;

@@ -34,7 +34,7 @@ namespace Chess
             }
         }
 
-        // TODO: Implement en passant
+        // FEATURE: Implement en passant
         private void UpdateDiagonalMove()
         {
             int rankDirection = Color == Color.White ? 1 : -1;
@@ -62,7 +62,7 @@ namespace Chess
 
         protected override void OnMove(Vector2Int oldPosition, Vector2Int newPosition)
         {
-            // TODO: Implement UI that let's the player choose which kind of figure he wants. 
+            // FEATURE: Implement UI that let's the player choose which kind of figure he wants. 
             if (newPosition.y == 0 || newPosition.y == Board.Height - 1)
             {
                 Board.RemoveFigureFromSquare(newPosition);

@@ -27,7 +27,7 @@ namespace Chess
             UpdateRepresentation();
         }
 
-        // TODO: Implement proper debug menu
+        // FEATURE: Implement proper debug menu
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.U))
@@ -35,7 +35,7 @@ namespace Chess
                 UpdateGameState();
             }
 
-            // TODO: Only switch active player if undo was successful
+            // BUG: Only switch active player if undo was successful
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 match.Undo(gameState);

@@ -20,7 +20,7 @@ namespace Chess
             this.to = to;
         }
 
-        // TODO: Because the rook uses only the figure.Move function his position is not updated anymore.
+        // BUG: Because the rook uses only the figure.Move function his position is not updated anymore.
         public void Execute(GameState gameState)
         {
             // Check if the specified figure exists and get it. 
