@@ -15,7 +15,7 @@ public class BoardTests
     public void SetUp()
     {
         board = new Board(8, 8);
-        pawn = new Pawn(null);
+        pawn = new Pawn(new Vector2Int(), Color.White, null);
 
         pos0 = new Vector2Int();
         posOutside = new Vector2Int(8, 8);
@@ -135,7 +135,6 @@ public class BoardTests
         [Test]
         public void square_with_own_figure_has_no_enemy_piece()
         {
-            pawn.SetFigure(new Vector2Int(), Color.White, null);
             board.SetFigureToSquare(pawn, pos0);
             Assert.That(board.SquareHasEnemyPiece(Color.White, pos0), Is.False);
         }
@@ -143,7 +142,6 @@ public class BoardTests
         [Test]
         public void square_with_white_piece_has_enemy_piece()
         {
-            pawn.SetFigure(new Vector2Int(), Color.White, null);
             board.SetFigureToSquare(pawn, pos0);
             Assert.That(board.SquareHasEnemyPiece(Color.Black, pos0), Is.True);
         }
@@ -151,7 +149,6 @@ public class BoardTests
         [Test]
         public void square_with_black_piece_has_enemy_piece()
         {
-            pawn.SetFigure(new Vector2Int(), Color.Black, null);
             board.SetFigureToSquare(pawn, pos0);
             Assert.That(board.SquareHasEnemyPiece(Color.White, pos0), Is.True);
         }

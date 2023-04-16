@@ -1,38 +1,34 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace Chess
 {
+    /// <summary>
+    /// Controls game logic, such updating the figures and the pinning and checking for check/checkmate.
+    /// </summary>
     public sealed class GameManager : MonoBehaviour
     {
         [SerializeField]
-        private SpawnManager spawnManager = default;
+        private FigureSpawner spawnManager = default;
 
-        public Board Board { get { return board; } }
-        public Match Match { get { return match; } }
-        public Color ActivePlayer => activePlayer;
+        public Board Board { get { return gameState.Board; } }
+        public Color ActivePlayer => gameState.ActivePlayer;
 
         private Match match;
-        private Board board;
-        private List<Figure> whitePieces = new List<Figure>();
-        private List<Figure> blackPieces = new List<Figure>();
-        private List<Figure> pieces => whitePieces.Concat(blackPieces).ToList();
-        private Color activePlayer = Color.White;
+        private GameState gameState;
 
 
         private void Awake()
         {
-            board = new Board(8, 8);
+            gameState = new GameState();
             match = new Match();
-            spawnManager.ResetBoardStandard();
+            SpawnFigures();
             UpdateGameState();
+            UpdateRepresentation();
         }
 
-
         // TODO: Implement proper debug menu
-        public void Update()
+        private void Update()
         {
             if (Input.GetKeyDown(KeyCode.U))
             {
@@ -42,37 +38,86 @@ namespace Chess
             // TODO: Only switch active player if undo was successful
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                match.Undo(board, spawnManager);
+                match.Undo(gameState);
                 SwitchActivePlayer();
+                UpdateGameState();
+                UpdateRepresentation();
             }
 
             if (Input.GetKeyDown(KeyCode.E))
             {
-                match.Redo(board);
+                match.Redo(gameState);
                 SwitchActivePlayer();
+                UpdateGameState();
+                UpdateRepresentation();
             }
 
             if (Input.GetKeyDown(KeyCode.S))
             {
                 match.Serialize();
             }
+
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                spawnManager.ClearRepresentations();
+            }
         }
 
-        public void SwitchActivePlayer()
+        public void ExecuteMove(Move move)
         {
-            activePlayer = activePlayer == Color.White ? Color.Black : Color.White;
+            match.Add(move);
+            match.Redo(gameState);
+
+            SwitchActivePlayer();
+            UpdateGameState();
+            UpdateRepresentation();
         }
 
-        public void UpdateGameState()
+        private void SwitchActivePlayer()
         {
-            pieces.ForEach(piece => piece.ClearState());
-            pieces.ForEach(piece => piece.UpdatePositions());
+            gameState.SwitchActivePlayer();
+        }
+
+        private void SpawnFigures()
+        {
+            new Rook(new Vector2Int(0, 0), Color.White, gameState);
+            new Rook(new Vector2Int(7, 0), Color.White, gameState);
+            new Rook(new Vector2Int(0, 7), Color.Black, gameState);
+            new Rook(new Vector2Int(7, 7), Color.Black, gameState);
+
+            new Knight(new Vector2Int(1, 0), Color.White, gameState);
+            new Knight(new Vector2Int(6, 0), Color.White, gameState);
+            new Knight(new Vector2Int(1, 7), Color.Black, gameState);
+            new Knight(new Vector2Int(6, 7), Color.Black, gameState);
+
+            new Bishop(new Vector2Int(2, 0), Color.White, gameState);
+            new Bishop(new Vector2Int(5, 0), Color.White, gameState);
+            new Bishop(new Vector2Int(2, 7), Color.Black, gameState);
+            new Bishop(new Vector2Int(5, 7), Color.Black, gameState);
+
+            new Queen(new Vector2Int(3, 0), Color.White, gameState);
+            new Queen(new Vector2Int(3, 7), Color.Black, gameState);
+
+            new King(new Vector2Int(4, 0), Color.White, gameState);
+            new King(new Vector2Int(4, 7), Color.Black, gameState);
+
+            for (int i = 0; i < Board.Width; i++)
+            {
+                new Pawn(new Vector2Int(i, 1), Color.White, gameState);
+                new Pawn(new Vector2Int(i, 6), Color.Black, gameState);
+            }
+        }
+
+        private void UpdateGameState()
+        {
+            gameState.Pieces.ForEach(piece => piece.ClearState());
+            gameState.Pieces.ForEach(piece => piece.UpdatePositions());
 
             // Kings have to be updated last, because they cannot move to attacked tiles. 
-            GetKingOfColor(Color.White).UpdatePositions();
-            GetKingOfColor(Color.Black).UpdatePositions();
+            gameState.WhiteKing.UpdatePositions();
+            gameState.BlackKing.UpdatePositions();
 
-            pieces.ForEach(piece => piece.UpdatePinned());
+            gameState.Pieces.ForEach(piece => piece.UpdatePinned());
 
             // If the king is attacked no piece can move if it does not resolve the check.
             UpdateCheck(Color.White);
@@ -82,38 +127,11 @@ namespace Chess
             UpdateCheckMate(Color.Black);
         }
 
-        // The king is checkmated if he is in check and there are no valid moves to stop that. 
-        // The game is a draw if there are no valid moves but the king is not in check. 
-        private void UpdateCheckMate(Color color)
-        {
-            List<Figure> ownPieces = color == Color.White ? whitePieces : blackPieces;
-            foreach (Figure piece in ownPieces)
-            {
-                if (piece.MoveablePositions.Count > 0)
-                {
-                    return;
-                }
-            }
-
-            King king = GetKingOfColor(color);
-            List<Figure> enemyPieces = color == Color.White ? blackPieces : whitePieces;
-            foreach (var piece in enemyPieces)
-            {
-                if (piece.AttacksPosition(king.Position))
-                {
-                    Debug.Log("Checkmate!");
-                    return;
-                }
-            }
-
-            Debug.Log("Draw");
-        }
-
         private void UpdateCheck(Color kingColor)
         {
-            King king = GetKingOfColor(kingColor);
-            List<Figure> enemyPieces = kingColor == Color.White ? blackPieces : whitePieces;
-            List<Figure> ownPieces = kingColor == Color.White ? whitePieces : blackPieces;
+            King king = kingColor == Color.White ? gameState.WhiteKing : gameState.BlackKing;
+            List<Figure> enemyPieces = kingColor == Color.White ? gameState.BlackPieces : gameState.WhitePieces;
+            List<Figure> ownPieces = kingColor == Color.White ? gameState.WhitePieces : gameState.BlackPieces;
 
             List<Figure> attackingFigures = new List<Figure>();
             foreach (var piece in enemyPieces)
@@ -159,65 +177,40 @@ namespace Chess
             }
         }
 
-        public void RegisterFigure(Figure figure)
+        // The king is checkmated if he is in check and there are no valid moves to stop that. 
+        // The game is a draw if there are no valid moves but the king is not in check. 
+        private void UpdateCheckMate(Color color)
         {
-            if (figure.Color == Color.White)
+            List<Figure> ownPieces = color == Color.White ? gameState.WhitePieces : gameState.BlackPieces;
+            foreach (Figure piece in ownPieces)
             {
-                whitePieces.Add(figure);
-            }
-            else
-            {
-                blackPieces.Add(figure);
-            }
-
-            figure.OnFigureMovedEvent += OnFigureMoved;
-            figure.OnFigureDestroyedEvent += OnFigureDestroyed;
-        }
-
-        private void OnFigureMoved(Figure figure)
-        {
-            UpdateGameState();
-        }
-
-        public void OnFigureDestroyed(Figure figure)
-        {
-            if (figure.Color == Color.White)
-            {
-                whitePieces.Remove(figure);
-            }
-            else
-            {
-                blackPieces.Remove(figure);
-            }
-
-            figure.OnFigureMovedEvent -= OnFigureMoved;
-            figure.OnFigureDestroyedEvent -= OnFigureDestroyed;
-        }
-
-        public bool IsSquareAttacked(Color ownColor, Vector2Int position)
-        {
-            List<Figure> opponentPieces = ownColor == Color.White ? blackPieces : whitePieces;
-            foreach (var piece in opponentPieces)
-            {
-                if (piece.AttacksPosition(position))
+                if (piece.MoveablePositions.Count > 0)
                 {
-                    return true;
+                    return;
                 }
             }
-            return false;
+
+            King king = color == Color.White ? gameState.WhiteKing : gameState.BlackKing;
+            List<Figure> enemyPieces = color == Color.White ? gameState.BlackPieces : gameState.WhitePieces;
+            foreach (var piece in enemyPieces)
+            {
+                if (piece.AttacksPosition(king.Position))
+                {
+                    Debug.Log("Checkmate!");
+                    return;
+                }
+            }
+
+            Debug.Log("Draw");
         }
 
-        public King GetKingOfColor(Color color)
+        private void UpdateRepresentation()
         {
-            List<Figure> pieces = color == Color.White ? whitePieces : blackPieces;
-            King king = pieces.Where(piece => piece is King).First() as King;
-            Assert.IsNotNull(king, "A king of each color should exist at all time.");
-            return king;
-        }
-
-        public King GetEnemyKing(Color color)
-        {
-            return GetKingOfColor(color == Color.White ? Color.Black : Color.White);
+            spawnManager.ClearRepresentations();
+            foreach (Figure figure in gameState.Pieces)
+            {
+                spawnManager.CreateRepresentation(figure);
+            }
         }
     }
 }

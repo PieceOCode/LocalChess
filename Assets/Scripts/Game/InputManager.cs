@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Chess
 {
     /// <summary>
-    /// Handles all input on figures and squares and currently also movement. 
+    /// Handles input on figures and squares. 
     /// </summary>
     public class InputManager : MonoBehaviour
     {
@@ -14,7 +14,6 @@ namespace Chess
 
         private Board Board => gameManager.Board;
         private Figure selectedFigure = null;
-        private Color activePlayer => gameManager.ActivePlayer;
 
         public void RegisterSquare(SquareRepresentation square)
         {
@@ -24,20 +23,18 @@ namespace Chess
         private void OnSquareSelected(SquareRepresentation square)
         {
             Debug.Log($"OnSqaureSelected in Board: on square {square.Position}");
-            if (selectedFigure != null && selectedFigure.CanMove(square.Position))
+            if (selectedFigure != null && selectedFigure.CanMoveTo(square.Position))
             {
                 Move move = new Move(selectedFigure, selectedFigure.Position, square.Position);
-                gameManager.Match.Add(move);
-                gameManager.Match.Redo(Board);
+                gameManager.ExecuteMove(move);
 
                 selectedFigure = null;
                 UpdateHighlights();
-                gameManager.SwitchActivePlayer();
             }
             else if (!Board.SquareIsEmpty(square.Position))
             {
                 selectedFigure = Board.GetFigure(square.Position);
-                if (selectedFigure.Color != activePlayer)
+                if (selectedFigure.Color != gameManager.ActivePlayer)
                 {
                     selectedFigure = null;
                 }

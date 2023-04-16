@@ -10,7 +10,7 @@ namespace Chess
         [SerializeField]
         private BoardRepresentation board = default;
 
-        private List<GameObject> highlightList = new List<GameObject>();
+        private readonly List<GameObject> highlightList = new List<GameObject>();
 
         public void HighlightSquares(List<Vector2Int> squarePositions)
         {

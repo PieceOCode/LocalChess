@@ -21,37 +21,37 @@ namespace Chess
         }
 
         // TODO: Because the rook uses only the figure.Move function his position is not updated anymore.
-        public void Execute(Board board)
+        public void Execute(GameState gameState)
         {
             // Check if the specified figure exists and get it. 
+            Board board = gameState.Board;
             Assert.IsTrue(!board.SquareIsEmpty(from));
             Figure figure = board.GetFigure(from);
             Assert.IsTrue(figure.GetType() == figureData.type
                 && figure.Color == figureData.color);
 
-            Assert.IsTrue(figure.CanMove(to));
+            Assert.IsTrue(figure.CanMoveTo(to));
             board.RemoveFigureFromSquare(from);
 
             // Kick figure if square is blocked by enemy piece
             if (!board.SquareIsEmpty(to))
             {
                 Assert.IsTrue(board.GetFigure(to).Color != figure.Color);
-                Figure kickedFigure = board.GetFigure(to);
-                kickedFigure.RaiseDestroyedEvent();
-                kickedData = new FigureData(kickedFigure);
+                kickedData = new FigureData(board.GetFigure(to));
                 kicked = true;
-                board.RemoveFigureFromSquare(to);
+                gameState.RemoveFigure(board.GetFigure(to));
             }
 
             board.SetFigureToSquare(figure, to);
             figure.Move(to);
         }
 
-        public void Undo(Board board, SpawnManager spawnManager)
+        public void Undo(GameState gameState)
         {
             // Preconditions
 
             // Check if the specified figure exists and get it. 
+            Board board = gameState.Board;
             Assert.IsTrue(!board.SquareIsEmpty(to));
             Figure figure = board.GetFigure(to);
             Assert.IsTrue(figure.GetType() == figureData.type
@@ -62,27 +62,17 @@ namespace Chess
             // Recreate figure if the moved kicked one.
             if (kicked)
             {
-                Figure kickedFigure = CreateFigure(spawnManager, kickedData);
+                Figure kickedFigure = CreateFigure(kickedData, gameState);
+
             }
 
             board.SetFigureToSquare(figure, from);
             figure.Move(from);
         }
 
-        public void Redo(Board board)
+        public void Redo(GameState gameState)
         {
-            Execute(board);
-        }
-
-        private Figure CreateFigure(SpawnManager spawnManager, FigureData data)
-        {
-            if (data.type == typeof(Pawn)) { return spawnManager.CreatePawn(data.color, data.position); }
-            else if (data.type == typeof(Bishop)) { return spawnManager.CreateBishop(data.color, data.position); }
-            else if (data.type == typeof(Knight)) { return spawnManager.CreateKnight(data.color, data.position); }
-            else if (data.type == typeof(Rook)) { return spawnManager.CreateRook(data.color, data.position); }
-            else if (data.type == typeof(Queen)) { return spawnManager.CreateQueen(data.color, data.position); }
-            else if (data.type == typeof(King)) { return spawnManager.CreateKing(data.color, data.position); }
-            else return null;
+            Execute(gameState);
         }
 
         // TODO: Resolve ambiguities by mentioning which square the piece moved from if needed.
@@ -104,6 +94,18 @@ namespace Chess
             }
             sw.Write(to.ToChessNotation());
         }
+
+        private Figure CreateFigure(FigureData data, GameState gameState)
+        {
+            if (data.type == typeof(Pawn)) { return new Pawn(data.position, data.color, gameState); }
+            else if (data.type == typeof(Bishop)) { return new Bishop(data.position, data.color, gameState); }
+            else if (data.type == typeof(Knight)) { return new Knight(data.position, data.color, gameState); }
+            else if (data.type == typeof(Rook)) { return new Rook(data.position, data.color, gameState); }
+            else if (data.type == typeof(Queen)) { return new Queen(data.position, data.color, gameState); }
+            else if (data.type == typeof(King)) { return new King(data.position, data.color, gameState); }
+            else return null;
+        }
+
 
         private string GetFileCharacter(int x)
         {

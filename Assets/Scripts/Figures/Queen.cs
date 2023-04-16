@@ -1,7 +1,11 @@
+using UnityEngine;
+
 namespace Chess
 {
     public class Queen : Figure
     {
+        public Queen(Vector2Int position, Color color, GameState gameState) : base(position, color, gameState) { }
+
         public override void UpdatePositions()
         {
             UpdateStraight();

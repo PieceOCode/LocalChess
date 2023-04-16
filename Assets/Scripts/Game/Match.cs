@@ -10,20 +10,20 @@ namespace Chess
         private readonly List<Move> moves = new List<Move>();
         private int currentIndex = 0;
 
-        public void Undo(Board board, SpawnManager spawnManager)
+        public void Undo(GameState gameState)
         {
             if (currentIndex >= 1)
             {
                 currentIndex--;
-                moves[currentIndex].Undo(board, spawnManager);
+                moves[currentIndex].Undo(gameState);
             }
         }
 
-        public void Redo(Board board)
+        public void Redo(GameState gameState)
         {
             if (currentIndex <= moves.Count - 1)
             {
-                moves[currentIndex].Redo(board);
+                moves[currentIndex].Redo(gameState);
                 currentIndex++;
             }
         }

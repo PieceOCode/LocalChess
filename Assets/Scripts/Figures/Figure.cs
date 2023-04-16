@@ -19,33 +19,29 @@ namespace Chess
         public Vector2Int Position => position;
         public bool HasMoved => hasMoved;
         public List<Vector2Int> MoveablePositions { get { return moveablePositions; } }
-        protected GameManager GameManager => gameManager;
-        protected Board Board => GameManager.Board;
+
+        protected GameState GameState => gameState;
+        protected Board Board => GameState.Board;
 
 
-        private GameManager gameManager;
+        private readonly GameState gameState;
+        private readonly Chess.Color color = default;
         protected Vector2Int position = new();
-        private Chess.Color color = default;
         protected bool hasMoved = false;
         protected Figure pinnedBy = null;
 
         protected readonly List<Vector2Int> moveablePositions = new List<Vector2Int>();
         protected readonly List<Vector2Int> attackedPositions = new List<Vector2Int>();
 
-
-        public void SetFigure(Vector2Int position, Color color, GameManager gameManager)
+        public Figure(Vector2Int position, Color color, GameState gameState)
         {
             this.position = position;
             this.color = color;
-            this.gameManager = gameManager;
+            this.gameState = gameState;
+            gameState.AddFigure(this);
         }
 
-        public void RaiseDestroyedEvent()
-        {
-            OnFigureDestroyedEvent.Invoke(this);
-        }
-
-        public bool CanMove(Vector2Int position)
+        public bool CanMoveTo(Vector2Int position)
         {
             return moveablePositions.Contains(position);
         }
@@ -148,7 +144,7 @@ namespace Chess
             {
                 UpdateField(newPosition);
                 Figure figure = Board.GetFigure(newPosition);
-                King enemyKing = GameManager.GetEnemyKing(color);
+                King enemyKing = color == Color.White ? gameState.BlackKing : gameState.WhiteKing;
                 if (figure == enemyKing)
                 {
                     Vector2Int positionBehindKing = new Vector2Int(newPosition.x + horizontal, newPosition.y + vertical);

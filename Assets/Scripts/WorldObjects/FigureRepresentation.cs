@@ -10,30 +10,10 @@ namespace Chess
         [SerializeField]
         private GameObject blackSprite = default;
 
-        private BoardRepresentation board;
-
-        public void Initialize(Figure figure, BoardRepresentation board)
+        public void SetColor(Color color)
         {
-            this.board = board;
-            transform.position = board.GetWorldPosition(figure.Position);
-
-            whiteSprite.SetActive(figure.Color == Color.White);
-            blackSprite.SetActive(figure.Color == Color.Black);
-
-            figure.OnFigureDestroyedEvent += OnFigureDestroyed;
-            figure.OnFigureMovedEvent += OnFigureMoved;
-        }
-
-        private void OnFigureMoved(Figure figure)
-        {
-            transform.position = board.GetWorldPosition(figure.Position);
-        }
-
-        private void OnFigureDestroyed(Figure figure)
-        {
-            figure.OnFigureDestroyedEvent -= OnFigureDestroyed;
-            figure.OnFigureMovedEvent -= OnFigureMoved;
-            Destroy(gameObject);
+            whiteSprite.SetActive(color == Color.White);
+            blackSprite.SetActive(color == Color.Black);
         }
     }
 }

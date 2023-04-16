@@ -6,6 +6,8 @@ namespace Chess
 {
     public class Knight : Figure
     {
+        public Knight(Vector2Int position, Color color, GameState gameState) : base(position, color, gameState) { }
+
         public override void UpdatePositions()
         {
             List<Vector2Int> moveablePositions = new List<Vector2Int>

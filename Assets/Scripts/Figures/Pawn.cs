@@ -4,12 +4,7 @@ namespace Chess
 {
     public class Pawn : Figure
     {
-        private SpawnManager spawnManager;
-
-        public Pawn(SpawnManager spawnManager) : base()
-        {
-            this.spawnManager = spawnManager;
-        }
+        public Pawn(Vector2Int position, Color color, GameState gameState) : base(position, color, gameState) { }
 
         public override void UpdatePositions()
         {
@@ -70,9 +65,10 @@ namespace Chess
             // TODO: Implement UI that let's the player choose which kind of figure he wants. 
             if (newPosition.y == 0 || newPosition.y == Board.Height - 1)
             {
-                RaiseDestroyedEvent();
                 Board.RemoveFigureFromSquare(newPosition);
-                Queen queen = spawnManager.CreateQueen(this.Color, newPosition);
+
+                Queen queen = new Queen(newPosition, this.Color, this.GameState);
+
                 queen.Move(newPosition);
             }
         }

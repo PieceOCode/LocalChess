@@ -6,6 +6,8 @@ namespace Chess
 {
     public class King : Figure
     {
+        public King(Vector2Int position, Color color, GameState gameState) : base(position, color, gameState) { }
+
         public override void UpdatePositions()
         {
             AddPossibleSquares();
@@ -40,6 +42,7 @@ namespace Chess
         }
 
         // TODO: Refactor, this seems overly long and complicated. Is there a better way to quickly check a number of tiles?
+        // TODO: King may not castle if he is checked. Some kind of bug here?
         private void CheckCastle()
         {
             if (!hasMoved)
@@ -52,9 +55,9 @@ namespace Chess
                     {
                         if (Board.SquareIsEmpty(new Vector2Int(position.x - 1, position.y)) &&
                             Board.SquareIsEmpty(new Vector2Int(position.x - 2, position.y)) &&
-                            !GameManager.IsSquareAttacked(Color, position) &&
-                            !GameManager.IsSquareAttacked(Color, new Vector2Int(position.x - 1, position.y)) &&
-                            !GameManager.IsSquareAttacked(Color, new Vector2Int(position.x - 2, position.y))
+                            !GameState.IsSquareAttacked(Color, position) &&
+                            !GameState.IsSquareAttacked(Color, new Vector2Int(position.x - 1, position.y)) &&
+                            !GameState.IsSquareAttacked(Color, new Vector2Int(position.x - 2, position.y))
                         )
                         {
                             moveablePositions.Add(new Vector2Int(position.x - 2, position.y));
@@ -70,9 +73,9 @@ namespace Chess
                     {
                         if (Board.SquareIsEmpty(new Vector2Int(position.x + 1, position.y)) &&
                             Board.SquareIsEmpty(new Vector2Int(position.x + 2, position.y)) &&
-                            !GameManager.IsSquareAttacked(Color, position) &&
-                            !GameManager.IsSquareAttacked(Color, new Vector2Int(position.x + 1, position.y)) &&
-                            !GameManager.IsSquareAttacked(Color, new Vector2Int(position.x + 2, position.y))
+                            !GameState.IsSquareAttacked(Color, position) &&
+                            !GameState.IsSquareAttacked(Color, new Vector2Int(position.x + 1, position.y)) &&
+                            !GameState.IsSquareAttacked(Color, new Vector2Int(position.x + 2, position.y))
                         )
                         {
 
@@ -88,7 +91,7 @@ namespace Chess
             List<Vector2Int> attackedPositions = new List<Vector2Int>();
             foreach (Vector2Int position in moveablePositions)
             {
-                if (GameManager.IsSquareAttacked(Color, position))
+                if (GameState.IsSquareAttacked(Color, position))
                 {
                     attackedPositions.Add(position);
                 }
