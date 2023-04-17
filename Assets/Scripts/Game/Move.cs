@@ -1,7 +1,7 @@
-using System;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Assertions;
+
 
 namespace Chess
 {
@@ -62,7 +62,7 @@ namespace Chess
             // Recreate figure if the moved kicked one.
             if (kicked)
             {
-                Figure kickedFigure = CreateFigure(kickedData, gameState);
+                Figure kickedFigure = FigureData.CreateFigureFrom(kickedData, gameState);
                 gameState.AddFigure(kickedFigure);
             }
 
@@ -82,49 +82,17 @@ namespace Chess
         // TODO: Should castle and pawn promotions be subclasses?
         public void Serialize(StreamWriter sw)
         {
-            string figureText = GetFigureCharacter(figureData.type);
+            string figureText = ChessNotation.GetPieceNotation(figureData.type);
             sw.Write(figureText);
             if (kicked)
             {
                 if (figureText.Length == 0)
                 {
-                    sw.Write(GetFileCharacter(from.x));
+                    sw.Write(ChessNotation.GetFileNotation(from.x));
                 }
                 sw.Write('x');
             }
-            sw.Write(to.ToChessNotation());
-        }
-
-        private Figure CreateFigure(FigureData data, GameState gameState)
-        {
-            if (data.type == typeof(Pawn)) { return new Pawn(data.position, data.color, gameState); }
-            else if (data.type == typeof(Bishop)) { return new Bishop(data.position, data.color, gameState); }
-            else if (data.type == typeof(Knight)) { return new Knight(data.position, data.color, gameState); }
-            else if (data.type == typeof(Rook)) { return new Rook(data.position, data.color, gameState); }
-            else if (data.type == typeof(Queen)) { return new Queen(data.position, data.color, gameState); }
-            else if (data.type == typeof(King)) { return new King(data.position, data.color, gameState); }
-            else return null;
-        }
-
-
-        private string GetFileCharacter(int x)
-        {
-            return ((Files)x).ToString().ToLower();
-        }
-
-        private string GetFigureCharacter(Type type)
-        {
-            if (type == typeof(Pawn)) return "";
-            else if (type == typeof(Knight)) return "K";
-            else if (type == typeof(Bishop)) return "B";
-            else if (type == typeof(Rook)) return "R";
-            else if (type == typeof(Queen)) return "Q";
-            else if (type == typeof(King)) return "K";
-            else
-            {
-                Debug.LogError("There should not be another type of figure");
-                return "";
-            }
+            sw.Write(ChessNotation.GetSquareNotation(to));
         }
     }
 }

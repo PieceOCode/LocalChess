@@ -66,7 +66,7 @@ namespace Chess
             for (int x = 0; x < board.Width; x++)
             {
                 TMP_Text fileUI = Instantiate(fileUIPrefab, transform);
-                fileUI.text = ((Files)x).ToString();
+                fileUI.text = ChessNotation.GetFileNotation(x);
 
                 Vector2Int pos = new Vector2Int(x, 0);
                 fileUI.transform.position = GetWorldPosition(pos) + new Vector3(0.5f, -0.5f, 0);
@@ -77,7 +77,7 @@ namespace Chess
             for (int y = 0; y < board.Height; y++)
             {
                 TMP_Text rankUI = Instantiate(rankUIPrefab);
-                rankUI.text = (y + 1).ToString();
+                rankUI.text = ChessNotation.GetRankNotation(y);
 
                 Vector2Int pos = new Vector2Int(0, y);
                 rankUI.transform.position = GetWorldPosition(pos) + new Vector3(-0.5f, 0.5f, 0);

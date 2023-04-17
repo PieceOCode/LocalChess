@@ -4,18 +4,8 @@ using UnityEngine.Assertions;
 
 namespace Chess
 {
-    public enum Files
-    {
-        A, B, C, D, E, F, G, H
-    }
-
     public static class ChessVectorExtensions
     {
-        public static string ToChessNotation(this Vector2Int pos)
-        {
-            return $"{(Files)pos.x}{pos.y + 1}".ToLower();
-        }
-
         public static float ManhattanDistance(this Vector2Int pos, Vector2Int otherPos)
         {
             return Mathf.Abs(pos.x - otherPos.x) + Mathf.Abs(pos.y - otherPos.y);
