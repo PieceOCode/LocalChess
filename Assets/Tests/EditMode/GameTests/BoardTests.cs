@@ -149,7 +149,8 @@ public class BoardTests
         [Test]
         public void square_with_black_piece_has_enemy_piece()
         {
-            board.SetFigureToSquare(pawn, pos0);
+            Pawn blackPawn = new Pawn(pos0, Color.Black, null);
+            board.SetFigureToSquare(blackPawn, pos0);
             Assert.That(board.SquareHasEnemyPiece(Color.White, pos0), Is.True);
         }
 
@@ -168,6 +169,7 @@ public class BoardTests
             Assert.That(board.IsPositionValid(pos0), Is.True);
         }
 
+        [Test]
         public void invalid_position_is_invalid()
         {
             Assert.That(board.IsPositionValid(posOutside), Is.False);

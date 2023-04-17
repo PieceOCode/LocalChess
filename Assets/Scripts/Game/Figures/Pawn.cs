@@ -68,6 +68,7 @@ namespace Chess
                 Board.RemoveFigureFromSquare(newPosition);
 
                 Queen queen = new Queen(newPosition, this.Color, this.GameState);
+                this.GameState.AddFigure(queen);
 
                 queen.Move(newPosition);
             }

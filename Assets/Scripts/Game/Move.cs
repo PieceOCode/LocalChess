@@ -63,7 +63,7 @@ namespace Chess
             if (kicked)
             {
                 Figure kickedFigure = CreateFigure(kickedData, gameState);
-
+                gameState.AddFigure(kickedFigure);
             }
 
             board.SetFigureToSquare(figure, from);

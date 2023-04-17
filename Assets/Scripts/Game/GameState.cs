@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Chess
 {
@@ -13,8 +14,8 @@ namespace Chess
         public List<Figure> WhitePieces => whitePieces;
         public List<Figure> BlackPieces => blackPieces;
         public List<Figure> Pieces => whitePieces.Concat(blackPieces).ToList();
-        public King WhiteKing => whitePieces.Where(piece => piece is King).First() as King;
-        public King BlackKing => blackPieces.Where(piece => piece is King).First() as King;
+        public King WhiteKing => whitePieces.Where(piece => piece is King).FirstOrDefault() as King;
+        public King BlackKing => blackPieces.Where(piece => piece is King).FirstOrDefault() as King;
         public Color ActivePlayer => activePlayer;
         public Board Board => board;
 
@@ -50,6 +51,9 @@ namespace Chess
 
         public void AddFigure(Figure figure)
         {
+            Assert.IsNotNull(figure);
+            Assert.IsTrue(!Pieces.Contains(figure), "This given figure already exists in this GameState");
+
             board.SetFigureToSquare(figure, figure.Position);
             if (figure.Color == Color.White)
             {
@@ -63,6 +67,10 @@ namespace Chess
 
         public void RemoveFigure(Figure figure)
         {
+            Assert.IsNotNull(figure, "You cannot remove a figure that is null.");
+            Assert.IsTrue(Pieces.Contains(figure), "The given figure does not exist in this GameState.");
+            Assert.IsTrue(board.GetFigure(figure.Position) == figure, "A different figure exists on the given figures position on this board.");
+
             board.RemoveFigureFromSquare(figure.Position);
             if (figure.Color == Color.White)
             {
@@ -71,6 +79,36 @@ namespace Chess
             else
             {
                 blackPieces.Remove(figure);
+            }
+        }
+
+        public void SpawnFigures()
+        {
+            AddFigure(new Rook(new Vector2Int(0, 0), Color.White, this));
+            AddFigure(new Rook(new Vector2Int(7, 0), Color.White, this));
+            AddFigure(new Rook(new Vector2Int(0, 7), Color.Black, this));
+            AddFigure(new Rook(new Vector2Int(7, 7), Color.Black, this));
+
+            AddFigure(new Knight(new Vector2Int(1, 0), Color.White, this));
+            AddFigure(new Knight(new Vector2Int(6, 0), Color.White, this));
+            AddFigure(new Knight(new Vector2Int(1, 7), Color.Black, this));
+            AddFigure(new Knight(new Vector2Int(6, 7), Color.Black, this));
+
+            AddFigure(new Bishop(new Vector2Int(2, 0), Color.White, this));
+            AddFigure(new Bishop(new Vector2Int(5, 0), Color.White, this));
+            AddFigure(new Bishop(new Vector2Int(2, 7), Color.Black, this));
+            AddFigure(new Bishop(new Vector2Int(5, 7), Color.Black, this));
+
+            AddFigure(new Queen(new Vector2Int(3, 0), Color.White, this));
+            AddFigure(new Queen(new Vector2Int(3, 7), Color.Black, this));
+
+            AddFigure(new King(new Vector2Int(4, 0), Color.White, this));
+            AddFigure(new King(new Vector2Int(4, 7), Color.Black, this));
+
+            for (int i = 0; i < Board.Width; i++)
+            {
+                AddFigure(new Pawn(new Vector2Int(i, 1), Color.White, this));
+                AddFigure(new Pawn(new Vector2Int(i, 6), Color.Black, this));
             }
         }
     }

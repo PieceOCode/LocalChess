@@ -38,7 +38,6 @@ namespace Chess
             this.position = position;
             this.color = color;
             this.gameState = gameState;
-            gameState.AddFigure(this);
         }
 
         public bool CanMoveTo(Vector2Int position)

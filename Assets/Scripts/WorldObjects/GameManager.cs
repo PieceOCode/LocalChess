@@ -22,7 +22,7 @@ namespace Chess
         {
             gameState = new GameState();
             match = new Match();
-            SpawnFigures();
+            gameState.SpawnFigures();
             UpdateGameState();
             UpdateRepresentation();
         }
@@ -78,35 +78,6 @@ namespace Chess
             gameState.SwitchActivePlayer();
         }
 
-        private void SpawnFigures()
-        {
-            new Rook(new Vector2Int(0, 0), Color.White, gameState);
-            new Rook(new Vector2Int(7, 0), Color.White, gameState);
-            new Rook(new Vector2Int(0, 7), Color.Black, gameState);
-            new Rook(new Vector2Int(7, 7), Color.Black, gameState);
-
-            new Knight(new Vector2Int(1, 0), Color.White, gameState);
-            new Knight(new Vector2Int(6, 0), Color.White, gameState);
-            new Knight(new Vector2Int(1, 7), Color.Black, gameState);
-            new Knight(new Vector2Int(6, 7), Color.Black, gameState);
-
-            new Bishop(new Vector2Int(2, 0), Color.White, gameState);
-            new Bishop(new Vector2Int(5, 0), Color.White, gameState);
-            new Bishop(new Vector2Int(2, 7), Color.Black, gameState);
-            new Bishop(new Vector2Int(5, 7), Color.Black, gameState);
-
-            new Queen(new Vector2Int(3, 0), Color.White, gameState);
-            new Queen(new Vector2Int(3, 7), Color.Black, gameState);
-
-            new King(new Vector2Int(4, 0), Color.White, gameState);
-            new King(new Vector2Int(4, 7), Color.Black, gameState);
-
-            for (int i = 0; i < Board.Width; i++)
-            {
-                new Pawn(new Vector2Int(i, 1), Color.White, gameState);
-                new Pawn(new Vector2Int(i, 6), Color.Black, gameState);
-            }
-        }
 
         private void UpdateGameState()
         {
