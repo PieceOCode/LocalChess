@@ -15,6 +15,7 @@ namespace Chess
 
         public Move(Figure figure, Vector2Int from, Vector2Int to)
         {
+            Assert.IsNotNull(figure);
             this.figureData = new FigureData(figure);
             this.from = from;
             this.to = to;
@@ -22,18 +23,16 @@ namespace Chess
 
         public virtual void Do(GameState gameState)
         {
-            // Check if the specified figure exists and get it. 
             Board board = gameState.Board;
-            Assert.IsTrue(!board.SquareIsEmpty(from));
+
             Figure figure = board.GetFigure(from);
-            Assert.IsTrue(figure.GetType() == figureData.type
-                && figure.Color == figureData.color);
+            Assert.IsTrue(figure.GetType() == figureData.type && figure.Color == figureData.color); // Asserts that we got the correct figure.
             Assert.IsTrue(figure.CanMoveTo(to));
 
             // Kick figure if square is blocked by enemy piece
             if (!board.SquareIsEmpty(to))
             {
-                Assert.IsTrue(board.GetFigure(to).Color != figure.Color);
+                Assert.IsTrue(board.SquareHasEnemyPiece(figureData.color, to));
                 kickedData = new FigureData(board.GetFigure(to));
                 kicked = true;
                 gameState.RemoveFigure(board.GetFigure(to));
@@ -44,16 +43,11 @@ namespace Chess
 
         public virtual void Undo(GameState gameState)
         {
-            // Preconditions
-
-            // Check if the specified figure exists and get it. 
-            Board board = gameState.Board;
-            Assert.IsTrue(!board.SquareIsEmpty(to));
-            Figure figure = board.GetFigure(to);
-            Assert.IsTrue(figure.GetType() == figureData.type
-                && figure.Color == figureData.color);
+            Figure figure = gameState.Board.GetFigure(to);
+            Assert.IsTrue(figure.GetType() == figureData.type && figure.Color == figureData.color);
 
             gameState.MoveFigure(figure, from);
+            figure.HasMoved = figureData.hasMoved;
 
             // Recreate figure if the moved kicked one.
             if (kicked)

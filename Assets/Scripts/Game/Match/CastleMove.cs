@@ -1,27 +1,38 @@
 using System.IO;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Chess
 {
     public class CastleMove : Move
     {
-        public CastleMove(King king, Vector2Int from, Vector2Int to) : base(king, from, to) { }
+        private bool IsQueensideCastle => from.x > to.x;
+
+        public CastleMove(King king, Vector2Int from, Vector2Int to) : base(king, from, to)
+        {
+            Assert.IsTrue(Vector2Int.Distance(from, to) == 2);
+        }
 
         override public void Do(GameState gameState)
         {
             Figure king = gameState.Board.GetFigure(from);
-            gameState.MoveFigure(king, to);
+            Assert.IsTrue(king is King && king.Color == figureData.color);
+            Assert.IsTrue(!king.HasMoved);
+            Assert.IsTrue(king.CanMoveTo(to));
 
-            if (from.x > to.x)
+            gameState.MoveFigure(king, to);
+            if (IsQueensideCastle)
             {
-                // Queen side castle
                 Figure rook = gameState.Board.GetFigure(new Vector2Int(0, from.y));
+                Assert.IsTrue(rook is Rook && rook.Color == figureData.color);
+                Assert.IsTrue(!rook.HasMoved);
                 gameState.MoveFigure(rook, to + Vector2Int.right);
             }
             else
             {
-                // King side castle
                 Figure rook = gameState.Board.GetFigure(new Vector2Int(gameState.Board.Width - 1, from.y));
+                Assert.IsTrue(rook is Rook && rook.Color == figureData.color);
+                Assert.IsTrue(!rook.HasMoved);
                 gameState.MoveFigure(rook, to + Vector2Int.left);
             }
         }
@@ -29,33 +40,35 @@ namespace Chess
         override public void Undo(GameState gameState)
         {
             Figure king = gameState.Board.GetFigure(to);
-            gameState.MoveFigure(king, from);
+            Assert.IsTrue(king is King && king.Color == figureData.color);
 
-            if (from.x > to.x)
+            gameState.MoveFigure(king, from);
+            king.HasMoved = false;
+
+            if (IsQueensideCastle)
             {
-                // Queen side castle
                 Figure rook = gameState.Board.GetFigure(to + Vector2Int.right);
+                Assert.IsTrue(rook is Rook && rook.Color == figureData.color);
                 gameState.MoveFigure(rook, new Vector2Int(0, from.y));
+                rook.HasMoved = false;
             }
             else
             {
-                // King side castle
                 Figure rook = gameState.Board.GetFigure(to + Vector2Int.left);
+                Assert.IsTrue(rook is Rook && rook.Color == figureData.color);
                 gameState.MoveFigure(rook, new Vector2Int(gameState.Board.Width - 1, from.y));
+                rook.HasMoved = false;
             }
         }
 
         public override void Serialize(StreamWriter sw)
         {
-            // TODO: Add king and queen side casteling (O-O, O-O-O)
-            if (from.x > to.x)
+            if (IsQueensideCastle)
             {
-                // Queen side castle
                 sw.Write("O-O-O");
             }
             else
             {
-                // King side castle
                 sw.Write("O-O");
             }
         }

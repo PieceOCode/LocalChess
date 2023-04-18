@@ -90,7 +90,7 @@ public class BoardTests
         [Test]
         public void throws_exception_when_figure_is_null()
         {
-            Assert.Throws<UnityEngine.Assertions.AssertionException>(() => board.SetFigureToSquare(null, pos0));
+            Assert.Throws<ArgumentNullException>(() => board.SetFigureToSquare(null, pos0));
         }
 
         [Test]

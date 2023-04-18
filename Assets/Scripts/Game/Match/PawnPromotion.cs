@@ -1,5 +1,6 @@
 using System.IO;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Chess
 {
@@ -12,6 +13,7 @@ namespace Chess
             base.Do(gameState);
 
             Figure pawn = gameState.Board.GetFigure(to);
+            Assert.IsTrue(pawn is Pawn && pawn.Color == figureData.color);
             gameState.RemoveFigure(pawn);
 
             Queen queen = new Queen(to, figureData.color, gameState);

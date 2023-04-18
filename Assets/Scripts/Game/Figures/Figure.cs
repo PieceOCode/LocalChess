@@ -17,7 +17,7 @@ namespace Chess
 
         public Chess.Color Color => color;
         public Vector2Int Position => position;
-        public bool HasMoved => hasMoved;
+        public bool HasMoved { get => hasMoved; set { hasMoved = value; } }
         public List<Vector2Int> MoveablePositions { get { return moveablePositions; } }
 
         protected GameState GameState => gameState;
