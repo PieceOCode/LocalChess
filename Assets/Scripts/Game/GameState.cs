@@ -51,7 +51,7 @@ namespace Chess
 
         public void AddFigure(Figure figure)
         {
-            Assert.IsNotNull(figure);
+            Assert.IsNotNull(figure, "The figure argument should not be null.");
             Assert.IsTrue(!Pieces.Contains(figure), "This given figure already exists in this GameState");
 
             board.SetFigureToSquare(figure, figure.Position);

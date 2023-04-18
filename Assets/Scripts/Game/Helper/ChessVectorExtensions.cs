@@ -25,7 +25,7 @@ namespace Chess
 
         public static bool IsBetween(this Vector2Int pos, Vector2Int start, Vector2Int end)
         {
-            Assert.IsTrue(start != end);
+            Assert.IsTrue(start != end, "The start and end position arguments cannot be the same.");
             Vector2 line = end - start;
             Vector2 unitDirection = line / (float)start.ChebyshevDistance(end);
             int distance = start.ChebyshevDistance(pos);
@@ -34,7 +34,7 @@ namespace Chess
 
         public static List<Vector2Int> GetPositionsBetween(this Vector2Int pos, Vector2Int otherPos)
         {
-            Assert.IsTrue(pos.IsOnSameLine(otherPos));
+            Assert.IsTrue(pos.IsOnSameLine(otherPos), "Function call is invalid because pos and otherPos are not on the same line.");
             List<Vector2Int> positionsBetween = new List<Vector2Int>();
 
             int distance = pos.ChebyshevDistance(otherPos);

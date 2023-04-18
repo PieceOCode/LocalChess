@@ -31,7 +31,7 @@ namespace Chess
 
         public Vector3 GetWorldPosition(Vector2Int position)
         {
-            Assert.IsTrue(board.IsPositionValid(position));
+            Assert.IsTrue(board.IsPositionValid(position), "Position is not valid because it is outside of the board's bounds.");
             return new Vector3(position.x, position.y, transform.position.z);
         }
 

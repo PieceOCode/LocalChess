@@ -1,15 +1,11 @@
 using System.IO;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace Chess
 {
     public class CastleMove : Move
     {
-        public CastleMove(King king, Vector2Int from, Vector2Int to) : base(king, from, to)
-        {
-            Assert.IsTrue(!figureData.hasMoved);
-        }
+        public CastleMove(King king, Vector2Int from, Vector2Int to) : base(king, from, to) { }
 
         override public void Do(GameState gameState)
         {

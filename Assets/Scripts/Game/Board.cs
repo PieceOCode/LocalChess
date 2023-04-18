@@ -26,7 +26,7 @@ namespace Chess
         public Figure GetFigure(Vector2Int position)
         {
             if (!IsPositionValid(position)) throw new ArgumentOutOfRangeException("position");
-            Assert.IsNotNull(squares[position.x, position.y]);
+            Assert.IsNotNull(squares[position.x, position.y], "No figure exists on the board at the given position. Check if the position is not empty first.");
 
             return squares[position.x, position.y];
         }
@@ -34,8 +34,8 @@ namespace Chess
         public void SetFigureToSquare(Figure figure, Vector2Int position)
         {
             if (!IsPositionValid(position)) throw new ArgumentOutOfRangeException("position");
-            Assert.IsNotNull(figure);
-            Assert.IsTrue(SquareIsEmpty(position));
+            if (figure == null) throw new ArgumentNullException("figure");
+            Assert.IsTrue(SquareIsEmpty(position), "A figure already exists on the board at the given position. Check if the position is empty first.");
 
             squares[position.x, position.y] = figure;
         }
