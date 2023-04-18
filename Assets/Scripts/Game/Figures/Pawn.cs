@@ -59,19 +59,5 @@ namespace Chess
                 attackedPositions.Add(possiblePosition);
             }
         }
-
-        protected override void OnMove(Vector2Int oldPosition, Vector2Int newPosition)
-        {
-            // FEATURE: Implement UI that let's the player choose which kind of figure he wants. 
-            if (newPosition.y == 0 || newPosition.y == Board.Height - 1)
-            {
-                Board.RemoveFigureFromSquare(newPosition);
-
-                Queen queen = new Queen(newPosition, this.Color, this.GameState);
-                this.GameState.AddFigure(queen);
-
-                queen.Move(newPosition);
-            }
-        }
     }
 }

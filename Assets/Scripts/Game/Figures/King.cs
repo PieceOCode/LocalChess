@@ -97,22 +97,5 @@ namespace Chess
             }
             moveablePositions.RemoveAll((i) => attackedPositions.Contains(i));
         }
-
-        // Check if move is castle to move the corresponding rook
-        protected override void OnMove(Vector2Int oldPosition, Vector2Int newPosition)
-        {
-            base.OnMove(oldPosition, newPosition);
-            float direction = oldPosition.x - newPosition.x;
-            if (direction > 1)
-            {
-                Figure rook = Board.GetFigure(new Vector2Int(0, position.y));
-                rook.Move(new Vector2Int(3, position.y));
-            }
-            else if (direction < -1)
-            {
-                Figure rook = Board.GetFigure(new Vector2Int(7, position.y));
-                rook.Move(new Vector2Int(5, position.y));
-            }
-        }
     }
 }

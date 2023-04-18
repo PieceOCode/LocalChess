@@ -7,11 +7,11 @@ namespace Chess
 {
     public class Move
     {
-        private readonly FigureData figureData;
-        private readonly Vector2Int from;
-        private readonly Vector2Int to;
-        private bool kicked;
-        private FigureData kickedData;
+        protected readonly FigureData figureData;
+        protected readonly Vector2Int from;
+        protected readonly Vector2Int to;
+        protected bool kicked;
+        protected FigureData kickedData;
 
         public Move(Figure figure, Vector2Int from, Vector2Int to)
         {
@@ -20,8 +20,7 @@ namespace Chess
             this.to = to;
         }
 
-        // BUG: Because the rook uses only the figure.Move function his position is not updated anymore.
-        public void Execute(GameState gameState)
+        public virtual void Do(GameState gameState)
         {
             // Check if the specified figure exists and get it. 
             Board board = gameState.Board;
@@ -29,9 +28,7 @@ namespace Chess
             Figure figure = board.GetFigure(from);
             Assert.IsTrue(figure.GetType() == figureData.type
                 && figure.Color == figureData.color);
-
             Assert.IsTrue(figure.CanMoveTo(to));
-            board.RemoveFigureFromSquare(from);
 
             // Kick figure if square is blocked by enemy piece
             if (!board.SquareIsEmpty(to))
@@ -42,11 +39,10 @@ namespace Chess
                 gameState.RemoveFigure(board.GetFigure(to));
             }
 
-            board.SetFigureToSquare(figure, to);
-            figure.Move(to);
+            gameState.MoveFigure(figure, to);
         }
 
-        public void Undo(GameState gameState)
+        public virtual void Undo(GameState gameState)
         {
             // Preconditions
 
@@ -57,7 +53,7 @@ namespace Chess
             Assert.IsTrue(figure.GetType() == figureData.type
                 && figure.Color == figureData.color);
 
-            board.RemoveFigureFromSquare(to);
+            gameState.MoveFigure(figure, from);
 
             // Recreate figure if the moved kicked one.
             if (kicked)
@@ -65,22 +61,16 @@ namespace Chess
                 Figure kickedFigure = FigureData.CreateFigureFrom(kickedData, gameState);
                 gameState.AddFigure(kickedFigure);
             }
-
-            board.SetFigureToSquare(figure, from);
-            figure.Move(from);
         }
 
         public void Redo(GameState gameState)
         {
-            Execute(gameState);
+            Do(gameState);
         }
 
         // TODO: Resolve ambiguities by mentioning which square the piece moved from if needed.
-        // TODO: Add king and queen side casteling (O-O, O-O-O)
-        // TODO: Add Pawn promotions
         // TODO: Add check (+) or checkmate (#)
-        // TODO: Should castle and pawn promotions be subclasses?
-        public void Serialize(StreamWriter sw)
+        public virtual void Serialize(StreamWriter sw)
         {
             string figureText = ChessNotation.GetPieceNotation(figureData.type);
             sw.Write(figureText);

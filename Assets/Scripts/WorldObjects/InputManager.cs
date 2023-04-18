@@ -25,7 +25,19 @@ namespace Chess
             Debug.Log($"OnSqaureSelected in Board: on square {square.Position}");
             if (selectedFigure != null && selectedFigure.CanMoveTo(square.Position))
             {
-                Move move = new Move(selectedFigure, selectedFigure.Position, square.Position);
+                Move move = null;
+                if (selectedFigure is King && Vector2Int.Distance(selectedFigure.Position, square.Position) == 2)
+                {
+                    move = new CastleMove(selectedFigure as King, selectedFigure.Position, square.Position);
+                }
+                else if (selectedFigure is Pawn && (square.Position.y == 0 || square.Position.y == Board.Height - 1))
+                {
+                    move = new PawnPromotion(selectedFigure as Pawn, selectedFigure.Position, square.Position);
+                }
+                else
+                {
+                    move = new Move(selectedFigure, selectedFigure.Position, square.Position);
+                }
                 gameManager.ExecuteMove(move);
 
                 selectedFigure = null;

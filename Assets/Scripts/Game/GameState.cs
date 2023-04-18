@@ -82,6 +82,15 @@ namespace Chess
             }
         }
 
+        // Should this also kick a figure and return the kicked figure?
+        // TODO: Implement tests for this
+        public void MoveFigure(Figure figure, Vector2Int to)
+        {
+            board.RemoveFigureFromSquare(figure.Position);
+            board.SetFigureToSquare(figure, to);
+            figure.Move(to);
+        }
+
         public void SpawnFigures()
         {
             AddFigure(new Rook(new Vector2Int(0, 0), Color.White, this));
