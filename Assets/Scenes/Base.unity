@@ -413,7 +413,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9939a1703b1d2243962d325d27b760c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 1797114149}
   boardRepresentation: {fileID: 1980422166}
   pawnPrefab: {fileID: 2700866944818806476, guid: 90fea7d0e9cc59a4c818a40a76081c7c, type: 3}
   bishopPrefab: {fileID: 2470370464049628983, guid: 3890c3e1705e46a438046eb2c50329e9, type: 3}
@@ -463,6 +462,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnManager: {fileID: 1797114146}
+  boardRepresentation: {fileID: 1980422166}
 --- !u!1 &1980422163
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ namespace Chess
         [SerializeField]
         private Highlights highlights = default;
 
-        private Board Board => gameManager.Board;
+        private Board Board => gameManager.ActiveGame.Board;
         private Figure selectedFigure = null;
 
         public void RegisterSquare(SquareRepresentation square)
@@ -38,7 +38,7 @@ namespace Chess
                 {
                     move = new Move(selectedFigure, selectedFigure.Position, square.Position);
                 }
-                gameManager.ExecuteMove(move);
+                gameManager.ActiveGame.ExecuteMove(move);
 
                 selectedFigure = null;
                 UpdateHighlights();
@@ -46,7 +46,7 @@ namespace Chess
             else if (!Board.SquareIsEmpty(square.Position))
             {
                 selectedFigure = Board.GetFigure(square.Position);
-                if (selectedFigure.Color != gameManager.ActivePlayer)
+                if (selectedFigure.Color != gameManager.ActiveGame.ActivePlayer)
                 {
                     selectedFigure = null;
                 }

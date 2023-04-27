@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace Chess
 {
@@ -25,27 +24,30 @@ namespace Chess
         [SerializeField]
         private TMP_Text rankUIPrefab = default;
 
-        public int Width => board.Width;
-        public int Height => board.Height;
-        private Board board => gameManager.Board;
+        public int Width => width;
+        public int Height => height;
+
+        private int width = default;
+        private int height = default;
 
         public Vector3 GetWorldPosition(Vector2Int position)
         {
-            Assert.IsTrue(board.IsPositionValid(position), "Position is not valid because it is outside of the board's bounds.");
             return new Vector3(position.x, position.y, transform.position.z);
         }
 
-        void Start()
+        public void SpawnRepresentation(int width, int height)
         {
+            this.width = width;
+            this.height = height;
             SpawnSquares();
             SpawnRankAndFileTexts();
         }
 
         private void SpawnSquares()
         {
-            for (int x = 0; x < board.Width; x++)
+            for (int x = 0; x < width; x++)
             {
-                for (int y = 0; y < board.Height; y++)
+                for (int y = 0; y < height; y++)
                 {
                     SquareRepresentation square = Instantiate(squarePrefab, squareContainer);
 
@@ -63,7 +65,7 @@ namespace Chess
 
         private void SpawnRankAndFileTexts()
         {
-            for (int x = 0; x < board.Width; x++)
+            for (int x = 0; x < width; x++)
             {
                 TMP_Text fileUI = Instantiate(fileUIPrefab, transform);
                 fileUI.text = ChessNotation.GetFileNotation(x);
@@ -74,7 +76,7 @@ namespace Chess
                 fileUI.color = color == Color.White ? darkColor : brightColor;
             }
 
-            for (int y = 0; y < board.Height; y++)
+            for (int y = 0; y < height; y++)
             {
                 TMP_Text rankUI = Instantiate(rankUIPrefab);
                 rankUI.text = ChessNotation.GetRankNotation(y);
