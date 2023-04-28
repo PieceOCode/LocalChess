@@ -68,7 +68,7 @@ namespace Chess
             {
                 return CastleMove.Deserialize(moveText, game);
             }
-            else if (moveText == "1-0")
+            else if (new Regex(@"[01]-[01]").IsMatch(moveText))
             {
                 move = null; // Surrender move?
             }

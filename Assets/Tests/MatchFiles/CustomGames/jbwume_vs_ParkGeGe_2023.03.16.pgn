@@ -1,0 +1,20 @@
+[Event "Live Chess"]
+[Site "Chess.com"]
+[Date "2023.03.16"]
+[Round "?"]
+[White "jbwume"]
+[Black "ParkGeGe"]
+[Result "1-0"]
+[ECO "D00"]
+[WhiteElo "1066"]
+[BlackElo "1073"]
+[TimeControl "600"]
+[EndTime "13:17:28 PDT"]
+[Termination "jbwume won by resignation"]
+
+1. d4 d5 2. Nc3 Nf6 3. Bg5 h6 4. Bxf6 gxf6 5. h3 e5 6. dxe5 fxe5 7. Nxd5 Be6 8.
+Nc3 Qxd1+ 9. Rxd1 Nd7 10. Nf3 O-O-O 11. e4 Bb4 12. Be2 Nc5 13. O-O Bxc3 14. bxc3
+Nxe4 15. Rxd8+ Rxd8 16. c4 f6 17. Rd1 Nc3 18. Rxd8+ Kxd8 19. Bd3 c5 20. a3 Kc7
+21. Kf1 Kb6 22. Ke1 Ka5 23. Kd2 Na4 24. Nh4 Nb6 25. Kc3 Ka4 26. Ng6 Kxa3 27. Nf8
+Bf7 28. Be4 Na4+ 29. Kd3 b6 30. Nd7 Nb2+ 31. Kc3 Bxc4 32. Nxf6 Nd1+ 33. Kxc4
+Nxf2 34. Bc6 a6 35. Nd5 b5+ 36. Kxc5 Ne4+ 37. Kb6 b4 38. Kxa6 1-0

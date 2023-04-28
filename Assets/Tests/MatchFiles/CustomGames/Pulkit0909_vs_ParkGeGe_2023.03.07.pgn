@@ -1,0 +1,17 @@
+[Event "Live Chess"]
+[Site "Chess.com"]
+[Date "2023.03.07"]
+[Round "?"]
+[White "Pulkit0909"]
+[Black "ParkGeGe"]
+[Result "0-1"]
+[ECO "D20"]
+[WhiteElo "1061"]
+[BlackElo "1088"]
+[TimeControl "600"]
+[EndTime "3:18:26 PST"]
+[Termination "ParkGeGe won by checkmate"]
+
+1. d4 d5 2. c4 dxc4 3. Bf4 Nc6 4. Nf3 Bg4 5. e3 f6 6. Bxc4 e5 7. Bxg8 Rxg8 8.
+Bg3 Bb4+ 9. Nc3 e4 10. Qb3 Bxc3+ 11. bxc3 Rf8 12. Nh4 g5 13. Qxb7 Ne7 14. Bxc7
+Qc8 15. Qxe4 gxh4 16. Bd6 Qe6 17. Qxa8+ Qc8 18. Qxa7 Qxc3+ 19. Kf1 Qxa1# 0-1

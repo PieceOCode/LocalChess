@@ -1,0 +1,21 @@
+[Event "Live Chess"]
+[Site "Chess.com"]
+[Date "2023.03.07"]
+[Round "?"]
+[White "ParkGeGe"]
+[Black "M_Maahir"]
+[Result "0-1"]
+[ECO "B00"]
+[WhiteElo "1082"]
+[BlackElo "1193"]
+[TimeControl "600"]
+[EndTime "3:38:47 PST"]
+[Termination "M_Maahir won by checkmate"]
+
+1. d4 a6 2. e4 h6 3. Nf3 g5 4. Bc4 Bg7 5. c3 c6 6. Qb3 d5 7. exd5 cxd5 8. Bxd5
+e6 9. Bc4 Bd7 10. a4 Ra7 11. Be3 Nf6 12. O-O O-O 13. Nbd2 Nc6 14. Ne5 Ra8 15.
+Nxc6 Bxc6 16. Rad1 Nd5 17. Nf3 b5 18. axb5 axb5 19. Bxb5 Rb8 20. c4 Bxb5 21.
+cxb5 Qd7 22. Ne5 Bxe5 23. dxe5 Rxb5 24. Qa4 Qb7 25. Rb1 Ra8 26. Qd4 Rb4 27. Qd2
+Qb5 28. Ra1 Rba4 29. Rxa4 Rxa4 30. Rb1 Kg7 31. g3 Nb4 32. f4 Nd5 33. fxg5 h5 34.
+h3 Re4 35. Bf4 Re2 36. Qd4 Nb4 37. Qd8 Qc5+ 38. Kh1 Nd5 39. Rg1 Qf2 40. g4 Qf3+
+41. Rg2 Re1+ 42. Kh2 Qxf4+ 43. Rg3 Re2+ 44. Kg1 Qxg3+ 45. Kh1 Qh2# 0-1

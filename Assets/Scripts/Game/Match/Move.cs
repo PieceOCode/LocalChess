@@ -98,25 +98,42 @@ namespace Chess
             int rank = ChessNotation.GetRankNumber(rankCollection.Last().Value[0]);
 
             Vector2Int destination = new Vector2Int(file, rank);
-            // TODO: Implement pawn transformation
 
-            // TODO: Check if multiple figures are eglible. If yes find out which is meant here.
             IEnumerable<Figure> figures = game.GameState.Pieces.Where((fig) =>
                 fig.Color == game.ActivePlayer &&
                 fig.GetType() == type &&
                 fig.CanMoveTo(destination)
             );
 
-            if (fileCollection.Count > 1)
+            // If two figures of the same type can move to this tile, find out which one moved (specified by its rank or file e.g Nec3 or B3d4)
+            Figure figure;
+            if (figures.Count() > 1)
             {
-                Figure figure = figures.Where(fig => fig.Position.x == ChessNotation.GetFileNumber(fileCollection.First().Value[0])).First();
-                return new Move(figure, figure.Position, destination);
+                if (fileCollection.Count() > 1)
+                {
+                    figure = figures.Where(fig => fig.Position.x == ChessNotation.GetFileNumber(fileCollection.First().Value[0])).First();
+                }
+                else if (rankCollection.Count() > 1)
+                {
+                    figure = figures.Where(fig => fig.Position.x == ChessNotation.GetFileNumber(fileCollection.First().Value[0])).First();
+                }
+                else
+                {
+                    throw new Exception("If more than one figure can move to destination, the move should specify the rank or file of the figure that moved.");
+                }
             }
             else
             {
-                return new Move(figures.First(), figures.First().Position, destination);
+                figure = figures.First();
             }
 
+            // Check if the move is a pawn promotion.
+            if (moveText.Contains('='))
+            {
+                return new PawnPromotion(figure as Pawn, figure.Position, destination);
+            }
+
+            return new Move(figures.First(), figures.First().Position, destination);
         }
     }
 }
