@@ -41,7 +41,7 @@ namespace Chess
 
             if (Input.GetKeyDown(KeyCode.S))
             {
-                game.SerializeMatch();
+                MatchSerializer.SerializeMatch(game.Match, Application.persistentDataPath + "/match.pgn");
             }
 
             if (Input.GetKeyDown(KeyCode.R))

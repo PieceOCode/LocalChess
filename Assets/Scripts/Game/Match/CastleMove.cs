@@ -1,4 +1,4 @@
-using System.IO;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -61,15 +61,28 @@ namespace Chess
             }
         }
 
-        public override void Serialize(StreamWriter sw)
+        public override string Serialize()
         {
             if (IsQueensideCastle)
             {
-                sw.Write("O-O-O");
+                return "O-O-O";
             }
             else
             {
-                sw.Write("O-O");
+                return "O-O";
+            }
+        }
+
+        public static new CastleMove Deserialize(string moveText, Game game)
+        {
+            King king = game.GameState.ActivePlayer == Color.White ? game.GameState.WhiteKing : game.GameState.BlackKing;
+            if (moveText.Count(x => x == 'O') == 2)
+            {
+                return new CastleMove(king, king.Position, king.Position + Vector2Int.right * 2); // King-side castle
+            }
+            else
+            {
+                return new CastleMove(king, king.Position, king.Position + Vector2Int.left * 2); // Queen-side castle
             }
         }
     }

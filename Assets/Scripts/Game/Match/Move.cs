@@ -1,7 +1,9 @@
-using System.IO;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Assertions;
-
 
 namespace Chess
 {
@@ -64,19 +66,57 @@ namespace Chess
 
         // TODO: Resolve ambiguities by mentioning which square the piece moved from if needed.
         // TODO: Add check (+) or checkmate (#)
-        public virtual void Serialize(StreamWriter sw)
+        public virtual string Serialize()
         {
+            string serializedMove = "";
             string figureText = ChessNotation.GetPieceNotation(figureData.type);
-            sw.Write(figureText);
+            serializedMove += figureText;
             if (kicked)
             {
                 if (figureText.Length == 0)
                 {
-                    sw.Write(ChessNotation.GetFileNotation(from.x));
+                    serializedMove += ChessNotation.GetFileNotation(from.x);
                 }
-                sw.Write('x');
+                serializedMove += 'x';
             }
-            sw.Write(ChessNotation.GetSquareNotation(to));
+            serializedMove += ChessNotation.GetSquareNotation(to);
+            return serializedMove;
+        }
+
+        public static Move Deserialize(string moveText, Game game)
+        {
+            Type type = ChessNotation.GetTypeFromNotation(moveText[0]);
+            if (type == null)
+            {
+                type = typeof(Pawn);
+            }
+
+            MatchCollection fileCollection = new Regex(@"[a-h]").Matches(moveText);
+            int file = ChessNotation.GetFileNumber(fileCollection.Last().Value[0]);
+
+            MatchCollection rankCollection = new Regex(@"\d").Matches(moveText);
+            int rank = ChessNotation.GetRankNumber(rankCollection.Last().Value[0]);
+
+            Vector2Int destination = new Vector2Int(file, rank);
+            // TODO: Implement pawn transformation
+
+            // TODO: Check if multiple figures are eglible. If yes find out which is meant here.
+            IEnumerable<Figure> figures = game.GameState.Pieces.Where((fig) =>
+                fig.Color == game.ActivePlayer &&
+                fig.GetType() == type &&
+                fig.CanMoveTo(destination)
+            );
+
+            if (fileCollection.Count > 1)
+            {
+                Figure figure = figures.Where(fig => fig.Position.x == ChessNotation.GetFileNumber(fileCollection.First().Value[0])).First();
+                return new Move(figure, figure.Position, destination);
+            }
+            else
+            {
+                return new Move(figures.First(), figures.First().Position, destination);
+            }
+
         }
     }
 }

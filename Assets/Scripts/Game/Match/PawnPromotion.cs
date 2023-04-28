@@ -1,4 +1,3 @@
-using System.IO;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -33,10 +32,10 @@ namespace Chess
             base.Undo(gameState);
         }
 
-        public override void Serialize(StreamWriter sw)
+        public override string Serialize()
         {
-            base.Serialize(sw);
-            sw.Write("=Q");
+            string s = base.Serialize();
+            return s + "=Q";
         }
     }
 }

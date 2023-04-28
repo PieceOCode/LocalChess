@@ -13,8 +13,10 @@ namespace Chess
 
         public Board Board { get { return gameState.Board; } }
         public Color ActivePlayer => gameState.ActivePlayer;
+        public Match Match => match;
+        public GameState GameState => gameState;
 
-        private readonly Match match;
+        private Match match;
         private readonly GameState gameState;
 
         public Game()
@@ -57,14 +59,9 @@ namespace Chess
             gameState.SwitchActivePlayer();
         }
 
-        public void SerializeMatch()
-        {
-            match.Serialize();
-        }
-
         public void DeserializeMatch()
         {
-            match.Deserialize();
+            match = MatchSerializer.DeserializeMatch(Application.persistentDataPath + "/Jose Raul Capablanca_vs_Vladas Mikenas_1939. . .pgn");
         }
 
         private void UpdateGameState()
