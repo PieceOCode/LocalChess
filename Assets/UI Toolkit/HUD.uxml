@@ -1,0 +1,14 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/HUD.uss?fileID=7433441132597879392&amp;guid=aada62e822b8837418ca7a5991457f5d&amp;type=3#HUD" />
+    <ui:VisualElement style="position: absolute; right: 0; width: 20%; height: 100%; background-color: rgb(41, 41, 41);">
+        <ui:Button text="Restart" display-tooltip-when-elided="true" name="restart-button" class="button" />
+        <ui:VisualElement style="flex-direction: row;">
+            <ui:Button text="Undo" display-tooltip-when-elided="true" name="undo-button" class="button" style="flex-grow: 1;" />
+            <ui:Button text="Redo" display-tooltip-when-elided="true" name="redo-button" class="button" style="flex-grow: 1;" />
+        </ui:VisualElement>
+        <ui:VisualElement style="flex-direction: row;">
+            <ui:Button text="Save" display-tooltip-when-elided="true" name="save-button" class="button" style="flex-grow: 1;" />
+            <ui:Button text="Load" display-tooltip-when-elided="true" name="load-button" class="button" style="flex-grow: 1;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

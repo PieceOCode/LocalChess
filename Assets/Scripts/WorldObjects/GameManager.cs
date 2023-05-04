@@ -25,31 +25,6 @@ namespace Chess
             boardRepresentation.SpawnRepresentation(game.Board.Width, game.Board.Height);
         }
 
-        // FEATURE: Implement proper debug menu
-        private void Update()
-        {
-            // BUG: Only switch active player if undo was successful
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                game.Undo();
-            }
-
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                game.Redo();
-            }
-
-            if (Input.GetKeyDown(KeyCode.S))
-            {
-                MatchSerializer.SerializeMatch(game.Match, Application.persistentDataPath + "/match.pgn");
-            }
-
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                game.DeserializeMatch();
-            }
-        }
-
         private void UpdateRepresentation(List<Figure> pieces)
         {
             spawnManager.ClearRepresentations();
@@ -57,6 +32,38 @@ namespace Chess
             {
                 spawnManager.CreateRepresentation(figure);
             }
+        }
+
+        public void Restart()
+        {
+            game.OnMoveCompletedEvent -= UpdateRepresentation;
+
+            game = new Game();
+            game.OnMoveCompletedEvent += UpdateRepresentation;
+            game.StartGame();
+        }
+
+        // BUG: Only switch active player if undo was successful
+        public void Undo()
+        {
+            game.Undo();
+        }
+
+        // BUG: Only switch active player if undo was successful
+        public void Redo()
+        {
+            game.Redo();
+        }
+
+        public void LoadGame()
+        {
+            Restart();
+            game.DeserializeMatch();
+        }
+
+        public void SaveGame()
+        {
+            MatchSerializer.SerializeMatch(game.Match, Application.persistentDataPath + "/match.pgn");
         }
     }
 }
