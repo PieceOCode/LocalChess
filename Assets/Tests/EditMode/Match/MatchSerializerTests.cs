@@ -36,7 +36,10 @@ public class MatchSerializerTest
         string[] files = Directory.GetFiles(Application.dataPath + "/Tests/MatchFiles/CustomGames");
         foreach (string file in files)
         {
-            Assert.DoesNotThrow(() => MatchSerializer.DeserializeMatch(file));
+            if (file.EndsWith(".pgn"))
+            {
+                Assert.DoesNotThrow(() => MatchSerializer.DeserializeMatch(file));
+            }
         }
     }
 }

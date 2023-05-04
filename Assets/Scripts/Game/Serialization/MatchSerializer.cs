@@ -40,24 +40,17 @@ namespace Chess
                 string line = ReadMetaData(sr);
 
                 MatchCollection movesMatches = SplitMoves(sr, line);
-                try
+                foreach (System.Text.RegularExpressions.Match moveMatch in movesMatches)
                 {
-                    foreach (System.Text.RegularExpressions.Match moveMatch in movesMatches)
+                    Move move = CreateMove(game, moveMatch.Value);
+                    if (move != null)
                     {
-                        Move move = CreateMove(game, moveMatch.Value);
-                        if (move != null)
-                        {
-                            game.ExecuteMove(move);
-                        }
+                        game.ExecuteMove(move);
                     }
                 }
-                catch
-                {
 
-                    game.Match.SetIndex(0);
-                    return game.Match;
-                }
-                return null;
+                game.Match.SetIndex(0);
+                return game.Match;
             }
         }
 

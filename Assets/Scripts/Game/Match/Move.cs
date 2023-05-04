@@ -111,11 +111,13 @@ namespace Chess
             {
                 if (fileCollection.Count() > 1)
                 {
-                    figure = figures.Where(fig => fig.Position.x == ChessNotation.GetFileNumber(fileCollection.First().Value[0])).First();
+                    int fileNumber = ChessNotation.GetFileNumber(fileCollection.First().Value[0]);
+                    figure = figures.Where(fig => fig.Position.x == fileNumber).First();
                 }
                 else if (rankCollection.Count() > 1)
                 {
-                    figure = figures.Where(fig => fig.Position.x == ChessNotation.GetFileNumber(fileCollection.First().Value[0])).First();
+                    int rankNumber = ChessNotation.GetRankNumber(rankCollection.First().Value[0]);
+                    figure = figures.Where(fig => fig.Position.y == rankNumber).First();
                 }
                 else
                 {
@@ -133,7 +135,7 @@ namespace Chess
                 return new PawnPromotion(figure as Pawn, figure.Position, destination);
             }
 
-            return new Move(figures.First(), figures.First().Position, destination);
+            return new Move(figure, figure.Position, destination);
         }
     }
 }
