@@ -10,6 +10,8 @@ namespace Chess
     {
         [SerializeField]
         private BoardRepresentation boardRepresentation = null;
+        [SerializeField]
+        private GameManager gameManager = null;
 
         [Header("Figure Prefabs")]
         [SerializeField]
@@ -28,7 +30,26 @@ namespace Chess
 
         private List<FigureRepresentation> figures = new List<FigureRepresentation>();
 
-        public void ClearRepresentations()
+        private void Awake()
+        {
+            gameManager.OnGameStateChanged += OnGameStateChanged;
+        }
+
+        private void OnDestroy()
+        {
+            gameManager.OnGameStateChanged -= OnGameStateChanged;
+        }
+
+        private void OnGameStateChanged(Match match, GameState gameState)
+        {
+            ClearRepresentations();
+            foreach (var f in gameState.Pieces)
+            {
+                CreateRepresentation(f);
+            }
+        }
+
+        private void ClearRepresentations()
         {
             foreach (FigureRepresentation figure in figures)
             {
@@ -37,7 +58,7 @@ namespace Chess
             figures.Clear();
         }
 
-        public void CreateRepresentation(Figure figure)
+        private void CreateRepresentation(Figure figure)
         {
             FigureRepresentation figureRepresentation = Instantiate(GetPrefab(figure));
             figureRepresentation.transform.position = boardRepresentation.GetWorldPosition(figure.Position);

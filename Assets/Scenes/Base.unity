@@ -295,6 +295,7 @@ GameObject:
   - component: {fileID: 946448871}
   - component: {fileID: 946448870}
   - component: {fileID: 946448872}
+  - component: {fileID: 946448873}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -343,6 +344,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0050a1a2de502904eb0cd1b09a5f68e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 1797114149}
+--- !u!114 &946448873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 946448869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 392121f05818626438d31d05308ae219, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 1797114149}
@@ -453,9 +467,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1797114147}
-  - component: {fileID: 1797114146}
-  - component: {fileID: 1797114148}
   - component: {fileID: 1797114149}
+  - component: {fileID: 1797114148}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -463,25 +476,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1797114146
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1797114145}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9939a1703b1d2243962d325d27b760c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  boardRepresentation: {fileID: 1980422166}
-  pawnPrefab: {fileID: 2700866944818806476, guid: 90fea7d0e9cc59a4c818a40a76081c7c, type: 3}
-  bishopPrefab: {fileID: 2470370464049628983, guid: 3890c3e1705e46a438046eb2c50329e9, type: 3}
-  knightPrefab: {fileID: 716555329560638612, guid: 56b6dd069f856c141a34d08aabe3f251, type: 3}
-  rookPrefab: {fileID: 3524389840036646283, guid: e8f91e735c111ea4ea80914b581fa414, type: 3}
-  queenPrefab: {fileID: 5899205688595558737, guid: 8d24163b71fca764ba69115b0753db16, type: 3}
-  kingPrefab: {fileID: 4231219598407764734, guid: 86a2b52d1bd418042b6207ba7ec46fc8, type: 3}
 --- !u!4 &1797114147
 Transform:
   m_ObjectHideFlags: 0
@@ -523,8 +517,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49a902ec440003748af78d6373c8a07e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnManager: {fileID: 1797114146}
-  boardRepresentation: {fileID: 1980422166}
 --- !u!1 &1980422163
 GameObject:
   m_ObjectHideFlags: 0
@@ -535,6 +527,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1980422165}
   - component: {fileID: 1980422166}
+  - component: {fileID: 1980422167}
   m_Layer: 0
   m_Name: Board
   m_TagString: Untagged
@@ -579,3 +572,23 @@ MonoBehaviour:
   squareContainer: {fileID: 1195169428}
   fileUIPrefab: {fileID: 4430852760287227857, guid: d5de28f943dc486438f1704acc4270f9, type: 3}
   rankUIPrefab: {fileID: 4869723702112181908, guid: 7e8c3eef51df14947b1d1eaafabdcec8, type: 3}
+--- !u!114 &1980422167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1980422163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9939a1703b1d2243962d325d27b760c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boardRepresentation: {fileID: 1980422166}
+  gameManager: {fileID: 1797114149}
+  pawnPrefab: {fileID: 2700866944818806476, guid: 90fea7d0e9cc59a4c818a40a76081c7c, type: 3}
+  bishopPrefab: {fileID: 2470370464049628983, guid: 3890c3e1705e46a438046eb2c50329e9, type: 3}
+  knightPrefab: {fileID: 716555329560638612, guid: 56b6dd069f856c141a34d08aabe3f251, type: 3}
+  rookPrefab: {fileID: 3524389840036646283, guid: e8f91e735c111ea4ea80914b581fa414, type: 3}
+  queenPrefab: {fileID: 5899205688595558737, guid: 8d24163b71fca764ba69115b0753db16, type: 3}
+  kingPrefab: {fileID: 4231219598407764734, guid: 86a2b52d1bd418042b6207ba7ec46fc8, type: 3}

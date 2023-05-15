@@ -5,3 +5,7 @@ VisualElement {
     height: 40px;
     font-size: 20px;
 }
+
+.unity-list-view__empty-label {
+    display: none;
+}

@@ -8,10 +8,8 @@ namespace Chess
     /// </summary>
     public sealed class GameManager : MonoBehaviour
     {
-        [SerializeField]
-        private FigureSpawner spawnManager = default;
-        [SerializeField]
-        private BoardRepresentation boardRepresentation = default;
+        public delegate void GameStateChanged(Match match, GameState state);
+        public event GameStateChanged OnGameStateChanged;
 
         public Game ActiveGame => game;
         private Game game;
@@ -19,37 +17,38 @@ namespace Chess
         private void Awake()
         {
             game = new Game();
-            game.OnMoveCompletedEvent += UpdateRepresentation;
-            game.StartGame();
-
-            boardRepresentation.SpawnRepresentation(game.Board.Width, game.Board.Height);
+            game.OnMoveCompletedEvent += OnMoveCompleted;
         }
 
-        private void UpdateRepresentation(List<Figure> pieces)
+        private void Start()
         {
-            spawnManager.ClearRepresentations();
-            foreach (Figure figure in pieces)
-            {
-                spawnManager.CreateRepresentation(figure);
-            }
+            game.StartGame();
+        }
+
+        private void OnDestroy()
+        {
+            game.OnMoveCompletedEvent -= OnMoveCompleted;
+        }
+
+        private void OnMoveCompleted(List<Figure> figures)
+        {
+            OnGameStateChanged?.Invoke(ActiveGame.Match, ActiveGame.GameState);
         }
 
         public void Restart()
         {
-            game.OnMoveCompletedEvent -= UpdateRepresentation;
+            game.OnMoveCompletedEvent -= OnMoveCompleted;
 
             game = new Game();
-            game.OnMoveCompletedEvent += UpdateRepresentation;
+            game.OnMoveCompletedEvent += OnMoveCompleted;
             game.StartGame();
         }
 
-        // BUG: Only switch active player if undo was successful
         public void Undo()
         {
             game.Undo();
         }
 
-        // BUG: Only switch active player if undo was successful
         public void Redo()
         {
             game.Redo();
@@ -59,6 +58,7 @@ namespace Chess
         {
             Restart();
             game.DeserializeMatch();
+            game.StartGame();
         }
 
         public void SaveGame()

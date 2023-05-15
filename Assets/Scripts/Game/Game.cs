@@ -32,6 +32,7 @@ namespace Chess
             OnMoveCompletedEvent?.Invoke(gameState.Pieces);
         }
 
+        // BUG: Only switch active player if undo was successful
         public void Redo()
         {
             match.Redo(gameState);
@@ -40,6 +41,7 @@ namespace Chess
             OnMoveCompletedEvent?.Invoke(gameState.Pieces);
         }
 
+        // BUG: Only switch active player if undo was successful
         public void Undo()
         {
             match.Undo(gameState);
@@ -61,7 +63,7 @@ namespace Chess
 
         public void DeserializeMatch()
         {
-            match = MatchSerializer.DeserializeMatch(Application.persistentDataPath + "/Jose Raul Capablanca_vs_Vladas Mikenas_1939. . .pgn");
+            match = MatchSerializer.DeserializeMatch(Application.persistentDataPath + "/match.pgn");
         }
 
         private void UpdateGameState()

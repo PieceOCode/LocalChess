@@ -35,6 +35,12 @@ namespace Chess
             return new Vector3(position.x, position.y, transform.position.z);
         }
 
+        private void Start()
+        {
+            Board board = gameManager.ActiveGame.Board;
+            SpawnRepresentation(board.Width, board.Height);
+        }
+
         public void SpawnRepresentation(int width, int height)
         {
             this.width = width;

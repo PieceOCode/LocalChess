@@ -2,6 +2,7 @@
     "name": "UI",
     "rootNamespace": "Chess.UI",
     "references": [
+        "GUID:4d905406ca168a143874f25b0f537e92",
         "GUID:fe6c3e14d9c846a42a52456b2471d9a5"
     ],
     "includePlatforms": [],
