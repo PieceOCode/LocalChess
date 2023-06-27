@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Chess
@@ -61,6 +62,7 @@ namespace Chess
         private void CreateRepresentation(Figure figure)
         {
             FigureRepresentation figureRepresentation = Instantiate(GetPrefab(figure));
+            figureRepresentation.position = figure.Position;
             figureRepresentation.transform.position = boardRepresentation.GetWorldPosition(figure.Position);
             figureRepresentation.SetColor(figure.Color);
             figures.Add(figureRepresentation);
@@ -75,6 +77,11 @@ namespace Chess
             else if (figure.GetType() == typeof(Queen)) { return queenPrefab; }
             else if (figure.GetType() == typeof(King)) { return kingPrefab; }
             else return null;
+        }
+
+        public FigureRepresentation GetFigureRepresentation(Vector2Int position)
+        {
+            return figures.Where((figure) => figure.position.x == position.x && figure.position.y == position.y).FirstOrDefault();
         }
     }
 }

@@ -62,7 +62,6 @@ namespace Chess
                     UnityEngine.Color squareColor = color == Color.White ? brightColor : darkColor;
 
                     square.SetSquare(pos, squareColor);
-                    inputManager.RegisterSquare(square);
 
                     square.transform.position = GetWorldPosition(pos);
                 }

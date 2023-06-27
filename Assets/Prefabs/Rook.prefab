@@ -214,5 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d77a9f297545d7143b4d2100a97cbe55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  whiteSprite: {fileID: 2280401102847210955}
-  blackSprite: {fileID: 1709582182713885240}
+  whiteSprite: {fileID: 3007809791913453632}
+  blackSprite: {fileID: 4300615179022266807}
+  hightlightedSortingOrder: 10
+  position: {x: 0, y: 0}

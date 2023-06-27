@@ -46,8 +46,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d77a9f297545d7143b4d2100a97cbe55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  whiteSprite: {fileID: 2571210281947727638}
-  blackSprite: {fileID: 2260296166607332154}
+  whiteSprite: {fileID: 8350819853727750384}
+  blackSprite: {fileID: 7928784239145454281}
+  hightlightedSortingOrder: 10
+  position: {x: 0, y: 0}
 --- !u!1 &2260296166607332154
 GameObject:
   m_ObjectHideFlags: 0
