@@ -6,6 +6,7 @@ namespace Chess
     public class Match
     {
         public List<Move> Moves => moves;
+        public int CurrentIndex => currentIndex;
 
         private readonly List<Move> moves = new List<Move>();
         private int currentIndex = 0;
@@ -38,5 +39,4 @@ namespace Chess
             this.currentIndex = index;
         }
     }
-
 }

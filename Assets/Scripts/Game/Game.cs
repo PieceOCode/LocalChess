@@ -32,22 +32,26 @@ namespace Chess
             OnMoveCompletedEvent?.Invoke(gameState.Pieces);
         }
 
-        // BUG: Only switch active player if undo was successful
         public void Redo()
         {
-            match.Redo(gameState);
-            SwitchActivePlayer();
-            UpdateGameState();
-            OnMoveCompletedEvent?.Invoke(gameState.Pieces);
+            if (match.CurrentIndex < match.Moves.Count)
+            {
+                match.Redo(gameState);
+                SwitchActivePlayer();
+                UpdateGameState();
+                OnMoveCompletedEvent?.Invoke(gameState.Pieces);
+            }
         }
 
-        // BUG: Only switch active player if undo was successful
         public void Undo()
         {
-            match.Undo(gameState);
-            SwitchActivePlayer();
-            UpdateGameState();
-            OnMoveCompletedEvent?.Invoke(gameState.Pieces);
+            if (match.CurrentIndex > 0)
+            {
+                match.Undo(gameState);
+                SwitchActivePlayer();
+                UpdateGameState();
+                OnMoveCompletedEvent?.Invoke(gameState.Pieces);
+            }
         }
 
         public void ExecuteMove(Move move)

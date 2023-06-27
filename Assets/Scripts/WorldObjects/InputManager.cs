@@ -76,6 +76,10 @@ namespace Chess
                     selectedFigure = null;
                 }
             }
+            else
+            {
+                selectedFigure = null;
+            }
 
             UpdateHighlights();
         }
