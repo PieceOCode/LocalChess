@@ -13,6 +13,7 @@ namespace Chess
     {
         public List<Figure> WhitePieces => whitePieces;
         public List<Figure> BlackPieces => blackPieces;
+        public List<Figure> DeadPieces => deadPieces;
         public List<Figure> Pieces => whitePieces.Concat(blackPieces).ToList();
         public King WhiteKing => whitePieces.Where(piece => piece is King).FirstOrDefault() as King;
         public King BlackKing => blackPieces.Where(piece => piece is King).FirstOrDefault() as King;
@@ -24,6 +25,7 @@ namespace Chess
         private readonly Board board;
         private readonly List<Figure> whitePieces = new List<Figure>();
         private readonly List<Figure> blackPieces = new List<Figure>();
+        private readonly List<Figure> deadPieces = new List<Figure>();
 
         public GameState()
         {
@@ -80,6 +82,7 @@ namespace Chess
             {
                 blackPieces.Remove(figure);
             }
+            deadPieces.Add(figure);
         }
 
         // Should this also kick a figure and return the kicked figure?

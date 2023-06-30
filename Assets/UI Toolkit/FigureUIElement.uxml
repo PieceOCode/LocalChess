@@ -1,3 +1,3 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <ui:VisualElement style="background-image: url(&apos;project://database/Assets/Sprites/Pieces.png?fileID=-255718854&amp;guid=ec2dddbc7b3827f4f87b2be8c3e6ad6e&amp;type=3#Pieces_5&apos;); width: 100%; height: 100%; -unity-background-scale-mode: scale-to-fit;" />
+    <ui:VisualElement name="figure_element-image" style="background-image: url(&apos;project://database/Assets/Sprites/Pieces.png?fileID=-255718854&amp;guid=ec2dddbc7b3827f4f87b2be8c3e6ad6e&amp;type=3#Pieces_5&apos;); -unity-background-scale-mode: scale-to-fit; height: 30px; width: 30px; margin-top: 2px; margin-bottom: 2px; margin-right: 2px; margin-left: 2px;" />
 </ui:UXML>

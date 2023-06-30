@@ -8,6 +8,7 @@ namespace Chess.UI
         public SquarePlaceholder()
         {
             this.RegisterCallback<GeometryChangedEvent>(OnGeometryChanged);
+            this.style.flexShrink = 0;
         }
 
         public new class UxmlFactory : UxmlFactory<SquarePlaceholder> { }

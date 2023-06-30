@@ -1,34 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:Template name="FigureUIElement" src="project://database/Assets/UI%20Toolkit/FigureUIElement.uxml?fileID=9197481963319205126&amp;guid=6539bf8f95b4a444c9c2c299490d92a0&amp;type=3#FigureUIElement" />
-    <ui:VisualElement name="black-score" style="flex-direction: row; -unity-text-align: middle-left; display: none;">
-        <ui:Instance template="FigureUIElement" name="FigureUIElement" style="width: 60px; height: 60px;" />
-        <ui:VisualElement name="FigureUIElement" style="width: 60px; height: 60px;">
-            <ui:VisualElement style="background-image: url(&apos;project://database/Assets/Sprites/Pieces.png?fileID=-1091324761&amp;guid=ec2dddbc7b3827f4f87b2be8c3e6ad6e&amp;type=3#Pieces_7&apos;); width: 100%; height: 100%; -unity-background-scale-mode: scale-to-fit;" />
-        </ui:VisualElement>
-        <ui:VisualElement name="FigureUIElement" style="width: 60px; height: 60px;">
-            <ui:VisualElement style="background-image: url(&apos;project://database/Assets/Sprites/Pieces.png?fileID=-763760527&amp;guid=ec2dddbc7b3827f4f87b2be8c3e6ad6e&amp;type=3#Pieces_2&apos;); width: 100%; height: 100%; -unity-background-scale-mode: scale-to-fit;" />
-        </ui:VisualElement>
-        <ui:VisualElement name="FigureUIElement" style="width: 60px; height: 60px;">
-            <ui:VisualElement style="background-image: url(&apos;project://database/Assets/Sprites/Pieces.png?fileID=1153752657&amp;guid=ec2dddbc7b3827f4f87b2be8c3e6ad6e&amp;type=3#Pieces_4&apos;); width: 100%; height: 100%; -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(255, 255, 255);" />
-        </ui:VisualElement>
-        <ui:VisualElement style="justify-content: center;">
-            <ui:Label tabindex="-1" text="+3" display-tooltip-when-elided="true" style="font-size: 30px;" />
-        </ui:VisualElement>
-    </ui:VisualElement>
+    <ui:Template name="score" src="project://database/Assets/UI%20Toolkit/Score.uxml?fileID=9197481963319205126&amp;guid=d94f592b6b6d48f45aec4a97c7e1acb0&amp;type=3#Score" />
+    <ui:Instance template="score" name="white-score" />
     <ui:ListView focusable="true" name="moves-list-view" show-alternating-row-backgrounds="ContentOnly" style="flex-grow: 1;" />
-    <ui:VisualElement name="white-score" style="flex-direction: row; -unity-text-align: middle-left; display: none;">
-        <ui:Instance template="FigureUIElement" name="FigureUIElement" style="width: 60px; height: 60px;" />
-        <ui:VisualElement name="FigureUIElement" style="width: 60px; height: 60px;">
-            <ui:VisualElement style="background-image: url(&apos;project://database/Assets/Sprites/Pieces.png?fileID=-1091324761&amp;guid=ec2dddbc7b3827f4f87b2be8c3e6ad6e&amp;type=3#Pieces_7&apos;); width: 100%; height: 100%; -unity-background-scale-mode: scale-to-fit;" />
-        </ui:VisualElement>
-        <ui:VisualElement name="FigureUIElement" style="width: 60px; height: 60px;">
-            <ui:VisualElement style="background-image: url(&apos;project://database/Assets/Sprites/Pieces.png?fileID=-763760527&amp;guid=ec2dddbc7b3827f4f87b2be8c3e6ad6e&amp;type=3#Pieces_2&apos;); width: 100%; height: 100%; -unity-background-scale-mode: scale-to-fit;" />
-        </ui:VisualElement>
-        <ui:VisualElement name="FigureUIElement" style="width: 60px; height: 60px;">
-            <ui:VisualElement style="background-image: url(&apos;project://database/Assets/Sprites/Pieces.png?fileID=1153752657&amp;guid=ec2dddbc7b3827f4f87b2be8c3e6ad6e&amp;type=3#Pieces_4&apos;); width: 100%; height: 100%; -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(255, 255, 255);" />
-        </ui:VisualElement>
-        <ui:VisualElement style="justify-content: center;">
-            <ui:Label tabindex="-1" text="+3" display-tooltip-when-elided="true" style="font-size: 30px;" />
-        </ui:VisualElement>
-    </ui:VisualElement>
+    <ui:Instance template="score" name="black-score" />
 </ui:UXML>

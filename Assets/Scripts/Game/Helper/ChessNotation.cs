@@ -65,5 +65,15 @@ namespace Chess
             else if (c == 'K') return typeof(King);
             else return null;
         }
+
+        public static int GetFigureValue(Figure figure)
+        {
+            if (figure.GetType() == typeof(Pawn)) return 1;
+            if (figure.GetType() == typeof(Knight)) return 3;
+            if (figure.GetType() == typeof(Bishop)) return 3;
+            if (figure.GetType() == typeof(Rook)) return 5;
+            if (figure.GetType() == typeof(Queen)) return 9;
+            return 0;
+        }
     }
 }
