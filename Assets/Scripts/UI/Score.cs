@@ -20,6 +20,8 @@ namespace Chess.UI
 
         [Header("Figure Sprites")]
         [SerializeField]
+        private FigureSpritesSO figureSprites = default;
+        [SerializeField]
         private Sprite pawnSprite = default;
         [SerializeField]
         private Sprite knightSprite = default;
@@ -73,12 +75,7 @@ namespace Chess.UI
             {
                 if (figure.Color != color)
                 {
-                    Sprite sprite = pawnSprite;
-                    if (figure.GetType() == typeof(Knight)) sprite = knightSprite;
-                    else if (figure.GetType() == typeof(Bishop)) sprite = bishopSprite;
-                    else if (figure.GetType() == typeof(Rook)) sprite = rookSprite;
-                    else if (figure.GetType() == typeof(Queen)) sprite = queenSprite;
-
+                    Sprite sprite = figureSprites.GetSprite(figure);
                     var figureElement = figureElementTemplate.CloneTree();
                     VisualElement image = figureElement.Q<VisualElement>(figureImageName);
                     image.style.backgroundImage = new StyleBackground(sprite);
