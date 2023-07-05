@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -5,7 +6,16 @@ namespace Chess
 {
     public class PawnPromotion : Move
     {
-        public PawnPromotion(Pawn figure, Vector2Int from, Vector2Int to) : base(figure, from, to) { }
+        private readonly FigureData promotedFigureData;
+
+        public PawnPromotion(Pawn figure, Type promotedFigureType, Vector2Int from, Vector2Int to) : base(figure, from, to)
+        {
+            Assert.IsTrue(promotedFigureType == typeof(Bishop)
+                || promotedFigureType == typeof(Knight)
+                || promotedFigureType == typeof(Rook)
+                || promotedFigureType == typeof(Queen));
+            this.promotedFigureData = new FigureData(promotedFigureType, figure.Color, to, true);
+        }
 
         public override void Do(GameState gameState)
         {
@@ -15,9 +25,9 @@ namespace Chess
             Assert.IsTrue(pawn is Pawn && pawn.Color == figureData.color);
             gameState.RemoveFigure(pawn);
 
-            Queen queen = new Queen(to, figureData.color, gameState);
-            gameState.AddFigure(queen);
-            queen.Move(to);
+            Figure promotedFigure = FigureData.CreateFigureFrom(promotedFigureData, gameState);
+            gameState.AddFigure(promotedFigure);
+            promotedFigure.Move(to);
         }
 
         public override void Undo(GameState gameState)
@@ -35,7 +45,7 @@ namespace Chess
         public override string Serialize()
         {
             string s = base.Serialize();
-            return s + "=Q";
+            return s + "=" + ChessNotation.GetPieceNotation(promotedFigureData.type);
         }
     }
 }

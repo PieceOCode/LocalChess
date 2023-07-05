@@ -6,8 +6,10 @@ using UnityEngine.UIElements;
 
 namespace Chess.UI
 {
-    public class MovesList : MonoBehaviour
+    public class MovesListController : MonoBehaviour
     {
+        private const string movesListID = "moves-list-view";
+
         [SerializeField]
         private GameManager gameManager = default;
         [SerializeField]
@@ -20,7 +22,7 @@ namespace Chess.UI
         {
             gameManager.OnGameStateChanged += OnGameStateChanged;
 
-            movesListView = rootUIDocument.rootVisualElement.Q<ListView>("moves-list-view");
+            movesListView = rootUIDocument.rootVisualElement.Q<ListView>(movesListID);
 
             Func<VisualElement> makeItem = () => new Label();
             movesListView.makeItem = makeItem;

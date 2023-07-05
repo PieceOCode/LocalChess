@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Chess
 {
@@ -9,6 +10,15 @@ namespace Chess
         public readonly Color color;
         public readonly Vector2Int position;
         public readonly bool hasMoved;
+
+        public FigureData(Type type, Color color, Vector2Int position, bool hasMoved)
+        {
+            Assert.IsTrue(type.IsSubclassOf(typeof(Figure)));
+            this.type = type;
+            this.color = color;
+            this.position = position;
+            this.hasMoved = hasMoved;
+        }
 
         public FigureData(Figure figure)
         {

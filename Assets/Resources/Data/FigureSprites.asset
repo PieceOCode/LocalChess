@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FigureSprites
   m_EditorClassIdentifier: 
   whitePawn: {fileID: -255718854, guid: ec2dddbc7b3827f4f87b2be8c3e6ad6e, type: 3}
-  whiteKnight: {fileID: -763760527, guid: ec2dddbc7b3827f4f87b2be8c3e6ad6e, type: 3}
+  whiteKnight: {fileID: 1054475016, guid: ec2dddbc7b3827f4f87b2be8c3e6ad6e, type: 3}
   whiteBishop: {fileID: -763760527, guid: ec2dddbc7b3827f4f87b2be8c3e6ad6e, type: 3}
   whiteRook: {fileID: 1153752657, guid: ec2dddbc7b3827f4f87b2be8c3e6ad6e, type: 3}
   whiteQueen: {fileID: -1892177607, guid: ec2dddbc7b3827f4f87b2be8c3e6ad6e, type: 3}

@@ -64,6 +64,11 @@ namespace Chess
             Do(gameState);
         }
 
+        public override string ToString()
+        {
+            return Serialize();
+        }
+
         // TODO: Resolve ambiguities by mentioning which square the piece moved from if needed.
         // TODO: Add check (+) or checkmate (#)
         public virtual string Serialize()
@@ -106,7 +111,7 @@ namespace Chess
             );
 
             // If two figures of the same type can move to this tile, find out which one moved (specified by its rank or file e.g Nec3 or B3d4)
-            Figure figure;
+            Figure figure = figures.First();
             if (figures.Count() > 1)
             {
                 if (fileCollection.Count() > 1)
@@ -124,15 +129,14 @@ namespace Chess
                     throw new Exception("If more than one figure can move to destination, the move should specify the rank or file of the figure that moved.");
                 }
             }
-            else
-            {
-                figure = figures.First();
-            }
 
             // Check if the move is a pawn promotion.
             if (moveText.Contains('='))
             {
-                return new PawnPromotion(figure as Pawn, figure.Position, destination);
+                MatchCollection promotedFigureCollection = new Regex(@"[N, B, R, Q]", RegexOptions.IgnoreCase).Matches(moveText);
+                Assert.IsTrue(promotedFigureCollection.Count() == 1, "A pawn promotion move should not contain more than one of the letters [N,B,R,Q].");
+                Type figureType = ChessNotation.GetTypeFromNotation(promotedFigureCollection.Last().Value[0]);
+                return new PawnPromotion(figure as Pawn, figureType, figure.Position, destination);
             }
 
             return new Move(figure, figure.Position, destination);

@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 namespace Chess.UI
 {
-    public class Score : MonoBehaviour
+    public class ScoreController : MonoBehaviour
     {
         [SerializeField]
         VisualTreeAsset figureElementTemplate = default;

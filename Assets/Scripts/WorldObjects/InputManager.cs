@@ -1,3 +1,4 @@
+using Chess.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,7 +9,6 @@ namespace Chess
     /// </summary>
     public class InputManager : MonoBehaviour
     {
-
         [SerializeField]
         private GameManager gameManager = default;
         [SerializeField]
@@ -19,6 +19,8 @@ namespace Chess
         private FigureSpawner figureSpawner = default;
         [SerializeField]
         private float pointerDragDistance = 0.3f;
+        [SerializeField]
+        PawnPromotionController pawnPromotionController;
 
         private InputAction pressAction = default;
         private InputAction positionAction = default;
@@ -157,16 +159,23 @@ namespace Chess
             if (selectedFigure is King && Vector2Int.Distance(selectedFigure.Position, position) == 2)
             {
                 move = new CastleMove(selectedFigure as King, selectedFigure.Position, position);
+                gameManager.ActiveGame.ExecuteMove(move);
             }
             else if (selectedFigure is Pawn && (position.y == 0 || position.y == Board.Height - 1))
             {
-                move = new PawnPromotion(selectedFigure as Pawn, selectedFigure.Position, position);
+                Pawn pawn = selectedFigure as Pawn;
+                pawnPromotionController.Show(pawn.Color);
+                pawnPromotionController.FigureChosenEvent += (type) =>
+                {
+                    move = new PawnPromotion(pawn, type, pawn.Position, position);
+                    gameManager.ActiveGame.ExecuteMove(move);
+                };
             }
             else
             {
                 move = new Move(selectedFigure, selectedFigure.Position, position);
+                gameManager.ActiveGame.ExecuteMove(move);
             }
-            gameManager.ActiveGame.ExecuteMove(move);
         }
 
         private void UpdateHighlights()

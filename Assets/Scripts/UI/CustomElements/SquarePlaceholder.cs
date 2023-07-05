@@ -17,6 +17,7 @@ namespace Chess.UI
         {
             this.style.width = this.resolvedStyle.height;
         }
+
         ~SquarePlaceholder()
         {
             this.UnregisterCallback<GeometryChangedEvent>(OnGeometryChanged);

@@ -1,8 +1,9 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:Template name="GameStateUI" src="project://database/Assets/UI%20Toolkit/GameStateUI.uxml?fileID=9197481963319205126&amp;guid=452458bebf8a0ea4c93411e9eeb08a89&amp;type=3#GameStateUI" />
+    <ui:Template name="PawnPromotionPopup" src="project://database/Assets/UI%20Toolkit/PawnPromotionPopup.uxml?fileID=9197481963319205126&amp;guid=e927badf78d0f794f9680c36da9dd2df&amp;type=3#PawnPromotionPopup" />
     <Style src="project://database/Assets/UI%20Toolkit/HUD.uss?fileID=7433441132597879392&amp;guid=aada62e822b8837418ca7a5991457f5d&amp;type=3#HUD" />
     <ui:VisualElement style="flex-direction: row; width: 100%; height: 100%;">
-        <ui:Instance template="GameStateUI" name="GameStateUI" style="flex-basis: 0; flex-grow: 1; background-color: rgba(91, 163, 217, 255);" />
+        <ui:Instance template="GameStateUI" name="GameStateUI" style="flex-basis: 0; flex-grow: 1; background-color: rgb(91, 163, 217);" />
         <Chess.UI.SquarePlaceholder />
         <ui:VisualElement style="flex-grow: 1; flex-basis: 0; background-color: rgb(91, 163, 217);">
             <ui:Button text="Restart" display-tooltip-when-elided="true" name="restart-button" class="button" />
@@ -16,4 +17,5 @@
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
+    <ui:Instance template="PawnPromotionPopup" name="pawn-promotion" style="position: absolute; width: 50%; height: 50%; left: 25%; top: 25%; display: none;" />
 </ui:UXML>
