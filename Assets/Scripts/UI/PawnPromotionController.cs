@@ -48,22 +48,8 @@ namespace Chess.UI
         private void OnFigureClicked(ClickEvent evt)
         {
             FigureElement element = (FigureElement)evt.target;
-            if (element.figure == FigureElement.FigureType.Knight)
-            {
-                FigureChosenEvent.Invoke(typeof(Knight));
-            }
-            else if (element.figure == FigureElement.FigureType.Bishop)
-            {
-                FigureChosenEvent.Invoke(typeof(Bishop));
-            }
-            else if (element.figure == FigureElement.FigureType.Rook)
-            {
-                FigureChosenEvent.Invoke(typeof(Rook));
-            }
-            else if (element.figure == FigureElement.FigureType.Queen)
-            {
-                FigureChosenEvent.Invoke(typeof(Queen));
-            }
+            Type figureType = element.figure.FigureEnumToType();
+            FigureChosenEvent.Invoke(figureType);
             FigureChosenEvent = null;
             this.Hide();
         }

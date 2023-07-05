@@ -8,8 +8,6 @@ namespace Chess.UI
     public class ScoreController : MonoBehaviour
     {
         [SerializeField]
-        VisualTreeAsset figureElementTemplate = default;
-        [SerializeField]
         private string scoreName = default;
         [SerializeField]
         UIDocument rootDocument = default;
@@ -18,23 +16,9 @@ namespace Chess.UI
         [SerializeField]
         private Color color;
 
-        [Header("Figure Sprites")]
-        [SerializeField]
-        private FigureSpritesSO figureSprites = default;
-        [SerializeField]
-        private Sprite pawnSprite = default;
-        [SerializeField]
-        private Sprite knightSprite = default;
-        [SerializeField]
-        private Sprite bishopSprite = default;
-        [SerializeField]
-        private Sprite rookSprite = default;
-        [SerializeField]
-        private Sprite queenSprite = default;
-
         private const string scoreLabelName = "score__points-label";
         private const string figureContainerName = "score__figure-container";
-        private const string figureImageName = "figure_element-image";
+        private const string figureImageClass = "score__figure_image";
         private Label scoreLabel = default;
         private VisualElement figureContainer = default;
 
@@ -75,10 +59,9 @@ namespace Chess.UI
             {
                 if (figure.Color != color)
                 {
-                    Sprite sprite = figureSprites.GetSprite(figure);
-                    var figureElement = figureElementTemplate.CloneTree();
-                    VisualElement image = figureElement.Q<VisualElement>(figureImageName);
-                    image.style.backgroundImage = new StyleBackground(sprite);
+                    FigureElement figureElement = new FigureElement();
+                    figureElement.AddToClassList(figureImageClass);
+                    figureElement.SetFigure(figure);
                     figureContainer.Add(figureElement);
                 }
             }

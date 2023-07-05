@@ -17,3 +17,12 @@ VisualElement {
     margin-top: 0;
     margin-bottom: 0;
 }
+
+.score__figure_image {
+    height: 30px;
+    width: 30px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    margin-right: 2px;
+    margin-left: 2px;
+}
