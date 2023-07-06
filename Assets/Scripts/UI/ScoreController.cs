@@ -5,12 +5,8 @@ using UnityEngine.UIElements;
 
 namespace Chess.UI
 {
-    public class ScoreController : MonoBehaviour
+    public class ScoreController : ControllerBase
     {
-        [SerializeField]
-        private string scoreName = default;
-        [SerializeField]
-        UIDocument rootDocument = default;
         [SerializeField]
         private GameManager gameManager = default;
         [SerializeField]
@@ -19,21 +15,26 @@ namespace Chess.UI
         private const string scoreLabelName = "score__points-label";
         private const string figureContainerName = "score__figure-container";
         private const string figureImageClass = "score__figure_image";
+
         private Label scoreLabel = default;
         private VisualElement figureContainer = default;
 
-        private void Awake()
+        override protected void Awake()
         {
-            var rootElement = rootDocument.rootVisualElement.Q(scoreName);
-            scoreLabel = rootElement.Q<Label>(scoreLabelName);
-            figureContainer = rootElement.Q<VisualElement>(figureContainerName);
-
+            base.Awake();
             gameManager.OnGameStateChanged += OnGameStateChanged;
         }
 
         private void OnDestroy()
         {
             gameManager.OnGameStateChanged -= OnGameStateChanged;
+        }
+
+        protected override void SetVisualElements()
+        {
+            base.SetVisualElements();
+            scoreLabel = rootElement.Q<Label>(scoreLabelName);
+            figureContainer = rootElement.Q<VisualElement>(figureContainerName);
         }
 
         private void OnGameStateChanged(Match match, GameState gameState)

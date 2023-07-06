@@ -1,43 +1,54 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Chess.UI
 {
-    public class MovesListController : MonoBehaviour
+    public class MovesListController : ControllerBase
     {
-        private const string movesListID = "moves-list-view";
-
         [SerializeField]
         private GameManager gameManager = default;
-        [SerializeField]
-        private UIDocument rootUIDocument = default;
 
         private ListView movesListView;
-        private List<string> moves = new List<string>();
+        private List<Tuple<Move, Move>> moves = new List<Tuple<Move, Move>>();
 
-        private void OnEnable()
+        protected override void SetVisualElements()
         {
-            gameManager.OnGameStateChanged += OnGameStateChanged;
+            base.SetVisualElements();
+            movesListView = rootElement.Q<ListView>();
 
-            movesListView = rootUIDocument.rootVisualElement.Q<ListView>(movesListID);
-
-            Func<VisualElement> makeItem = () => new Label();
+            Func<VisualElement> makeItem = () =>
+            {
+                var el = new MoveElement();
+                el.OnMoveSelectedEvent += OnMoveSelected;
+                return el;
+            };
             movesListView.makeItem = makeItem;
 
-            Action<VisualElement, int> bindItem = (e, i) => (e as Label).text = moves[i];
+            movesListView.destroyItem = (e) => (e as MoveElement).OnMoveSelectedEvent -= OnMoveSelected;
+
+            Action<VisualElement, int> bindItem = (e, i) => (e as MoveElement).Init(i, moves[i].Item1, moves[i].Item2);
             movesListView.bindItem = bindItem;
 
             movesListView.itemsSource = moves;
-            movesListView.onSelectionChange += OnMoveSelected;
         }
 
-        private void OnDisable()
+        protected override void RegisterCallbacks()
         {
+            base.RegisterCallbacks();
+            gameManager.OnGameStateChanged += OnGameStateChanged;
+        }
+
+        protected override void UnregisterCallbacks()
+        {
+            base.UnregisterCallbacks();
             gameManager.OnGameStateChanged -= OnGameStateChanged;
-            movesListView.onSelectionChange -= OnMoveSelected;
+        }
+
+        private void OnMoveSelected(Move move)
+        {
+            gameManager.ActiveGame.JumpToMove(move);
         }
 
         private void OnGameStateChanged(Match match, GameState gameState)
@@ -45,21 +56,17 @@ namespace Chess.UI
             moves.Clear();
             for (int i = 0; i < match.Moves.Count; i += 2)
             {
-                string move = $"{(i / 2) + 1}. {match.Moves[i].Serialize()}";
-                if (i + 1 < match.Moves.Count)
+                if (i + 1 >= match.Moves.Count)
                 {
-                    move += " " + match.Moves[i + 1].Serialize();
+                    moves.Add(new Tuple<Move, Move>(match.Moves[i], null));
                 }
-                moves.Add(move);
+                else
+                {
+                    moves.Add(new Tuple<Move, Move>(match.Moves[i], match.Moves[i + 1]));
+                }
             }
 
             movesListView.Rebuild();
-        }
-
-        private void OnMoveSelected(IEnumerable<object> objects)
-        {
-            // TODO: Enable game to jump to a specific move
-            Debug.Log(objects.First());
         }
     }
 }

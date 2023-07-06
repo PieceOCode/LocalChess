@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Chess
 {
@@ -51,6 +52,28 @@ namespace Chess
                 SwitchActivePlayer();
                 UpdateGameState();
                 OnMoveCompletedEvent?.Invoke(gameState.Pieces);
+            }
+        }
+
+        public void JumpToMove(Move move)
+        {
+            Assert.IsTrue(match.Moves.Contains(move), $"The move {move} is not contained in the current game state.");
+            int jumpToIndex = match.Moves.IndexOf(move) + 1;
+            Debug.Log($"Jump to move {move} with index {jumpToIndex}.");
+
+            if (jumpToIndex < match.CurrentIndex)
+            {
+                for (int i = match.CurrentIndex; i > jumpToIndex; i--)
+                {
+                    Undo();
+                }
+            }
+            else if (jumpToIndex > match.CurrentIndex)
+            {
+                for (int i = match.CurrentIndex; i < jumpToIndex; i++)
+                {
+                    Redo();
+                }
             }
         }
 

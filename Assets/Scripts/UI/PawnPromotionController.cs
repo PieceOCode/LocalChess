@@ -1,48 +1,44 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Chess.UI
 {
-    public class PawnPromotionController : MonoBehaviour
+    public class PawnPromotionController : ControllerBase
     {
-        private const string pawnPromotionID = "pawn-promotion";
-
         public event Action<Type> FigureChosenEvent;
-
-        [SerializeField]
-        private UIDocument rootUIDocument = default;
-
-        private VisualElement root = default;
-
         private List<FigureElement> figureElements = new List<FigureElement>();
 
-        private void OnEnable()
+        protected override void SetVisualElements()
         {
-            root = rootUIDocument.rootVisualElement.Q(pawnPromotionID);
+            base.SetVisualElements();
+            figureElements = rootElement.Query<FigureElement>().ToList();
+        }
 
-            figureElements = root.Query<FigureElement>().ToList();
-
+        protected override void RegisterCallbacks()
+        {
+            base.RegisterCallbacks();
             foreach (FigureElement el in figureElements)
             {
                 el.RegisterCallback<ClickEvent>(OnFigureClicked);
             }
         }
 
-        public void Show(Color color)
+        protected override void UnregisterCallbacks()
+        {
+            base.UnregisterCallbacks();
+            foreach (FigureElement el in figureElements)
+            {
+                el.UnregisterCallback<ClickEvent>(OnFigureClicked);
+            }
+        }
+
+        public void SetColor(Color color)
         {
             foreach (FigureElement el in figureElements)
             {
                 el.SetFigure(el.figure, color);
             }
-
-            root.style.display = DisplayStyle.Flex;
-        }
-
-        public void Hide()
-        {
-            root.style.display = DisplayStyle.None;
         }
 
         private void OnFigureClicked(ClickEvent evt)

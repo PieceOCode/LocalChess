@@ -164,7 +164,8 @@ namespace Chess
             else if (selectedFigure is Pawn && (position.y == 0 || position.y == Board.Height - 1))
             {
                 Pawn pawn = selectedFigure as Pawn;
-                pawnPromotionController.Show(pawn.Color);
+                pawnPromotionController.SetColor(pawn.Color);
+                pawnPromotionController.Show();
                 pawnPromotionController.FigureChosenEvent += (type) =>
                 {
                     move = new PawnPromotion(pawn, type, pawn.Position, position);

@@ -167,7 +167,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d82c87a369349fd4aa7caafe6a56bc1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rootUIDocument: {fileID: 946448870}
+  screenID: pawn-promotion
+  rootDocument: {fileID: 946448870}
 --- !u!1 &329514377
 GameObject:
   m_ObjectHideFlags: 0
@@ -212,17 +213,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 645f63b3ce9c1ff44b1b67c25c971fe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  figureElementTemplate: {fileID: 9197481963319205126, guid: 6539bf8f95b4a444c9c2c299490d92a0, type: 3}
-  scoreName: black-score
+  screenID: black-score
   rootDocument: {fileID: 946448870}
   gameManager: {fileID: 1797114149}
   color: 1
-  figureSprites: {fileID: 11400000, guid: 88f6ebb6d888abe49bad55247c9ea836, type: 2}
-  pawnSprite: {fileID: -255718854, guid: ec2dddbc7b3827f4f87b2be8c3e6ad6e, type: 3}
-  knightSprite: {fileID: 1054475016, guid: ec2dddbc7b3827f4f87b2be8c3e6ad6e, type: 3}
-  bishopSprite: {fileID: -763760527, guid: ec2dddbc7b3827f4f87b2be8c3e6ad6e, type: 3}
-  rookSprite: {fileID: 1153752657, guid: ec2dddbc7b3827f4f87b2be8c3e6ad6e, type: 3}
-  queenSprite: {fileID: -1892177607, guid: ec2dddbc7b3827f4f87b2be8c3e6ad6e, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -382,6 +376,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 392121f05818626438d31d05308ae219, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  screenID: moves-list-view
+  rootDocument: {fileID: 946448870}
   gameManager: {fileID: 1797114149}
   rootUIDocument: {fileID: 946448870}
 --- !u!1 &762628378
@@ -684,17 +680,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 645f63b3ce9c1ff44b1b67c25c971fe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  figureElementTemplate: {fileID: 9197481963319205126, guid: 6539bf8f95b4a444c9c2c299490d92a0, type: 3}
-  scoreName: white-score
+  screenID: white-score
   rootDocument: {fileID: 946448870}
   gameManager: {fileID: 1797114149}
   color: 0
-  figureSprites: {fileID: 11400000, guid: 88f6ebb6d888abe49bad55247c9ea836, type: 2}
-  pawnSprite: {fileID: 110528925, guid: ec2dddbc7b3827f4f87b2be8c3e6ad6e, type: 3}
-  knightSprite: {fileID: 321877157, guid: ec2dddbc7b3827f4f87b2be8c3e6ad6e, type: 3}
-  bishopSprite: {fileID: 904764479, guid: ec2dddbc7b3827f4f87b2be8c3e6ad6e, type: 3}
-  rookSprite: {fileID: -1900110161, guid: ec2dddbc7b3827f4f87b2be8c3e6ad6e, type: 3}
-  queenSprite: {fileID: -1091324761, guid: ec2dddbc7b3827f4f87b2be8c3e6ad6e, type: 3}
 --- !u!1 &1556618701
 GameObject:
   m_ObjectHideFlags: 0
