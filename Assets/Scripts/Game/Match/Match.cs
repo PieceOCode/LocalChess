@@ -40,5 +40,10 @@ namespace Chess
         {
             this.currentIndex = index;
         }
+
+        public bool IsPastGamestate()
+        {
+            return currentIndex < moves.Count;
+        }
     }
 }

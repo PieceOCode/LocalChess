@@ -101,12 +101,10 @@ namespace Chess
                 MoveFigure(selectedFigure, square.Position);
                 selectedFigure = null;
             }
-            else
-            {
-                // If move is canceled move dragged figure back to its original position
-                figureRepresentation.DisableHighlight();
-                figureRepresentation.transform.position = draggedFigureStartPosition;
-            }
+
+            // Put the figure back to its original position
+            figureRepresentation.DisableHighlight();
+            figureRepresentation.transform.position = draggedFigureStartPosition;
 
             isDragging = false;
             figureRepresentation = null;

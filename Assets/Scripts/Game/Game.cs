@@ -79,6 +79,11 @@ namespace Chess
 
         public void ExecuteMove(Move move)
         {
+            if (match.IsPastGamestate())
+            {
+                return;
+            }
+
             match.Add(move);
             Redo();
         }
