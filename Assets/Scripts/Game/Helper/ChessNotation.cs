@@ -5,6 +5,7 @@ namespace Chess
 {
     public static class ChessNotation
     {
+
         public enum Files
         {
             A, B, C, D, E, F, G, H
@@ -73,6 +74,17 @@ namespace Chess
             if (figure.GetType() == typeof(Bishop)) return 3;
             if (figure.GetType() == typeof(Rook)) return 5;
             if (figure.GetType() == typeof(Queen)) return 9;
+            return 0;
+        }
+
+        public static int StandardNumberOfFigure(Type figureType)
+        {
+            if (figureType == typeof(Pawn)) return 8;
+            if (figureType == typeof(Knight)) return 2;
+            if (figureType == typeof(Bishop)) return 2;
+            if (figureType == typeof(Rook)) return 2;
+            if (figureType == typeof(Queen)) return 1;
+            if (figureType == typeof(King)) return 1;
             return 0;
         }
     }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -56,13 +57,28 @@ namespace Chess.UI
         private void UpdateDeadFigures(GameState gameState)
         {
             figureContainer.Clear();
-            foreach (Figure figure in gameState.DeadPieces.OrderBy(f => ChessNotation.GetFigureValue(f)))
+
+            foreach (FigureEnum figure in Enum.GetValues(typeof(FigureEnum)))
             {
-                if (figure.Color != color)
+                Type type = figure.FigureEnumToType();
+                int fullCount = ChessNotation.StandardNumberOfFigure(type);
+
+                int count = 0;
+                Color enemyColor = this.color == Color.White ? Color.Black : Color.White;
+                if (enemyColor == Color.White)
+                {
+                    count = gameState.WhitePieces.Where(f => f.GetType() == type).Count();
+                }
+                else
+                {
+                    count = gameState.BlackPieces.Where(f => f.GetType() == type).Count();
+                }
+
+                for (int i = 0; i < fullCount - count; i++)
                 {
                     FigureElement figureElement = new FigureElement();
                     figureElement.AddToClassList(figureImageClass);
-                    figureElement.SetFigure(figure);
+                    figureElement.SetFigure(figure, enemyColor);
                     figureContainer.Add(figureElement);
                 }
             }

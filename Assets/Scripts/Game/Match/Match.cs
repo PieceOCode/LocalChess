@@ -2,7 +2,6 @@ using System.Collections.Generic;
 
 namespace Chess
 {
-    // TODO: Add result
     /// <summary>
     /// Contains a history of the game in the form of a list of all moves that happened and the current state/move of the game. 
     /// </summary>
