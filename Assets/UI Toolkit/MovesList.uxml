@@ -1,0 +1,3 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:ListView name="moves-list-view" selection-type="None" style="flex-grow: 1;" />
+</ui:UXML>

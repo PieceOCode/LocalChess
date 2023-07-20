@@ -26,3 +26,17 @@ VisualElement {
     margin-right: 2px;
     margin-left: 2px;
 }
+
+.hud-panels {
+    flex-grow: 1;
+    flex-basis: 0;
+    background-color: rgb(238, 238, 210);
+    border-left-color: rgb(183, 146, 93);
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-right-color: rgb(183, 146, 93);
+    border-top-color: rgb(183, 146, 93);
+    border-bottom-color: rgb(183, 146, 93);
+}

@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:Template name="score" src="project://database/Assets/UI%20Toolkit/Score.uxml?fileID=9197481963319205126&amp;guid=d94f592b6b6d48f45aec4a97c7e1acb0&amp;type=3#Score" />
     <ui:Instance template="score" name="black-score" />
-    <ui:ListView name="moves-list-view" show-alternating-row-backgrounds="ContentOnly" selection-type="None" style="flex-grow: 1;" />
-    <ui:Instance template="score" name="white-score" />
+    <ui:VisualElement style="flex-grow: 1;" />
+    <ui:Instance template="score" name="white-score" style="flex-grow: 0;" />
 </ui:UXML>
