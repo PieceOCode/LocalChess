@@ -379,7 +379,6 @@ MonoBehaviour:
   screenID: moves-list-view
   rootDocument: {fileID: 946448870}
   gameManager: {fileID: 1797114149}
-  rootUIDocument: {fileID: 946448870}
 --- !u!1 &762628378
 GameObject:
   m_ObjectHideFlags: 0
@@ -457,7 +456,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &801617674
 MonoBehaviour:
@@ -506,7 +505,7 @@ MonoBehaviour:
   inputSystemActions: {fileID: 801617674}
   figureSpawner: {fileID: 1980422167}
   pointerDragDistance: 5
-  pawnPromotionController: {fileID: 134652521}
+  windowController: {fileID: 946448873}
 --- !u!1 &888909333
 GameObject:
   m_ObjectHideFlags: 0
@@ -552,6 +551,7 @@ GameObject:
   - component: {fileID: 946448871}
   - component: {fileID: 946448870}
   - component: {fileID: 946448872}
+  - component: {fileID: 946448873}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -589,8 +589,10 @@ Transform:
   m_Children:
   - {fileID: 888909334}
   - {fileID: 134652520}
+  - {fileID: 1264263453}
+  - {fileID: 1994554436}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &946448872
 MonoBehaviour:
@@ -605,6 +607,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 1797114149}
+--- !u!114 &946448873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 946448869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8eac9dd9043025d498dcb11a7cd3ff45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 1797114149}
+  rootDocument: {fileID: 946448870}
+  windowOverlay: {fileID: 1994554437}
+  pawnPromotion: {fileID: 134652521}
+  winScreen: {fileID: 1264263454}
 --- !u!1 &1195169427
 GameObject:
   m_ObjectHideFlags: 0
@@ -636,6 +655,52 @@ Transform:
   m_Father: {fileID: 1980422165}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1264263452
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1264263453}
+  - component: {fileID: 1264263454}
+  m_Layer: 5
+  m_Name: WinScreen
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1264263453
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1264263452}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 946448871}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1264263454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1264263452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5fb13b7dd6b08e4a8f68b2d7a4dc705, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  screenID: win-screen
+  rootDocument: {fileID: 946448870}
 --- !u!1 &1298356644
 GameObject:
   m_ObjectHideFlags: 0
@@ -880,3 +945,49 @@ MonoBehaviour:
   rookPrefab: {fileID: 3524389840036646283, guid: e8f91e735c111ea4ea80914b581fa414, type: 3}
   queenPrefab: {fileID: 5899205688595558737, guid: 8d24163b71fca764ba69115b0753db16, type: 3}
   kingPrefab: {fileID: 4231219598407764734, guid: 86a2b52d1bd418042b6207ba7ec46fc8, type: 3}
+--- !u!1 &1994554435
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1994554436}
+  - component: {fileID: 1994554437}
+  m_Layer: 5
+  m_Name: WindowOverlay
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1994554436
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1994554435}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 946448871}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1994554437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1994554435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a05a26788b641f34285af4f310f1f5be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  screenID: window-overlay
+  rootDocument: {fileID: 946448870}

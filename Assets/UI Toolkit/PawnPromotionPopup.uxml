@@ -1,7 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/HUD.uss?fileID=7433441132597879392&amp;guid=aada62e822b8837418ca7a5991457f5d&amp;type=3#HUD" />
-    <ui:VisualElement style="width: 100%; height: 100%; padding-left: 10%; padding-right: 10%; padding-top: 10%; padding-bottom: 10%;">
-        <ui:Label tabindex="-1" text="Choose a figure" display-tooltip-when-elided="true" style="font-size: 30px; -unity-text-align: upper-center; margin-bottom: 10%;" />
+    <ui:VisualElement class="window" style="width: 100%; height: 100%; padding-left: 10%; padding-right: 10%; padding-top: 10%; padding-bottom: 10%;">
+        <ui:Label tabindex="-1" text="Choose a figure:" display-tooltip-when-elided="true" style="font-size: 30%; -unity-text-align: upper-center; margin-bottom: 10%;" />
         <ui:VisualElement style="flex-direction: row; width: 100%; height: 40%;">
             <Chess.UI.FigureElement figure="Knight" class="pawn-promotion__image" />
             <Chess.UI.FigureElement figure="Bishop" color="White" class="pawn-promotion__image" style="width: 25%;" />

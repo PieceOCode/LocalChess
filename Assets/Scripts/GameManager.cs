@@ -8,8 +8,11 @@ namespace Chess
     /// </summary>
     public sealed class GameManager : MonoBehaviour
     {
-        public delegate void GameStateChanged(Match match, GameState state);
-        public event GameStateChanged OnGameStateChanged;
+        public delegate void GameStateChangedEventHandler(Match match, GameState state);
+        public event GameStateChangedEventHandler OnGameStateChanged;
+
+        public delegate void GameEndedEventHandler(GameResult gameResult);
+        public event GameEndedEventHandler OnGameEndedEvent;
 
         public Game ActiveGame => game;
         private Game game;
@@ -17,7 +20,8 @@ namespace Chess
         private void Awake()
         {
             game = new Game();
-            game.OnMoveCompletedEvent += OnMoveCompleted;
+            game.MoveCompletedEvent += OnMoveCompleted;
+            game.GameEndedEvent += OnGameEnded;
         }
 
         private void Start()
@@ -27,7 +31,8 @@ namespace Chess
 
         private void OnDestroy()
         {
-            game.OnMoveCompletedEvent -= OnMoveCompleted;
+            game.MoveCompletedEvent -= OnMoveCompleted;
+            game.GameEndedEvent -= OnGameEnded;
         }
 
         private void OnMoveCompleted(List<Figure> figures)
@@ -35,12 +40,20 @@ namespace Chess
             OnGameStateChanged?.Invoke(ActiveGame.Match, ActiveGame.GameState);
         }
 
+        private void OnGameEnded(GameResult result)
+        {
+            OnGameEndedEvent?.Invoke(result);
+            game.GameEndedEvent -= OnGameEnded;
+        }
+
         public void Restart()
         {
-            game.OnMoveCompletedEvent -= OnMoveCompleted;
+            game.MoveCompletedEvent -= OnMoveCompleted;
+            game.GameEndedEvent -= OnGameEnded;
 
             game = new Game();
-            game.OnMoveCompletedEvent += OnMoveCompleted;
+            game.MoveCompletedEvent += OnMoveCompleted;
+            game.GameEndedEvent += OnGameEnded;
             game.StartGame();
         }
 

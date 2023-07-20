@@ -20,7 +20,7 @@ namespace Chess
         [SerializeField]
         private float pointerDragDistance = 0.3f;
         [SerializeField]
-        PawnPromotionController pawnPromotionController;
+        WindowController windowController;
 
         private InputAction pressAction = default;
         private InputAction positionAction = default;
@@ -162,13 +162,11 @@ namespace Chess
             else if (selectedFigure is Pawn && (position.y == 0 || position.y == Board.Height - 1))
             {
                 Pawn pawn = selectedFigure as Pawn;
-                pawnPromotionController.SetColor(pawn.Color);
-                pawnPromotionController.Show();
-                pawnPromotionController.FigureChosenEvent += (type) =>
+                windowController.ShowPawnPromotion(pawn.Color, (type) =>
                 {
                     move = new PawnPromotion(pawn, type, pawn.Position, position);
                     gameManager.ActiveGame.ExecuteMove(move);
-                };
+                });
             }
             else
             {

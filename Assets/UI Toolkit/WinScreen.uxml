@@ -1,5 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:VisualElement style="width: 50%; height: 50%; margin-left: auto; margin-right: auto; margin-top: auto; margin-bottom: auto; background-color: rgba(209, 209, 209, 255);">
-        <ui:Label tabindex="-1" text="White wins!" name="Label" style="-unity-text-align: upper-center; font-size: 50px; color: rgba(24, 24, 24, 255); margin-top: 51px;" />
+    <Style src="project://database/Assets/UI%20Toolkit/HUD.uss?fileID=7433441132597879392&amp;guid=aada62e822b8837418ca7a5991457f5d&amp;type=3#HUD" />
+    <ui:VisualElement class="window" style="width: 100%; height: 100%; margin-left: auto; margin-right: auto; margin-top: auto; margin-bottom: auto;">
+        <ui:Label tabindex="-1" text="White wins!" name="win-screen__label" style="-unity-text-align: upper-center; font-size: 50px; color: rgb(24, 24, 24); margin-top: 51px;" />
     </ui:VisualElement>
 </ui:UXML>

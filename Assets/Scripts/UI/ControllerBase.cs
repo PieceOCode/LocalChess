@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UIElements;
@@ -15,7 +16,10 @@ namespace Chess.UI
         protected string screenID = default;
         [Tooltip("Set the UI Document here explicitly (or get automatically from current GameObject).")]
         [SerializeField]
-        private UIDocument rootDocument;
+        private UIDocument rootDocument = default;
+
+        public event Action ShowEvent = default;
+        public event Action HideEvent = default;
 
         protected VisualElement rootElement = default;
 
@@ -60,11 +64,13 @@ namespace Chess.UI
 
         public virtual void Show()
         {
+            ShowEvent?.Invoke();
             rootElement.ShowVisualElement();
         }
 
         public virtual void Hide()
         {
+            HideEvent?.Invoke();
             rootElement.HideVisualElement();
         }
     }

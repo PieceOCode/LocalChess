@@ -9,8 +9,11 @@ namespace Chess
     /// </summary>
     public sealed class Game
     {
-        public delegate void OnMoveCompleted(List<Figure> pieces);
-        public event OnMoveCompleted OnMoveCompletedEvent;
+        public delegate void MoveCompletedEventHandler(List<Figure> pieces);
+        public event MoveCompletedEventHandler MoveCompletedEvent;
+
+        public delegate void GameEndedEventHandler(GameResult gameEnd);
+        public event GameEndedEventHandler GameEndedEvent;
 
         public Board Board { get { return gameState.Board; } }
         public Color ActivePlayer => gameState.ActivePlayer;
@@ -30,7 +33,7 @@ namespace Chess
         public void StartGame()
         {
             UpdateGameState();
-            OnMoveCompletedEvent?.Invoke(gameState.Pieces);
+            MoveCompletedEvent?.Invoke(gameState.Pieces);
         }
 
         public void Redo()
@@ -40,7 +43,7 @@ namespace Chess
                 match.Redo(gameState);
                 SwitchActivePlayer();
                 UpdateGameState();
-                OnMoveCompletedEvent?.Invoke(gameState.Pieces);
+                MoveCompletedEvent?.Invoke(gameState.Pieces);
             }
         }
 
@@ -51,7 +54,7 @@ namespace Chess
                 match.Undo(gameState);
                 SwitchActivePlayer();
                 UpdateGameState();
-                OnMoveCompletedEvent?.Invoke(gameState.Pieces);
+                MoveCompletedEvent?.Invoke(gameState.Pieces);
             }
         }
 
@@ -167,10 +170,9 @@ namespace Chess
             }
         }
 
-        // The king is checkmated if he is in check and there are no valid moves to stop that. 
-        // The game is a draw if there are no valid moves but the king is not in check. 
         private void UpdateCheckMate(Color color)
         {
+            // Check if the player still has valid moves.
             List<Figure> ownPieces = color == Color.White ? gameState.WhitePieces : gameState.BlackPieces;
             foreach (Figure piece in ownPieces)
             {
@@ -180,18 +182,20 @@ namespace Chess
                 }
             }
 
+            // If the player has no valid moves and his king is checked, he is checkmated.
             King king = color == Color.White ? gameState.WhiteKing : gameState.BlackKing;
             List<Figure> enemyPieces = color == Color.White ? gameState.BlackPieces : gameState.WhitePieces;
             foreach (var piece in enemyPieces)
             {
                 if (piece.AttacksPosition(king.Position))
                 {
-                    Debug.Log("Checkmate!");
+                    GameEndedEvent?.Invoke(color == Color.White ? GameResult.BlackWins : GameResult.WhiteWins);
                     return;
                 }
             }
 
-            Debug.Log("Draw");
+            // If the player has no valid moves but his king is not checked the game is a draw.
+            GameEndedEvent?.Invoke(GameResult.Draw);
         }
     }
 }

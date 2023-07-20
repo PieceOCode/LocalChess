@@ -41,11 +41,17 @@ namespace Chess.UI
             }
         }
 
+        public override void Hide()
+        {
+            base.Hide();
+            FigureChosenEvent = null;
+        }
+
         private void OnFigureClicked(ClickEvent evt)
         {
             FigureElement element = (FigureElement)evt.target;
             Type figureType = element.figure.FigureEnumToType();
-            FigureChosenEvent.Invoke(figureType);
+            FigureChosenEvent?.Invoke(figureType);
             FigureChosenEvent = null;
             this.Hide();
         }
