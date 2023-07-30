@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   screenID: pawn-promotion
-  rootDocument: {fileID: 946448870}
+  uiManager: {fileID: 946448874}
 --- !u!1 &329514377
 GameObject:
   m_ObjectHideFlags: 0
@@ -214,7 +214,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   screenID: black-score
-  rootDocument: {fileID: 946448870}
+  uiManager: {fileID: 946448874}
   gameManager: {fileID: 1797114149}
   color: 1
 --- !u!1 &519420028
@@ -377,7 +377,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   screenID: moves-list-view
-  rootDocument: {fileID: 946448870}
+  uiManager: {fileID: 0}
   gameManager: {fileID: 1797114149}
 --- !u!1 &762628378
 GameObject:
@@ -550,7 +550,7 @@ GameObject:
   m_Component:
   - component: {fileID: 946448871}
   - component: {fileID: 946448870}
-  - component: {fileID: 946448872}
+  - component: {fileID: 946448874}
   - component: {fileID: 946448873}
   m_Layer: 5
   m_Name: UI
@@ -587,6 +587,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1125274054}
   - {fileID: 888909334}
   - {fileID: 134652520}
   - {fileID: 1264263453}
@@ -594,19 +595,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &946448872
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 946448869}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0050a1a2de502904eb0cd1b09a5f68e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameManager: {fileID: 1797114149}
 --- !u!114 &946448873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -620,10 +608,73 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 1797114149}
-  rootDocument: {fileID: 946448870}
   windowOverlay: {fileID: 1994554437}
   pawnPromotion: {fileID: 134652521}
   winScreen: {fileID: 1264263454}
+--- !u!114 &946448874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 946448869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cedca87d081f22046a9742bd64eeaa1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HUDDocument: {fileID: 946448870}
+  defaultHUD: {fileID: 9197481963319205126, guid: 704dbc9c7a09b774abfcd5019220094c, type: 3}
+  defaultPanelSettings: {fileID: 11400000, guid: 61fd19af98931c14e886dde8e91e7052, type: 2}
+  portraitHUD: {fileID: 9197481963319205126, guid: 8475741153559934386f88268557cca9, type: 3}
+  portraitPanelSettings: {fileID: 11400000, guid: 14357cc79d10b4e4e81eb6112e1532e7, type: 2}
+--- !u!1 &1125274053
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1125274054}
+  - component: {fileID: 1125274055}
+  m_Layer: 5
+  m_Name: HUD
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1125274054
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125274053}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 946448871}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1125274055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125274053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0050a1a2de502904eb0cd1b09a5f68e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  screenID: HUD
+  uiManager: {fileID: 946448874}
+  gameManager: {fileID: 1797114149}
 --- !u!1 &1195169427
 GameObject:
   m_ObjectHideFlags: 0
@@ -700,7 +751,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   screenID: win-screen
-  rootDocument: {fileID: 946448870}
+  uiManager: {fileID: 946448874}
 --- !u!1 &1298356644
 GameObject:
   m_ObjectHideFlags: 0
@@ -746,7 +797,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   screenID: white-score
-  rootDocument: {fileID: 946448870}
+  uiManager: {fileID: 946448874}
   gameManager: {fileID: 1797114149}
   color: 0
 --- !u!1 &1556618701
@@ -990,4 +1041,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   screenID: window-overlay
-  rootDocument: {fileID: 946448870}
+  uiManager: {fileID: 946448874}

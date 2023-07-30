@@ -2,8 +2,8 @@ VisualElement {
 }
 
 .button {
-    height: 40px;
-    font-size: 20px;
+    font-size: 50px;
+    min-width: 45%;
 }
 
 .unity-list-view__empty-label {
@@ -19,12 +19,24 @@ VisualElement {
 }
 
 .score__figure_image {
-    height: 30px;
-    width: 30px;
+    height: 50px;
+    width: 50px;
     margin-top: 2px;
     margin-bottom: 2px;
     margin-right: 2px;
     margin-left: 2px;
+}
+
+.window {
+    border-left-color: rgb(183, 146, 93);
+    border-right-color: rgb(183, 146, 93);
+    border-top-color: rgb(183, 146, 93);
+    border-bottom-color: rgb(183, 146, 93);
+    background-color: rgb(238, 238, 210);
+    border-left-width: 5px;
+    border-right-width: 5px;
+    border-top-width: 5px;
+    border-bottom-width: 5px;
 }
 
 .hud-panels {
@@ -41,18 +53,6 @@ VisualElement {
     border-bottom-color: rgb(183, 146, 93);
 }
 
-.window {
-    border-left-color: rgb(183, 146, 93);
-    border-right-color: rgb(183, 146, 93);
-    border-top-color: rgb(183, 146, 93);
-    border-bottom-color: rgb(183, 146, 93);
-    background-color: rgb(238, 238, 210);
-    border-left-width: 5px;
-    border-right-width: 5px;
-    border-top-width: 5px;
-    border-bottom-width: 5px;
-}
-
 .window-overlay {
     position: absolute;
     left: 0;
@@ -61,4 +61,23 @@ VisualElement {
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.4);
     display: none;
+}
+
+.mobile-button {
+    flex-grow: 1;
+    min-width: 18%;
+    font-size: 50px;
+}
+
+MoveElement {
+    height: 50px;
+    font-size: 50px;
+}
+
+.move-element__label {
+    height: 100%;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
 }

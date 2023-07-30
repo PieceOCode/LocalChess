@@ -16,7 +16,7 @@ namespace Chess.UI
         protected string screenID = default;
         [Tooltip("Set the UI Document here explicitly (or get automatically from current GameObject).")]
         [SerializeField]
-        private UIDocument rootDocument = default;
+        private UIManager uiManager = default;
 
         public event Action ShowEvent = default;
         public event Action HideEvent = default;
@@ -25,12 +25,12 @@ namespace Chess.UI
 
         protected virtual void Awake()
         {
-            if (rootDocument == null)
+            if (uiManager == null)
             {
-                rootDocument = GetComponentInChildren<UIDocument>();
+                uiManager = GetComponentInParent<UIManager>();
             }
 
-            if (rootDocument == null)
+            if (uiManager == null)
             {
                 Debug.LogWarning($"Controller {gameObject.name} has no assigned UI Document.");
             }
@@ -48,7 +48,7 @@ namespace Chess.UI
 
         protected virtual void SetVisualElements()
         {
-            rootElement = rootDocument.rootVisualElement.Q(screenID);
+            rootElement = uiManager.rootDocument.rootVisualElement.Q(screenID);
             Assert.IsTrue(rootElement != null, $"The controller {gameObject.name} is not able to find the root visual element with id {screenID}.");
         }
 

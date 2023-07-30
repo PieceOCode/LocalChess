@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <ui:VisualElement style="flex-direction: row; justify-content: space-between; align-items: flex-start;">
+    <ui:VisualElement style="flex-direction: row; justify-content: space-between; align-items: center;">
         <ui:VisualElement name="score__figure-container" style="flex-direction: row; align-items: flex-end; flex-grow: 1; flex-wrap: wrap;" />
-        <ui:Label tabindex="-1" text="22" name="score__points-label" style="font-size: 30px; width: 50px; -unity-text-align: middle-right;" />
+        <ui:Label tabindex="-1" text="22" name="score__points-label" style="font-size: 50px; width: 70px; -unity-text-align: middle-right;" />
     </ui:VisualElement>
 </ui:UXML>
