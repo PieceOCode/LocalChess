@@ -132,6 +132,7 @@ namespace Chess
                 if (piece.AttacksPosition(king.Position))
                 {
                     attackingFigures.Add(piece);
+                    match.Moves[match.CurrentIndex - 1].isCheck = true;
                     Debug.Log("Check!");
                 }
             }
@@ -190,6 +191,7 @@ namespace Chess
                 if (piece.AttacksPosition(king.Position))
                 {
                     GameEndedEvent?.Invoke(color == Color.White ? GameResult.BlackWins : GameResult.WhiteWins);
+                    match.Moves[match.CurrentIndex - 1].isCheckmate = true;
                     return;
                 }
             }

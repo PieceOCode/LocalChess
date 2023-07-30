@@ -14,6 +14,8 @@ namespace Chess
         protected readonly Vector2Int to;
         protected bool kicked;
         protected FigureData kickedData;
+        public bool isCheck = false;
+        public bool isCheckmate = false;
 
         public Move(Figure figure, Vector2Int from, Vector2Int to)
         {
@@ -85,6 +87,16 @@ namespace Chess
                 serializedMove += 'x';
             }
             serializedMove += ChessNotation.GetSquareNotation(to);
+
+            if (isCheckmate)
+            {
+                serializedMove += "#";
+            }
+            else if (isCheck)
+            {
+                serializedMove += "+";
+            }
+
             return serializedMove;
         }
 
