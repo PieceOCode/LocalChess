@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.UIElements;
 
 namespace Chess.UI
 {
@@ -9,8 +8,6 @@ namespace Chess.UI
     {
         [SerializeField]
         private GameManager gameManager = default;
-        [SerializeField]
-        private UIDocument rootDocument = default;
         [Header("Window Controller")]
         [SerializeField]
         private OverlayController windowOverlay = default;

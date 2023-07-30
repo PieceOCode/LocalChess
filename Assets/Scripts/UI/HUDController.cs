@@ -3,7 +3,7 @@ using UnityEngine.UIElements;
 
 namespace Chess.UI
 {
-    public class HUD : MonoBehaviour
+    public class HUDController : ControllerBase
     {
         [SerializeField]
         private GameManager gameManager = default;
@@ -14,16 +14,25 @@ namespace Chess.UI
         private Button saveButton = default;
         private Button loadButton = default;
 
-        private void OnEnable()
+        private const string restartButtonID = "restart-button";
+        private const string undoButtonID = "undo-button";
+        private const string redoButtonID = "redo-button";
+        private const string saveButtonID = "save-button";
+        private const string loadButtonID = "load-button";
+
+        protected override void SetVisualElements()
         {
-            var uiDocument = GetComponent<UIDocument>();
+            base.SetVisualElements();
+            restartButton = rootElement.Q<Button>(restartButtonID);
+            undoButton = rootElement.Q<Button>(undoButtonID);
+            redoButton = rootElement.Q<Button>(redoButtonID);
+            saveButton = rootElement.Q<Button>(saveButtonID);
+            loadButton = rootElement.Q<Button>(loadButtonID);
+        }
 
-            restartButton = uiDocument.rootVisualElement.Q<Button>("restart-button");
-            undoButton = uiDocument.rootVisualElement.Q<Button>("undo-button");
-            redoButton = uiDocument.rootVisualElement.Q<Button>("redo-button");
-            saveButton = uiDocument.rootVisualElement.Q<Button>("save-button");
-            loadButton = uiDocument.rootVisualElement.Q<Button>("load-button");
-
+        protected override void RegisterCallbacks()
+        {
+            base.RegisterCallbacks();
             restartButton.RegisterCallback<ClickEvent>(OnRestartClicked);
             undoButton.RegisterCallback<ClickEvent>(OnUndoClicked);
             redoButton.RegisterCallback<ClickEvent>(OnRedoClicked);
@@ -31,8 +40,9 @@ namespace Chess.UI
             loadButton.RegisterCallback<ClickEvent>(OnLoadClicked);
         }
 
-        private void OnDisable()
+        protected override void UnregisterCallbacks()
         {
+            base.UnregisterCallbacks();
             restartButton.UnregisterCallback<ClickEvent>(OnRestartClicked);
             undoButton.UnregisterCallback<ClickEvent>(OnUndoClicked);
             redoButton.UnregisterCallback<ClickEvent>(OnRedoClicked);

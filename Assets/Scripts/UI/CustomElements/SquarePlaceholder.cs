@@ -15,7 +15,14 @@ namespace Chess.UI
 
         public void OnGeometryChanged(GeometryChangedEvent evt)
         {
-            this.style.width = this.resolvedStyle.height;
+            if (this.resolvedStyle.height > this.resolvedStyle.width)
+            {
+                this.style.width = this.resolvedStyle.height;
+            }
+            else if (this.resolvedStyle.width > this.resolvedStyle.height)
+            {
+                this.style.height = this.resolvedStyle.width;
+            }
         }
 
         ~SquarePlaceholder()
