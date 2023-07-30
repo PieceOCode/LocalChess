@@ -72,7 +72,6 @@ namespace Chess
         }
 
         // TODO: Resolve ambiguities by mentioning which square the piece moved from if needed.
-        // TODO: Add check (+) or checkmate (#)
         public virtual string Serialize()
         {
             string serializedMove = "";

@@ -1,8 +1,8 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/HUD.uss?fileID=7433441132597879392&amp;guid=aada62e822b8837418ca7a5991457f5d&amp;type=3#HUD" />
     <ui:VisualElement style="flex-direction: row;">
-        <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="move-element__index-label" class="move-element__label" />
-        <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="move-element__first-label" class="move-element__label" />
-        <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="move-element__second-label" class="move-element__label" />
+        <ui:Label tabindex="-1" text="10." display-tooltip-when-elided="true" name="move-element__index-label" class="move-element__label" style="width: 80px;" />
+        <ui:Label tabindex="-1" text="exf8+=Q" display-tooltip-when-elided="true" name="move-element__first-label" class="move-element__label" style="width: 50%; flex-shrink: 1;" />
+        <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="move-element__second-label" class="move-element__label" style="width: 50%; flex-shrink: 1;" />
     </ui:VisualElement>
 </ui:UXML>
