@@ -30,7 +30,7 @@ namespace Chess
 
         public static Match DeserializeMatch(string path)
         {
-            Assert.IsTrue(File.Exists(path));
+            Assert.IsTrue(File.Exists(path), "No file exists at the given position: " + path);
 
             Game game = new Game();
             game.StartGame();

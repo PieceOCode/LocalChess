@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -103,6 +104,8 @@ namespace Chess
 
         private void UpdateGameState()
         {
+            CheckIfPawnMovedTwoSquares();
+
             gameState.Pieces.ForEach(piece => piece.ClearState());
             gameState.Pieces.ForEach(piece => piece.UpdatePositions());
 
@@ -148,6 +151,7 @@ namespace Chess
                     }
                 }
             }
+
             // If the king is checked by only one figure, only moves that kick the figure or set a figure in between (not for Knight or Pawn) are valid. 
             else if (attackingFigures.Count == 1)
             {
@@ -198,6 +202,23 @@ namespace Chess
 
             // If the player has no valid moves but his king is not checked the game is a draw.
             GameEndedEvent?.Invoke(GameResult.Draw);
+        }
+
+        private void CheckIfPawnMovedTwoSquares()
+        {
+            if (match.CurrentIndex == 0)
+            {
+                return;
+            }
+
+            Move lastMove = match.Moves[match.CurrentIndex - 1];
+            if (lastMove.figureData.type == typeof(Pawn) && lastMove.from.ChebyshevDistance(lastMove.to) == 2)
+            {
+                foreach (Figure pawn in gameState.Pieces.Where((p) => p is Pawn))
+                {
+                    (pawn as Pawn).UpdatedHasMovedByTwo(lastMove.to);
+                }
+            }
         }
     }
 }

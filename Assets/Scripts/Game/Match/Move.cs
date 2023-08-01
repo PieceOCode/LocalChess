@@ -9,9 +9,9 @@ namespace Chess
 {
     public class Move
     {
-        protected readonly FigureData figureData;
-        protected readonly Vector2Int from;
-        protected readonly Vector2Int to;
+        public readonly FigureData figureData;
+        public readonly Vector2Int from;
+        public readonly Vector2Int to;
         protected bool kicked;
         protected FigureData kickedData;
         public bool isCheck = false;
@@ -32,6 +32,19 @@ namespace Chess
             Figure figure = board.GetFigure(from);
             Assert.IsTrue(figure.GetType() == figureData.type && figure.Color == figureData.color); // Asserts that we got the correct figure.
             Assert.IsTrue(figure.CanMoveTo(to));
+
+            // Special behavior for en passant because the kicked figure is removed from a different square than the destination square
+            if (figure is Pawn && from.x != to.x && gameState.Board.SquareIsEmpty(to))
+            {
+                Vector2Int enemyPawnPosition = new Vector2Int(to.x, from.y);
+                Assert.IsTrue(board.SquareHasEnemyPiece(figure.Color, enemyPawnPosition), "There is no enemy piece at the position to kick with en passant.");
+                Assert.IsTrue(board.GetFigure(enemyPawnPosition) is Pawn, "En passant works only if the enemy figure is a pawn.");
+                Assert.IsTrue((board.GetFigure(enemyPawnPosition) as Pawn).HasMovedByTwoLastMove, "En passant works only if the enemy pawn has moved two forward last turn.");
+
+                kickedData = new FigureData(board.GetFigure(enemyPawnPosition));
+                kicked = true;
+                gameState.RemoveFigure(board.GetFigure((enemyPawnPosition)));
+            }
 
             // Kick figure if square is blocked by enemy piece
             if (!board.SquareIsEmpty(to))

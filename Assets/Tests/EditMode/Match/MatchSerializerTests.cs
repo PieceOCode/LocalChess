@@ -31,6 +31,13 @@ public class MatchSerializerTest
     }
 
     [Test]
+    public void en_passant_do_not_throw()
+    {
+        Assert.DoesNotThrow(() => MatchSerializer.DeserializeMatch(Application.dataPath + "/Tests/MatchFiles" + "/gunnar-gundersen_vs_a-h-faul_1928.pgn"));
+        Assert.DoesNotThrow(() => MatchSerializer.DeserializeMatch(Application.dataPath + "/Tests/MatchFiles" + "/magnus-carlsen_vs_loek-van-wely_29-apr-2006.pgn"));
+    }
+
+    [Test]
     public void custom_games_do_not_throw()
     {
         string[] files = Directory.GetFiles(Application.dataPath + "/Tests/MatchFiles/CustomGames");
