@@ -43,7 +43,17 @@ namespace Chess.UI
                 HUDDocument.visualTreeAsset = defaultHUD;
                 HUDDocument.panelSettings = defaultPanelSettings;
             }
+
+            FixScreenOrientationOnStartup();
             isInitiated = true;
+        }
+
+        private void FixScreenOrientationOnStartup()
+        {
+            Screen.autorotateToPortrait = isPortrait;
+            Screen.autorotateToPortraitUpsideDown = isPortrait;
+            Screen.autorotateToLandscapeLeft = !isPortrait;
+            Screen.autorotateToLandscapeRight = !isPortrait;
         }
     }
 }
