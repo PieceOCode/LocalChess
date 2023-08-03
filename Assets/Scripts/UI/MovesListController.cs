@@ -28,7 +28,7 @@ namespace Chess.UI
 
             movesListView.destroyItem = (e) => (e as MoveElement).OnMoveSelectedEvent -= OnMoveSelected;
 
-            Action<VisualElement, int> bindItem = (e, i) => (e as MoveElement).Init(i, moves[i].Item1, moves[i].Item2);
+            Action<VisualElement, int> bindItem = (e, i) => (e as MoveElement).Init(i + 1, moves[i].Item1, moves[i].Item2);
             movesListView.bindItem = bindItem;
 
             movesListView.itemsSource = moves;

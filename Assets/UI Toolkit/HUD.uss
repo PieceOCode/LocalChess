@@ -3,7 +3,8 @@ VisualElement {
 
 .button {
     font-size: 50px;
-    min-width: 45%;
+    width: 100%;
+    flex-shrink: 1;
 }
 
 .unity-list-view__empty-label {

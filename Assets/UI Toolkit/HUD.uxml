@@ -9,16 +9,16 @@
         <Chess.UI.SquarePlaceholder />
         <ui:VisualElement class="hud-panels" style="border-left-width: 5px;">
             <ui:Instance template="MovesList" name="MovesList" style="flex-grow: 1;" />
-            <ui:VisualElement name="buttons">
+            <ui:VisualElement name="buttons" style="flex-shrink: 0;">
                 <ui:VisualElement style="flex-direction: row;">
-                    <ui:Button text="Undo" display-tooltip-when-elided="true" name="undo-button" class="button" style="flex-grow: 1;" />
-                    <ui:Button text="Redo" display-tooltip-when-elided="true" name="redo-button" class="button" style="flex-grow: 1;" />
+                    <ui:Button text="Undo" display-tooltip-when-elided="true" name="undo-button" class="button" />
+                    <ui:Button text="Redo" display-tooltip-when-elided="true" name="redo-button" class="button" />
                 </ui:VisualElement>
                 <ui:VisualElement style="flex-direction: row;">
-                    <ui:Button text="Save" display-tooltip-when-elided="true" name="save-button" class="button" style="flex-grow: 1;" />
-                    <ui:Button text="Load" display-tooltip-when-elided="true" name="load-button" class="button" style="flex-grow: 1;" />
+                    <ui:Button text="Save" display-tooltip-when-elided="true" name="save-button" class="button" />
+                    <ui:Button text="Load" display-tooltip-when-elided="true" name="load-button" class="button" />
                 </ui:VisualElement>
-                <ui:Button text="Restart" display-tooltip-when-elided="true" name="restart-button" class="button" />
+                <ui:Button text="Restart" display-tooltip-when-elided="true" name="restart-button" class="button" style="width: auto;" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
