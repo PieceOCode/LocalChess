@@ -5,6 +5,8 @@ VisualElement {
     font-size: 50px;
     width: 100%;
     flex-shrink: 1;
+    background-color: rgb(183, 146, 93);
+    color: rgb(238, 238, 210);
 }
 
 .unity-list-view__empty-label {
@@ -62,12 +64,6 @@ VisualElement {
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.4);
     display: none;
-}
-
-.mobile-button {
-    flex-grow: 1;
-    min-width: 18%;
-    font-size: 50px;
 }
 
 MoveElement {

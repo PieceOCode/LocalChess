@@ -14,11 +14,11 @@
         <ui:VisualElement class="hud-panels" style="border-top-width: 5px;">
             <ui:Instance template="Score" name="white-score" style="font-size: 50px; height: 60px;" />
             <ui:VisualElement name="buttons" style="height: 150px; flex-direction: row; position: absolute; bottom: 0; width: 100%; left: 0; right: 0; font-size: 50px;">
-                <ui:Button text="Restart" display-tooltip-when-elided="true" name="restart-button" class="mobile-button" />
-                <ui:Button text="Save" display-tooltip-when-elided="true" name="save-button" class="mobile-button" style="flex-grow: 1;" />
-                <ui:Button text="Load" display-tooltip-when-elided="true" name="load-button" class="mobile-button" style="flex-grow: 1;" />
-                <ui:Button text="Undo" display-tooltip-when-elided="true" name="undo-button" class="mobile-button" />
-                <ui:Button text="Redo" display-tooltip-when-elided="true" name="redo-button" class="mobile-button" />
+                <ui:Button text="Restart" display-tooltip-when-elided="true" name="restart-button" class="button" />
+                <ui:Button text="Save" display-tooltip-when-elided="true" name="save-button" class="button" style="flex-grow: 1;" />
+                <ui:Button text="Load" display-tooltip-when-elided="true" name="load-button" class="button" style="flex-grow: 1;" />
+                <ui:Button text="Undo" display-tooltip-when-elided="true" name="undo-button" class="button" />
+                <ui:Button text="Redo" display-tooltip-when-elided="true" name="redo-button" class="button" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
